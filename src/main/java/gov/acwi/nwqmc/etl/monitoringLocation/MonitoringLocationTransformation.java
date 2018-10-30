@@ -2,7 +2,9 @@ package gov.acwi.nwqmc.etl.monitoringLocation;
 
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.job.builder.SimpleJobBuilder;
+import org.springframework.batch.core.job.builder.FlowBuilder;
+import org.springframework.batch.core.job.flow.Flow;
+import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -58,8 +60,9 @@ public class MonitoringLocationTransformation {
 	@Qualifier("buildMonitoringLocationIndexes")
 	public Tasklet buildMonitoringLocationIndexes;
 
-	public SimpleJobBuilder build(SimpleJobBuilder job) {
-		return job.next(purgeWqxMonitoringLocationLocalWqx())
+	public Flow getFlow() {
+		return new FlowBuilder<SimpleFlow>("monitoringLocation")
+				.start(purgeWqxMonitoringLocationLocalWqx())
 				.next(updateWqxMonitoringLocationLocalWqx())
 				.next(purgeWqxMonitoringLocationLocalStoretw())
 				.next(updateWqxMonitoringLocationLocalStoretw())
@@ -69,7 +72,8 @@ public class MonitoringLocationTransformation {
 				.next(truncateMonitoringLocation())
 				.next(transformMonitoringLocationWqx())
 				.next(transformMonitoringLocationStoretw())
-				.next(buildMonitoringLocationIndexes());
+				.next(buildMonitoringLocationIndexes())
+				.build();
 	}
 
 	public Step purgeWqxMonitoringLocationLocalWqx() {

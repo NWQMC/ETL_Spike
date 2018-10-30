@@ -2,7 +2,9 @@ package gov.acwi.nwqmc.etl.projectObject;
 
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.job.builder.SimpleJobBuilder;
+import org.springframework.batch.core.job.builder.FlowBuilder;
+import org.springframework.batch.core.job.flow.Flow;
+import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,60 +17,51 @@ public class ProjectObjectTransformation {
 	public StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
-	@Qualifier("dropProjectIndexes")
-	public Tasklet dropProjectIndexes;
+	@Qualifier("dropProjectObjectIndexes")
+	public Tasklet dropProjectObjectIndexes;
 
 	@Autowired
-	@Qualifier("truncateProject")
-	public Tasklet truncateProject;
+	@Qualifier("truncateProjectObject")
+	public Tasklet truncateProjectObject;
 
 	@Autowired
-	@Qualifier("transformProjectWqx")
-	public Tasklet transformProjectWqx;
+	@Qualifier("transformProjectObjectWqx")
+	public Tasklet transformProjectObjectWqx;
 
 	@Autowired
-	@Qualifier("transformProjectStoretw")
-	public Tasklet transformProjectStoretw;
+	@Qualifier("buildProjectObjectIndexes")
+	public Tasklet buildProjectObjectIndexes;
 
-	@Autowired
-	@Qualifier("buildProjectIndexes")
-	public Tasklet buildProjectIndexes;
-
-	public SimpleJobBuilder build(SimpleJobBuilder job) {
-		return job.next(dropProjectIndexes())
-				.next(truncateProject())
-				.next(transformProjectWqx())
-				.next(transformProjectStoretw())
-				.next(buildProjectIndexes());
-	}
-
-	public Step dropProjectIndexes() {
-		return stepBuilderFactory.get("dropProjectIndexes")
-				.tasklet(dropProjectIndexes)
+	public Flow getFlow() {
+		return new FlowBuilder<SimpleFlow>("projectObject")
+				.start(dropProjectObjectIndexes())
+				.next(truncateProjectObject())
+				.next(transformProjectObjectWqx())
+				.next(buildProjectObjectIndexes())
 				.build();
 	}
 
-	public Step truncateProject() {
-		return stepBuilderFactory.get("truncateProject")
-				.tasklet(truncateProject)
+	public Step dropProjectObjectIndexes() {
+		return stepBuilderFactory.get("dropProjectObjectIndexes")
+				.tasklet(dropProjectObjectIndexes)
 				.build();
 	}
 
-	public Step transformProjectWqx() {
-		return stepBuilderFactory.get("transformProjectWqx")
-				.tasklet(transformProjectWqx)
+	public Step truncateProjectObject() {
+		return stepBuilderFactory.get("truncateProjectObject")
+				.tasklet(truncateProjectObject)
 				.build();
 	}
 
-	public Step transformProjectStoretw() {
-		return stepBuilderFactory.get("transformProjectStoretw")
-				.tasklet(transformProjectStoretw)
+	public Step transformProjectObjectWqx() {
+		return stepBuilderFactory.get("transformProjectObjectWqx")
+				.tasklet(transformProjectObjectWqx)
 				.build();
 	}
 
-	public Step buildProjectIndexes() {
-		return stepBuilderFactory.get("buildProjectIndexes")
-				.tasklet(buildProjectIndexes)
+	public Step buildProjectObjectIndexes() {
+		return stepBuilderFactory.get("buildProjectObjectIndexes")
+				.tasklet(buildProjectObjectIndexes)
 				.build();
 	}
 }

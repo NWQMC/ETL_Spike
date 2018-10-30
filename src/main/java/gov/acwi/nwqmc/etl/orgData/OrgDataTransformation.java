@@ -2,7 +2,9 @@ package gov.acwi.nwqmc.etl.orgData;
 
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.job.builder.SimpleJobBuilder;
+import org.springframework.batch.core.job.builder.FlowBuilder;
+import org.springframework.batch.core.job.flow.Flow;
+import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,12 +36,14 @@ public class OrgDataTransformation {
 	@Qualifier("buildOrgDataIndexes")
 	public Tasklet buildOrgDataIndexes;
 
-	public SimpleJobBuilder build(SimpleJobBuilder job) {
-		return job.next(dropOrgDataIndexes())
+	public Flow getFlow() {
+		return new FlowBuilder<SimpleFlow>("orgData")
+				.start(dropOrgDataIndexes())
 				.next(truncateOrgData())
 				.next(transformOrgDataWqx())
 				.next(transformOrgDataStoretw())
-				.next(buildOrgDataIndexes());
+				.next(buildOrgDataIndexes())
+				.build();
 	}
 
 	public Step dropOrgDataIndexes() {
