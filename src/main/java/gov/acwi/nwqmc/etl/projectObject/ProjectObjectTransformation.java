@@ -8,59 +8,65 @@ import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 public class ProjectObjectTransformation {
 
 	@Autowired
-	public StepBuilderFactory stepBuilderFactory;
+	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
 	@Qualifier("dropProjectObjectIndexes")
-	public Tasklet dropProjectObjectIndexes;
+	private Tasklet dropProjectObjectIndexes;
 
 	@Autowired
 	@Qualifier("truncateProjectObject")
-	public Tasklet truncateProjectObject;
+	private Tasklet truncateProjectObject;
 
 	@Autowired
 	@Qualifier("transformProjectObjectWqx")
-	public Tasklet transformProjectObjectWqx;
+	private Tasklet transformProjectObjectWqx;
 
 	@Autowired
 	@Qualifier("buildProjectObjectIndexes")
-	public Tasklet buildProjectObjectIndexes;
+	private Tasklet buildProjectObjectIndexes;
 
-	public Flow getFlow() {
-		return new FlowBuilder<SimpleFlow>("projectObject")
-				.start(dropProjectObjectIndexes())
-				.next(truncateProjectObject())
-				.next(transformProjectObjectWqx())
-				.next(buildProjectObjectIndexes())
+	@Bean
+	public Flow projectObjectFlow() {
+		return new FlowBuilder<SimpleFlow>("projectObjectFlow")
+				.start(dropProjectObjectIndexesStep())
+				.next(truncateProjectObjectStep())
+				.next(transformProjectObjectWqxStep())
+				.next(buildProjectObjectIndexesStep())
 				.build();
 	}
 
-	public Step dropProjectObjectIndexes() {
-		return stepBuilderFactory.get("dropProjectObjectIndexes")
+	@Bean
+	public Step dropProjectObjectIndexesStep() {
+		return stepBuilderFactory.get("dropProjectObjectIndexesStep")
 				.tasklet(dropProjectObjectIndexes)
 				.build();
 	}
 
-	public Step truncateProjectObject() {
-		return stepBuilderFactory.get("truncateProjectObject")
+	@Bean
+	public Step truncateProjectObjectStep() {
+		return stepBuilderFactory.get("truncateProjectObjectStep")
 				.tasklet(truncateProjectObject)
 				.build();
 	}
 
-	public Step transformProjectObjectWqx() {
-		return stepBuilderFactory.get("transformProjectObjectWqx")
+	@Bean
+	public Step transformProjectObjectWqxStep() {
+		return stepBuilderFactory.get("transformProjectObjectWqxStep")
 				.tasklet(transformProjectObjectWqx)
 				.build();
 	}
 
-	public Step buildProjectObjectIndexes() {
-		return stepBuilderFactory.get("buildProjectObjectIndexes")
+	@Bean
+	public Step buildProjectObjectIndexesStep() {
+		return stepBuilderFactory.get("buildProjectObjectIndexesStep")
 				.tasklet(buildProjectObjectIndexes)
 				.build();
 	}

@@ -8,59 +8,65 @@ import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 public class MonitoringLocationObjectTransformation {
 
 	@Autowired
-	public StepBuilderFactory stepBuilderFactory;
+	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
 	@Qualifier("dropMonitoringLocationObjectIndexes")
-	public Tasklet dropMonitoringLocationObjectIndexes;
+	private Tasklet dropMonitoringLocationObjectIndexes;
 
 	@Autowired
 	@Qualifier("truncateMonitoringLocationObject")
-	public Tasklet truncateMonitoringLocationObject;
+	private Tasklet truncateMonitoringLocationObject;
 
 	@Autowired
 	@Qualifier("transformMonitoringLocationObjectWqx")
-	public Tasklet transformMonitoringLocationObjectWqx;
+	private Tasklet transformMonitoringLocationObjectWqx;
 
 	@Autowired
 	@Qualifier("buildMonitoringLocationObjectIndexes")
-	public Tasklet buildMonitoringLocationObjectIndexes;
+	private Tasklet buildMonitoringLocationObjectIndexes;
 
-	public Flow getFlow() {
-		return new FlowBuilder<SimpleFlow>("monitoringLocationObject")
-				.start(dropMonitoringLocationObjectIndexes())
-				.next(truncateMonitoringLocationObject())
-				.next(transformMonitoringLocationObjectWqx())
-				.next(buildMonitoringLocationObjectIndexes())
+	@Bean
+	public Flow monitoringLocationObjectFlow() {
+		return new FlowBuilder<SimpleFlow>("monitoringLocationObjectFlow")
+				.start(dropMonitoringLocationObjectIndexesStep())
+				.next(truncateMonitoringLocationObjectStep())
+				.next(transformMonitoringLocationObjectWqxStep())
+				.next(buildMonitoringLocationObjectIndexesStep())
 				.build();
 	}
 
-	public Step dropMonitoringLocationObjectIndexes() {
-		return stepBuilderFactory.get("dropMonitoringLocationObjectIndexes")
+	@Bean
+	public Step dropMonitoringLocationObjectIndexesStep() {
+		return stepBuilderFactory.get("dropMonitoringLocationObjectIndexesStep")
 				.tasklet(dropMonitoringLocationObjectIndexes)
 				.build();
 	}
 
-	public Step truncateMonitoringLocationObject() {
-		return stepBuilderFactory.get("truncateMonitoringLocationObject")
+	@Bean
+	public Step truncateMonitoringLocationObjectStep() {
+		return stepBuilderFactory.get("truncateMonitoringLocationObjectStep")
 				.tasklet(truncateMonitoringLocationObject)
 				.build();
 	}
 
-	public Step transformMonitoringLocationObjectWqx() {
-		return stepBuilderFactory.get("transformMonitoringLocationObjectWqx")
+	@Bean
+	public Step transformMonitoringLocationObjectWqxStep() {
+		return stepBuilderFactory.get("transformMonitoringLocationObjectWqxStep")
 				.tasklet(transformMonitoringLocationObjectWqx)
 				.build();
 	}
 
-	public Step buildMonitoringLocationObjectIndexes() {
-		return stepBuilderFactory.get("buildMonitoringLocationObjectIndexes")
+	@Bean
+	public Step buildMonitoringLocationObjectIndexesStep() {
+		return stepBuilderFactory.get("buildMonitoringLocationObjectIndexesStep")
 				.tasklet(buildMonitoringLocationObjectIndexes)
 				.build();
 	}

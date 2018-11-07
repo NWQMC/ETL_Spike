@@ -6,8 +6,11 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 
 @Component
 @StepScope
@@ -15,18 +18,18 @@ public class TransformWqxActivityMetricSum implements Tasklet {
 
 	private final JdbcTemplate jdbcTemplate;
 
+	@Value("classpath:sql/activity/activityMetricSum.sql")
+	private Resource resource;
+
 	@Autowired
 	public TransformWqxActivityMetricSum(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
+	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		jdbcTemplate.execute("insert /*+ append parallel(4) */ into wqx_activity_metric_sum (act_uid, activity_metric_count)\n" + 
-				"select /*+ parallel(4) */\n" + 
-				"       act_uid,\n" + 
-				"       count(*) activity_metric_count\n" + 
-				"  from wqx.activity_metric\n" + 
-				"    group by act_uid");
+		String sql = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
+		jdbcTemplate.execute(sql);
 		return RepeatStatus.FINISHED;
 	}
 }

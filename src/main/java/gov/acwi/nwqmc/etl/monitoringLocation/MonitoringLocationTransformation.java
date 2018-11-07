@@ -8,136 +8,149 @@ import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 public class MonitoringLocationTransformation {
 
 	@Autowired
-	public StepBuilderFactory stepBuilderFactory;
+	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
 	@Qualifier("purgeWqxMonitoringLocationLocalWqx")
-	public Tasklet purgeWqxMonitoringLocationLocalWqx;
+	private Tasklet purgeWqxMonitoringLocationLocalWqx;
 
 	@Autowired
 	@Qualifier("updateWqxMonitoringLocationLocalWqx")
-	public Tasklet updateWqxMonitoringLocationLocalWqx;
+	private Tasklet updateWqxMonitoringLocationLocalWqx;
 
 	@Autowired
 	@Qualifier("purgeWqxMonitoringLocationLocalStoretw")
-	public Tasklet purgeWqxMonitoringLocationLocalStoretw;
+	private Tasklet purgeWqxMonitoringLocationLocalStoretw;
 
 	@Autowired
 	@Qualifier("updateWqxMonitoringLocationLocalStoretw")
-	public Tasklet updateWqxMonitoringLocationLocalStoretw;
+	private Tasklet updateWqxMonitoringLocationLocalStoretw;
 
 	@Autowired
 	@Qualifier("calculateHuc")
-	public Tasklet calculateHuc;
+	private Tasklet calculateHuc;
 
 	@Autowired
 	@Qualifier("calculateGeopoliticalData")
-	public Tasklet calculateGeopoliticalData;
+	private Tasklet calculateGeopoliticalData;
 
 	@Autowired
 	@Qualifier("dropMonitoringLocationIndexes")
-	public Tasklet dropMonitoringLocationIndexes;
+	private Tasklet dropMonitoringLocationIndexes;
 
 	@Autowired
 	@Qualifier("truncateMonitoringLocation")
-	public Tasklet truncateMonitoringLocation;
+	private Tasklet truncateMonitoringLocation;
 
 	@Autowired
 	@Qualifier("transformMonitoringLocationWqx")
-	public Tasklet transformMonitoringLocationWqx;
+	private Tasklet transformMonitoringLocationWqx;
 
 	@Autowired
 	@Qualifier("transformMonitoringLocationStoretw")
-	public Tasklet transformMonitoringLocationStoretw;
+	private Tasklet transformMonitoringLocationStoretw;
 
 	@Autowired
 	@Qualifier("buildMonitoringLocationIndexes")
-	public Tasklet buildMonitoringLocationIndexes;
+	private Tasklet buildMonitoringLocationIndexes;
 
-	public Flow getFlow() {
-		return new FlowBuilder<SimpleFlow>("monitoringLocation")
-				.start(purgeWqxMonitoringLocationLocalWqx())
-				.next(updateWqxMonitoringLocationLocalWqx())
-				.next(purgeWqxMonitoringLocationLocalStoretw())
-				.next(updateWqxMonitoringLocationLocalStoretw())
-				.next(calculateHuc())
-				.next(calculateGeopoliticalData())
-				.next(dropMonitoringLocationIndexes())
-				.next(truncateMonitoringLocation())
-				.next(transformMonitoringLocationWqx())
-				.next(transformMonitoringLocationStoretw())
-				.next(buildMonitoringLocationIndexes())
+	@Bean
+	public Flow monitoringLocationFlow() {
+		return new FlowBuilder<SimpleFlow>("monitoringLocationFlow")
+				.start(purgeWqxMonitoringLocationLocalWqxStep())
+				.next(updateWqxMonitoringLocationLocalWqxStep())
+				.next(purgeWqxMonitoringLocationLocalStoretwStep())
+				.next(updateWqxMonitoringLocationLocalStoretwStep())
+				.next(calculateHucStep())
+				.next(calculateGeopoliticalDataStep())
+				.next(dropMonitoringLocationIndexesStep())
+				.next(truncateMonitoringLocationStep())
+				.next(transformMonitoringLocationWqxStep())
+				.next(transformMonitoringLocationStoretwStep())
+				.next(buildMonitoringLocationIndexesStep())
 				.build();
 	}
 
-	public Step purgeWqxMonitoringLocationLocalWqx() {
-		return stepBuilderFactory.get("purgeWqxMonitoringLocationLocalWqx")
+	@Bean
+	public Step purgeWqxMonitoringLocationLocalWqxStep() {
+		return stepBuilderFactory.get("purgeWqxMonitoringLocationLocalWqxStep")
 				.tasklet(purgeWqxMonitoringLocationLocalWqx)
 				.build();
 	}
 
-	public Step updateWqxMonitoringLocationLocalWqx() {
-		return stepBuilderFactory.get("updateWqxMonitoringLocationLocalWqx")
+	@Bean
+	public Step updateWqxMonitoringLocationLocalWqxStep() {
+		return stepBuilderFactory.get("updateWqxMonitoringLocationLocalWqxStep")
 				.tasklet(updateWqxMonitoringLocationLocalWqx)
 				.build();
 	}
 
-	public Step purgeWqxMonitoringLocationLocalStoretw() {
-		return stepBuilderFactory.get("purgeWqxMonitoringLocationLocalStoretw")
+	@Bean
+	public Step purgeWqxMonitoringLocationLocalStoretwStep() {
+		return stepBuilderFactory.get("purgeWqxMonitoringLocationLocalStoretwStep")
 				.tasklet(purgeWqxMonitoringLocationLocalStoretw)
 				.build();
 	}
 
-	public Step updateWqxMonitoringLocationLocalStoretw() {
-		return stepBuilderFactory.get("updateWqxMonitoringLocationLocalStoretw")
+	@Bean
+	public Step updateWqxMonitoringLocationLocalStoretwStep() {
+		return stepBuilderFactory.get("updateWqxMonitoringLocationLocalStoretwStep")
 				.tasklet(updateWqxMonitoringLocationLocalStoretw)
 				.build();
 	}
 
-	public Step calculateHuc() {
-		return stepBuilderFactory.get("calculateHuc")
+	@Bean
+	public Step calculateHucStep() {
+		return stepBuilderFactory.get("calculateHucStep")
 				.tasklet(calculateHuc)
 				.build();
 	}
 
-	public Step calculateGeopoliticalData() {
-		return stepBuilderFactory.get("calculateGeopoliticalData")
+	@Bean
+	public Step calculateGeopoliticalDataStep() {
+		return stepBuilderFactory.get("calculateGeopoliticalDataStep")
 				.tasklet(calculateGeopoliticalData)
 				.build();
 	}
 
-	public Step dropMonitoringLocationIndexes() {
-		return stepBuilderFactory.get("dropMonitoringLocationIndexes")
+	@Bean
+	public Step dropMonitoringLocationIndexesStep() {
+		return stepBuilderFactory.get("dropMonitoringLocationIndexesStep")
 				.tasklet(dropMonitoringLocationIndexes)
 				.build();
 	}
 
-	public Step truncateMonitoringLocation() {
-		return stepBuilderFactory.get("truncateMonitoringLocation")
+	@Bean
+	public Step truncateMonitoringLocationStep() {
+		return stepBuilderFactory.get("truncateMonitoringLocationStep")
 				.tasklet(truncateMonitoringLocation)
 				.build();
 	}
 
-	public Step transformMonitoringLocationWqx() {
-		return stepBuilderFactory.get("transformMonitoringLocationWqx")
+	@Bean
+	public Step transformMonitoringLocationWqxStep() {
+		return stepBuilderFactory.get("transformMonitoringLocationWqxStep")
 				.tasklet(transformMonitoringLocationWqx)
 				.build();
 	}
 
-	public Step transformMonitoringLocationStoretw() {
-		return stepBuilderFactory.get("transformMonitoringLocationStoretw")
+	@Bean
+	public Step transformMonitoringLocationStoretwStep() {
+		return stepBuilderFactory.get("transformMonitoringLocationStoretwStep")
 				.tasklet(transformMonitoringLocationStoretw)
 				.build();
 	}
 
-	public Step buildMonitoringLocationIndexes() {
-		return stepBuilderFactory.get("buildMonitoringLocationIndexes")
+	@Bean
+	public Step buildMonitoringLocationIndexesStep() {
+		return stepBuilderFactory.get("buildMonitoringLocationIndexesStep")
 				.tasklet(buildMonitoringLocationIndexes)
 				.build();
 	}

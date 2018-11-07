@@ -1,0 +1,4 @@
+addtyp_uid	addtyp_name	addtyp_desc	addtyp_last_change_date	usr_uid_last_change
+1	Location	Physical location of the entity	7/26/2006 10:57:46 AM	1
+2	Mailing	Postal mailing address of the entity	7/26/2006 10:57:46 AM	1
+3	Shipping	Shipping address of the entity	7/26/2006 10:57:46 AM	1

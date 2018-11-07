@@ -6,6 +6,8 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -15,10 +17,15 @@ public class TransformWqpNemiEpaCrosswalk implements Tasklet {
 
 	private final JdbcTemplate jdbcTemplate;
 
+	@Value("classpath:sql/result/wqxResultTaxonFeedingGroup.sql")
+	private Resource resource;
+
 	@Autowired
 	public TransformWqpNemiEpaCrosswalk(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
+
+	@Override
 //TODO mock database link - or flip to real batch ItemReader/ItemProcessor/ItemWriter
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		jdbcTemplate.execute("insert /*+ append parallel(4) */\n" + 

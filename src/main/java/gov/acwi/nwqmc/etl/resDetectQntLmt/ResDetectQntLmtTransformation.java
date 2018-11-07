@@ -8,70 +8,77 @@ import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 public class ResDetectQntLmtTransformation {
 
 	@Autowired
-	public StepBuilderFactory stepBuilderFactory;
+	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
 	@Qualifier("dropResDetectQntLmtIndexes")
-	public Tasklet dropResDetectQntLmtIndexes;
+	private Tasklet dropResDetectQntLmtIndexes;
 
 	@Autowired
 	@Qualifier("truncateResDetectQntLmt")
-	public Tasklet truncateResDetectQntLmt;
+	private Tasklet truncateResDetectQntLmt;
 
 	@Autowired
 	@Qualifier("transformResDetectQntLmtWqx")
-	public Tasklet transformResDetectQntLmtWqx;
+	private Tasklet transformResDetectQntLmtWqx;
 
 	@Autowired
 	@Qualifier("transformResDetectQntLmtStoretw")
-	public Tasklet transformResDetectQntLmtStoretw;
+	private Tasklet transformResDetectQntLmtStoretw;
 
 	@Autowired
 	@Qualifier("buildResDetectQntLmtIndexes")
-	public Tasklet buildResDetectQntLmtIndexes;
+	private Tasklet buildResDetectQntLmtIndexes;
 
-	public Flow getFlow() {
-		return new FlowBuilder<SimpleFlow>("resDetectQntLmt")
-				.start(dropResDetectQntLmtIndexes())
-				.next(truncateResDetectQntLmt())
-				.next(transformResDetectQntLmtWqx())
-				.next(transformResDetectQntLmtStoretw())
-				.next(buildResDetectQntLmtIndexes())
+	@Bean
+	public Flow resDetectQntLmtFlow() {
+		return new FlowBuilder<SimpleFlow>("resDetectQntLmtFlow")
+				.start(dropResDetectQntLmtIndexesStep())
+				.next(truncateResDetectQntLmtStep())
+				.next(transformResDetectQntLmtWqxStep())
+				.next(transformResDetectQntLmtStoretwStep())
+				.next(buildResDetectQntLmtIndexesStep())
 				.build();
 	}
 
-	public Step dropResDetectQntLmtIndexes() {
-		return stepBuilderFactory.get("dropResDetectQntLmtIndexes")
+	@Bean
+	public Step dropResDetectQntLmtIndexesStep() {
+		return stepBuilderFactory.get("dropResDetectQntLmtIndexesStep")
 				.tasklet(dropResDetectQntLmtIndexes)
 				.build();
 	}
 
-	public Step truncateResDetectQntLmt() {
-		return stepBuilderFactory.get("truncateResDetectQntLmt")
+	@Bean
+	public Step truncateResDetectQntLmtStep() {
+		return stepBuilderFactory.get("truncateResDetectQntLmtStep")
 				.tasklet(truncateResDetectQntLmt)
 				.build();
 	}
 
-	public Step transformResDetectQntLmtWqx() {
-		return stepBuilderFactory.get("transformResDetectQntLmtWqx")
+	@Bean
+	public Step transformResDetectQntLmtWqxStep() {
+		return stepBuilderFactory.get("transformResDetectQntLmtWqxStep")
 				.tasklet(transformResDetectQntLmtWqx)
 				.build();
 	}
 
-	public Step transformResDetectQntLmtStoretw() {
-		return stepBuilderFactory.get("transformResDetectQntLmtStoretw")
+	@Bean
+	public Step transformResDetectQntLmtStoretwStep() {
+		return stepBuilderFactory.get("transformResDetectQntLmtStoretwStep")
 				.tasklet(transformResDetectQntLmtStoretw)
 				.build();
 	}
 
-	public Step buildResDetectQntLmtIndexes() {
-		return stepBuilderFactory.get("buildResDetectQntLmtIndexes")
+	@Bean
+	public Step buildResDetectQntLmtIndexesStep() {
+		return stepBuilderFactory.get("buildResDetectQntLmtIndexesStep")
 				.tasklet(buildResDetectQntLmtIndexes)
 				.build();
 	}

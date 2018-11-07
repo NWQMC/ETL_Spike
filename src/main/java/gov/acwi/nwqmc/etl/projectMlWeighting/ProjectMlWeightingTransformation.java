@@ -8,59 +8,65 @@ import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 public class ProjectMlWeightingTransformation {
 
 	@Autowired
-	public StepBuilderFactory stepBuilderFactory;
+	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
 	@Qualifier("dropProjectMlWeightingIndexes")
-	public Tasklet dropProjectMlWeightingIndexes;
+	private Tasklet dropProjectMlWeightingIndexes;
 
 	@Autowired
 	@Qualifier("truncateProjectMlWeighting")
-	public Tasklet truncateProjectMlWeighting;
+	private Tasklet truncateProjectMlWeighting;
 
 	@Autowired
 	@Qualifier("transformProjectMlWeightingWqx")
-	public Tasklet transformProjectMlWeightingWqx;
+	private Tasklet transformProjectMlWeightingWqx;
 
 	@Autowired
 	@Qualifier("buildProjectMlWeightingIndexes")
-	public Tasklet buildProjectMlWeightingIndexes;
+	private Tasklet buildProjectMlWeightingIndexes;
 
-	public Flow getFlow() {
-		return new FlowBuilder<SimpleFlow>("projectMlWeighting")
-				.start(dropProjectMlWeightingIndexes())
-				.next(truncateProjectMlWeighting())
-				.next(transformProjectMlWeightingWqx())
-				.next(buildProjectMlWeightingIndexes())
+	@Bean
+	public Flow projectMlWeightingFlow() {
+		return new FlowBuilder<SimpleFlow>("projectMlWeightingFlow")
+				.start(dropProjectMlWeightingIndexesStep())
+				.next(truncateProjectMlWeightingStep())
+				.next(transformProjectMlWeightingWqxStep())
+				.next(buildProjectMlWeightingIndexesStep())
 				.build();
 	}
 
-	public Step dropProjectMlWeightingIndexes() {
-		return stepBuilderFactory.get("dropProjectMlWeightingIndexes")
+	@Bean
+	public Step dropProjectMlWeightingIndexesStep() {
+		return stepBuilderFactory.get("dropProjectMlWeightingIndexesStep")
 				.tasklet(dropProjectMlWeightingIndexes)
 				.build();
 	}
 
-	public Step truncateProjectMlWeighting() {
-		return stepBuilderFactory.get("truncateProjectMlWeighting")
+	@Bean
+	public Step truncateProjectMlWeightingStep() {
+		return stepBuilderFactory.get("truncateProjectMlWeightingStep")
 				.tasklet(truncateProjectMlWeighting)
 				.build();
 	}
 
-	public Step transformProjectMlWeightingWqx() {
-		return stepBuilderFactory.get("transformProjectMlWeightingWqx")
+	@Bean
+	public Step transformProjectMlWeightingWqxStep() {
+		return stepBuilderFactory.get("transformProjectMlWeightingWqxStep")
 				.tasklet(transformProjectMlWeightingWqx)
 				.build();
 	}
 
-	public Step buildProjectMlWeightingIndexes() {
-		return stepBuilderFactory.get("buildProjectMlWeightingIndexes")
+	@Bean
+	public Step buildProjectMlWeightingIndexesStep() {
+		return stepBuilderFactory.get("buildProjectMlWeightingIndexesStep")
 				.tasklet(buildProjectMlWeightingIndexes)
 				.build();
 	}

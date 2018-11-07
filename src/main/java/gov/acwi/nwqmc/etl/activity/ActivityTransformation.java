@@ -8,188 +8,209 @@ import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
-import org.springframework.stereotype.Component;
 
-@Component
+@Configuration
 public class ActivityTransformation {
 
 	@Autowired
-	public StepBuilderFactory stepBuilderFactory;
+	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
 	@Qualifier("truncateWqxActivityProject")
-	public TruncateWqxActivityProject truncateWqxActivityProject;
+	private Tasklet truncateWqxActivityProject;
 
 	@Autowired
 	@Qualifier("transformWqxActivityProject")
-	public TransformWqxActivityProject transformWqxActivityProject;
+	private Tasklet transformWqxActivityProject;
 
 	@Autowired
 	@Qualifier("truncateWqxActivityConductingOrg")
-	public TruncateWqxActivityConductingOrg truncateWqxActivityConductingOrg;
+	private Tasklet truncateWqxActivityConductingOrg;
 
 	@Autowired
 	@Qualifier("transformWqxActivityConductingOrg")
-	public TransformWqxActivityConductingOrg transformWqxActivityConductingOrg;
+	private Tasklet transformWqxActivityConductingOrg;
 
 	@Autowired
 	@Qualifier("transformWqxAttachedObjectActivity")
-	public TransformWqxAttachedObjectActivity transformWqxAttachedObjectActivity;
+	private Tasklet transformWqxAttachedObjectActivity;
 
 	@Autowired
 	@Qualifier("truncateWqxAttachedObjectActivity")
-	public TruncateWqxAttachedObjectActivity truncateWqxAttachedObjectActivity;
+	private Tasklet truncateWqxAttachedObjectActivity;
 
 	@Autowired
 	@Qualifier("truncateWqxActivityMetricSum")
-	public TruncateWqxActivityMetricSum truncateWqxActivityMetricSum;
+	private Tasklet truncateWqxActivityMetricSum;
 
 	@Autowired
 	@Qualifier("transformWqxActivityMetricSum")
-	public TransformWqxActivityMetricSum transformWqxActivityMetricSum;
+	private Tasklet transformWqxActivityMetricSum;
 
 	@Autowired
 	@Qualifier("dropActivityIndexes")
-	public Tasklet dropActivityIndexes;
+	private Tasklet dropActivityIndexes;
 
 	@Autowired
 	@Qualifier("truncateActivity")
-	public Tasklet truncateActivity;
+	private Tasklet truncateActivity;
 
 	@Autowired
 	@Qualifier("transformActivityWqx")
-	public Tasklet transformActivityWqx;
+	private Tasklet transformActivityWqx;
 
 	@Autowired
 	@Qualifier("transformActivityStoretw")
-	public Tasklet transformActivityStoretw;
+	private Tasklet transformActivityStoretw;
 
 	@Autowired
 	@Qualifier("buildActivityIndexes")
-	public Tasklet buildActivityIndexes;
+	private Tasklet buildActivityIndexes;
 
-	public Flow getFlow() {
-		return new FlowBuilder<SimpleFlow>("activity")
-				.start(wqxActivityProject())
+	@Bean
+	public Flow activityFlow() {
+		return new FlowBuilder<SimpleFlow>("activityFlow")
+				.start(wqxActivityProjectFlow())
 				.split(new SimpleAsyncTaskExecutor())
-				.add(wqxActivityConductingOrg(), wqxAttachedObjectActivity(), wqxActivityMetricSum(), wqxActivityStart())
-				.next(transformActivityWqx())
-				.next(transformActivityStoretw())
-				.next(buildActivityIndexes())
+				.add(wqxActivityConductingOrgFlow(), wqxAttachedObjectActivityFlow(),
+						wqxActivityMetricSumFlow(), wqxActivityStartFlow())
+				.next(transformActivityWqxStep())
+				.next(transformActivityStoretwStep())
+				.next(buildActivityIndexesStep())
 				.build();
 	}
 
-	public Step truncateWqxActivityProject() {
-		return stepBuilderFactory.get("truncateWqxActivityProject")
+	@Bean
+	public Step truncateWqxActivityProjectStep() {
+		return stepBuilderFactory.get("truncateWqxActivityProjectStep")
 				.tasklet(truncateWqxActivityProject)
 				.build();
 	}
 
-	public Step transformWqxActivityProject() {
-		return stepBuilderFactory.get("transformWqxActivityProject")
+	@Bean
+	public Step transformWqxActivityProjectStep() {
+		return stepBuilderFactory.get("transformWqxActivityProjectStep")
 				.tasklet(transformWqxActivityProject)
 				.build();
 	}
 
-	public Step truncateWqxActivityConductingOrg() {
-		return stepBuilderFactory.get("truncateWqxActivityConductingOrg")
+	@Bean
+	public Step truncateWqxActivityConductingOrgStep() {
+		return stepBuilderFactory.get("truncateWqxActivityConductingOrgStep")
 				.tasklet(truncateWqxActivityConductingOrg)
 				.build();
 	}
 
-	public Step transformWqxActivityConductingOrg() {
-		return stepBuilderFactory.get("transformWqxActivityConductingOrg")
+	@Bean
+	public Step transformWqxActivityConductingOrgStep() {
+		return stepBuilderFactory.get("transformWqxActivityConductingOrgStep")
 				.tasklet(transformWqxActivityConductingOrg)
 				.build();
 	}
 
-	public Step truncateWqxAttachedObjectActivity() {
-		return stepBuilderFactory.get("truncateWqxAttachedObjectActivity")
+	@Bean
+	public Step truncateWqxAttachedObjectActivityStep() {
+		return stepBuilderFactory.get("truncateWqxAttachedObjectActivityStep")
 				.tasklet(truncateWqxAttachedObjectActivity)
 				.build();
 	}
 
-	public Step transformWqxAttachedObjectActivity() {
-		return stepBuilderFactory.get("transformWqxAttachedObjectActivity")
+	@Bean
+	public Step transformWqxAttachedObjectActivityStep() {
+		return stepBuilderFactory.get("transformWqxAttachedObjectActivityStep")
 				.tasklet(transformWqxAttachedObjectActivity)
 				.build();
 	}
 
-	public Step truncateWqxActivityMetricSum() {
-		return stepBuilderFactory.get("truncateWqxActivityMetricSum")
+	@Bean
+	public Step truncateWqxActivityMetricSumStep() {
+		return stepBuilderFactory.get("truncateWqxActivityMetricSumStep")
 				.tasklet(truncateWqxActivityMetricSum)
 				.build();
 	}
 
-	public Step transformWqxActivityMetricSum() {
-		return stepBuilderFactory.get("transformWqxActivityMetricSum")
+	@Bean
+	public Step transformWqxActivityMetricSumStep() {
+		return stepBuilderFactory.get("transformWqxActivityMetricSumStep")
 				.tasklet(transformWqxActivityMetricSum)
 				.build();
 	}
 
-	public Step dropActivityIndexes() {
-		return stepBuilderFactory.get("dropActivityIndexes")
+	@Bean
+	public Step dropActivityIndexesStep() {
+		return stepBuilderFactory.get("dropActivityIndexesStep")
 				.tasklet(dropActivityIndexes)
 				.build();
 	}
 
-	public Step truncateActivity() {
-		return stepBuilderFactory.get("truncateActivity")
+	@Bean
+	public Step truncateActivityStep() {
+		return stepBuilderFactory.get("truncateActivityStep")
 				.tasklet(truncateActivity)
 				.build();
 	}
 
-	public Step transformActivityWqx() {
-		return stepBuilderFactory.get("transformActivityWqx")
+	@Bean
+	public Step transformActivityWqxStep() {
+		return stepBuilderFactory.get("transformActivityWqxStep")
 				.tasklet(transformActivityWqx)
 				.build();
 	}
 
-	public Step transformActivityStoretw() {
-		return stepBuilderFactory.get("transformActivityStoretw")
+	@Bean
+	public Step transformActivityStoretwStep() {
+		return stepBuilderFactory.get("transformActivityStoretwStep")
 				.tasklet(transformActivityStoretw)
 				.build();
 	}
 
-	public Step buildActivityIndexes() {
-		return stepBuilderFactory.get("buildActivityIndexes")
+	@Bean
+	public Step buildActivityIndexesStep() {
+		return stepBuilderFactory.get("buildActivityIndexesStep")
 				.tasklet(buildActivityIndexes)
 				.build();
 	}
 
-	public Flow wqxActivityProject() {
-		return new FlowBuilder<SimpleFlow>("wqxActivityProject")
-				.start(truncateWqxActivityProject())
-				.next(transformWqxActivityProject())
+	@Bean
+	public Flow wqxActivityProjectFlow() {
+		return new FlowBuilder<SimpleFlow>("wqxActivityProjectFlow")
+				.start(truncateWqxActivityProjectStep())
+				.next(transformWqxActivityProjectStep())
 				.build();
 	}
 
-	public Flow wqxActivityConductingOrg() {
-		return new FlowBuilder<SimpleFlow>("wqxActivityConductingOrg")
-				.start(truncateWqxActivityConductingOrg())
-				.next(transformWqxActivityConductingOrg())
+	@Bean
+	public Flow wqxActivityConductingOrgFlow() {
+		return new FlowBuilder<SimpleFlow>("wqxActivityConductingOrgFlow")
+				.start(truncateWqxActivityConductingOrgStep())
+				.next(transformWqxActivityConductingOrgStep())
 				.build();
 	}
 
-	public Flow wqxAttachedObjectActivity() {
-		return new FlowBuilder<SimpleFlow>("wqxAttachedObjectActivity")
-				.start(truncateWqxAttachedObjectActivity())
-				.next(transformWqxAttachedObjectActivity())
+	@Bean
+	public Flow wqxAttachedObjectActivityFlow() {
+		return new FlowBuilder<SimpleFlow>("wqxAttachedObjectActivityFlow")
+				.start(truncateWqxAttachedObjectActivityStep())
+				.next(transformWqxAttachedObjectActivityStep())
 				.build();
 	}
 
-	public Flow wqxActivityMetricSum() {
-		return new FlowBuilder<SimpleFlow>("wqxActivityMetricSum")
-				.start(truncateWqxActivityMetricSum())
-				.next(transformWqxActivityMetricSum())
+	@Bean
+	public Flow wqxActivityMetricSumFlow() {
+		return new FlowBuilder<SimpleFlow>("wqxActivityMetricSumFlow")
+				.start(truncateWqxActivityMetricSumStep())
+				.next(transformWqxActivityMetricSumStep())
 				.build();
 	}
 
-	public Flow wqxActivityStart() {
-		return new FlowBuilder<SimpleFlow>("wqxActivitystart")
-				.start(dropActivityIndexes())
-				.next(truncateActivity())
+	@Bean
+	public Flow wqxActivityStartFlow() {
+		return new FlowBuilder<SimpleFlow>("wqxActivitystartFlow")
+				.start(dropActivityIndexesStep())
+				.next(truncateActivityStep())
 				.build();
 	}
 }

@@ -15,17 +15,17 @@ import org.springframework.stereotype.Component;
 public class BuildBiologicalHabitatMetricIndexes implements Tasklet {
 
 	private final JdbcTemplate jdbcTemplate;
-
-	@Value("#{jobParameters['datasource']}")
-	String datasource;
+	private final String datasource;
 
 	@Autowired
-	public BuildBiologicalHabitatMetricIndexes(JdbcTemplate jdbcTemplate) {
+	public BuildBiologicalHabitatMetricIndexes(JdbcTemplate jdbcTemplate,
+			@Value("#{jobParameters['datasource']}") String datasource) {
 		this.jdbcTemplate = jdbcTemplate;
+		this.datasource = datasource;
 	}
 
-	public RepeatStatus execute(StepContribution contribution,
-			ChunkContext chunkContext) throws Exception {
+	@Override
+	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		jdbcTemplate.update("call etl_helper_bio_hab_metric.create_indexes(?)", datasource);
 		return RepeatStatus.FINISHED;
 	}

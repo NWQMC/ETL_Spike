@@ -15,17 +15,17 @@ import org.springframework.stereotype.Component;
 public class BuildActivityObjectIndexes implements Tasklet {
 
 	private final JdbcTemplate jdbcTemplate;
-
-	@Value("#{jobParameters['datasource']}")
-	String datasource;
+	private final String datasource;
 
 	@Autowired
-	public BuildActivityObjectIndexes(JdbcTemplate jdbcTemplate) {
+	public BuildActivityObjectIndexes(JdbcTemplate jdbcTemplate,
+			@Value("#{jobParameters['datasource']}") String datasource) {
 		this.jdbcTemplate = jdbcTemplate;
+		this.datasource = datasource;
 	}
 
-	public RepeatStatus execute(StepContribution contribution,
-			ChunkContext chunkContext) throws Exception {
+	@Override
+	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		jdbcTemplate.update("call etl_helper_activity_object.create_indexes(?)", datasource);
 		return RepeatStatus.FINISHED;
 	}

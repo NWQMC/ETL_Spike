@@ -6,8 +6,11 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 
 @Component
 @StepScope
@@ -15,17 +18,18 @@ public class PurgeWqxMonitoringLocationLocalStoretw implements Tasklet {
 
 	private final JdbcTemplate jdbcTemplate;
 
+	@Value("classpath:sql/monitoringLocation/purgeWqxMonitoringLocationLocalStoretw.sql")
+	private Resource resource;
+
 	@Autowired
 	public PurgeWqxMonitoringLocationLocalStoretw(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
+	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		jdbcTemplate.execute("delete from wqx_station_local\n" + 
-				" where station_source = 'STORETW' and\n" + 
-				"       not exists (select null\n" + 
-				"                     from station_no_source\n" + 
-				"                    where wqx_station_local.station_id = station_no_source.station_id)");
+		String sql = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
+		jdbcTemplate.execute(sql);
 		return RepeatStatus.FINISHED;
 	}
 

@@ -25,7 +25,7 @@ public class Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		JobParameters params = new JobParametersBuilder()
-				.addString("JobID", String.valueOf(System.currentTimeMillis()))
+//				.addString("JobID", String.valueOf(System.currentTimeMillis()))
 				.addString("datasource", "STORET")
 				.toJobParameters();
 		jobLauncher.run(job, params);

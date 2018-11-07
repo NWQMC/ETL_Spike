@@ -6,8 +6,11 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 
 @Component
 @StepScope
@@ -15,20 +18,18 @@ public class PurgeWqxMonitoringLocationLocalWqx implements Tasklet {
 
 	private final JdbcTemplate jdbcTemplate;
 
+	@Value("classpath:sql/monitoringLocation/purgeWqxMonitoringLocationLocalWqx.sql")
+	private Resource resource;
+
 	@Autowired
 	public PurgeWqxMonitoringLocationLocalWqx(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
+	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		jdbcTemplate.execute("delete from wqx_station_local\n" + 
-				" where station_source = 'WQX' and\n" + 
-				"       not exists (select null\n" + 
-				"                     from wqx.monitoring_location\n" + 
-				"                          left join wqx.organization org\n" + 
-				"                            on monitoring_location.org_uid = org.org_uid\n" + 
-				"                    where wqx_station_local.station_id = monitoring_location.mloc_uid and\n" + 
-				"                          org.org_uid not between 2000 and 2999)");
+		String sql = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
+		jdbcTemplate.execute(sql);
 		return RepeatStatus.FINISHED;
 	}
 

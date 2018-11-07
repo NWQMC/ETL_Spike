@@ -8,321 +8,356 @@ import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
-import org.springframework.stereotype.Component;
 
-@Component
+@Configuration
 public class ResultTransformation {
 
 	@Autowired
-	public StepBuilderFactory stepBuilderFactory;
+	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
 	@Qualifier("truncateWqpNemiEpaCrosswalk")
-	public TruncateWqpNemiEpaCrosswalk truncateWqpNemiEpaCrosswalk;
+	private TruncateWqpNemiEpaCrosswalk truncateWqpNemiEpaCrosswalk;
 
 	@Autowired
 	@Qualifier("transformWqpNemiEpaCrosswalk")
-	public TransformWqpNemiEpaCrosswalk transformWqpNemiEpaCrosswalk;
+	private TransformWqpNemiEpaCrosswalk transformWqpNemiEpaCrosswalk;
 
 	@Autowired
 	@Qualifier("truncateWqxAnalyticalMethod")
-	public TruncateWqxAnalyticalMethod truncateWqxAnalyticalMethod;
+	private TruncateWqxAnalyticalMethod truncateWqxAnalyticalMethod;
 
 	@Autowired
 	@Qualifier("transformWqxAnalyticalMethod")
-	public TransformWqxAnalyticalMethod transformWqxAnalyticalMethod;
+	private TransformWqxAnalyticalMethod transformWqxAnalyticalMethod;
 
 	@Autowired
 	@Qualifier("truncateWqxRDetectQntLmt")
-	public TruncateWqxRDetectQntLmt truncateWqxRDetectQntLmt;
+	private TruncateWqxRDetectQntLmt truncateWqxRDetectQntLmt;
 
 	@Autowired
 	@Qualifier("transformWqxRDetectQntLmt")
-	public TransformWqxRDetectQntLmt transformWqxRDetectQntLmt;
+	private TransformWqxRDetectQntLmt transformWqxRDetectQntLmt;
 
 	@Autowired
 	@Qualifier("truncateWqxDetectionQuantLimit")
-	public TruncateWqxDetectionQuantLimit truncateWqxDetectionQuantLimit;
+	private TruncateWqxDetectionQuantLimit truncateWqxDetectionQuantLimit;
 
 	@Autowired
 	@Qualifier("transformWqxDetectionQuantLimit")
-	public TransformWqxDetectionQuantLimit transformWqxDetectionQuantLimit;
+	private TransformWqxDetectionQuantLimit transformWqxDetectionQuantLimit;
 
 	@Autowired
 	@Qualifier("truncateWqxResultTaxonHabit")
-	public TruncateWqxResultTaxonHabit truncateWqxResultTaxonHabit;
+	private TruncateWqxResultTaxonHabit truncateWqxResultTaxonHabit;
 
 	@Autowired
 	@Qualifier("transformWqxResultTaxonHabit")
-	public TransformWqxResultTaxonHabit transformWqxResultTaxonHabit;
+	private TransformWqxResultTaxonHabit transformWqxResultTaxonHabit;
 
 	@Autowired
 	@Qualifier("truncateWqxResultTaxonFeedingGroup")
-	public TruncateWqxResultTaxonFeedingGroup truncateWqxResultTaxonFeedingGroup;
+	private TruncateWqxResultTaxonFeedingGroup truncateWqxResultTaxonFeedingGroup;
 
 	@Autowired
 	@Qualifier("transformWqxResultTaxonFeedingGroup")
-	public TransformWqxResultTaxonFeedingGroup transformWqxResultTaxonFeedingGroup;
+	private TransformWqxResultTaxonFeedingGroup transformWqxResultTaxonFeedingGroup;
 
 	@Autowired
 	@Qualifier("truncateWqxAttachedObjectResult")
-	public TruncateWqxAttachedObjectResult truncateWqxAttachedObjectResult;
+	private TruncateWqxAttachedObjectResult truncateWqxAttachedObjectResult;
 
 	@Autowired
 	@Qualifier("transformWqxAttachedObjectResult")
-	public TransformWqxAttachedObjectResult transformWqxAttachedObjectResult;
+	private TransformWqxAttachedObjectResult transformWqxAttachedObjectResult;
 
 	@Autowired
 	@Qualifier("truncateWqxResultLabSamplePrepSum")
-	public TruncateWqxResultLabSamplePrepSum truncateWqxResultLabSamplePrepSum;
+	private TruncateWqxResultLabSamplePrepSum truncateWqxResultLabSamplePrepSum;
 
 	@Autowired
 	@Qualifier("transformWqxResultLabSamplePrepSum")
-	public TransformWqxResultLabSamplePrepSum transformWqxResultLabSamplePrepSum;
+	private TransformWqxResultLabSamplePrepSum transformWqxResultLabSamplePrepSum;
 
 	@Autowired
 	@Qualifier("truncateWqxResultFrequencyClass")
-	public TruncateWqxResultFrequencyClass truncateWqxResultFrequencyClass;
+	private TruncateWqxResultFrequencyClass truncateWqxResultFrequencyClass;
 
 	@Autowired
 	@Qualifier("transformWqxResultFrequencyClass")
-	public TransformWqxResultFrequencyClass transformWqxResultFrequencyClass;
+	private TransformWqxResultFrequencyClass transformWqxResultFrequencyClass;
 
 	@Autowired
 	@Qualifier("dropResultIndexes")
-	public Tasklet dropResultIndexes;
+	private Tasklet dropResultIndexes;
 
 	@Autowired
 	@Qualifier("truncateResult")
-	public Tasklet truncateResult;
+	private Tasklet truncateResult;
 
 	@Autowired
 	@Qualifier("transformResultWqx")
-	public Tasklet transformResultWqx;
+	private Tasklet transformResultWqx;
 
 	@Autowired
 	@Qualifier("transformResultStoretw")
-	public Tasklet transformResultStoretw;
+	private Tasklet transformResultStoretw;
 
 	@Autowired
 	@Qualifier("buildResultIndexes")
-	public Tasklet buildResultIndexes;
+	private Tasklet buildResultIndexes;
 
-	public Flow getFlow() {
-		return new FlowBuilder<SimpleFlow>("result")
-				.start(wqpNemiEpaCrosswalk())
+	@Bean
+	public Flow resultFlow() {
+		return new FlowBuilder<SimpleFlow>("resultFlow")
+				.start(wqpNemiEpaCrosswalkFlow())
 				.split(new SimpleAsyncTaskExecutor())
-				.add(wqxAnalyticalMethod(), wqxRDetectQntLmt(), wqxResultTaxonHabit(),
-						wqxResultTaxonFeedingGroup(), wqxAttachedObjectResult(), wqxResultLabSamplePrepSum(),
-						wqxResultFrequencyClass(), wqxResultStart())
-				.next(transformResultWqx())
-				.next(transformResultStoretw())
-				.next(buildResultIndexes())
+				.add(wqxAnalyticalMethodFlow(), wqxRDetectQntLmtFlow(),
+						wqxResultTaxonHabitFlow(), wqxResultTaxonFeedingGroupFlow(),
+						wqxAttachedObjectResultFlow(), wqxResultLabSamplePrepSumFlow(),
+						wqxResultFrequencyClassFlow(), wqxResultStartFlow())
+				.next(transformResultWqxStep())
+				.next(transformResultStoretwStep())
+				.next(buildResultIndexesStep())
 				.build();
 	}
 
-	public Step truncateWqpNemiEpaCrosswalk() {
-		return stepBuilderFactory.get("truncateWqpNemiEpaCrosswalk")
+	@Bean
+	public Step truncateWqpNemiEpaCrosswalkStep() {
+		return stepBuilderFactory.get("truncateWqpNemiEpaCrosswalkStep")
 				.tasklet(truncateWqpNemiEpaCrosswalk)
 				.build();
 	}
 
-	public Step transformWqpNemiEpaCrosswalk() {
-		return stepBuilderFactory.get("transformWqpNemiEpaCrosswalk")
+	@Bean
+	public Step transformWqpNemiEpaCrosswalkStep() {
+		return stepBuilderFactory.get("transformWqpNemiEpaCrosswalkStep")
 				.tasklet(transformWqpNemiEpaCrosswalk)
 				.build();
 	}
 
-	public Step truncateWqxAnalyticalMethod() {
-		return stepBuilderFactory.get("truncateWqxAnalyticalMethod")
+	@Bean
+	public Step truncateWqxAnalyticalMethodStep() {
+		return stepBuilderFactory.get("truncateWqxAnalyticalMethodStep")
 				.tasklet(truncateWqxAnalyticalMethod)
 				.build();
 	}
 
-	public Step transformWqxAnalyticalMethod() {
-		return stepBuilderFactory.get("transformWqxAnalyticalMethod")
+	@Bean
+	public Step transformWqxAnalyticalMethodStep() {
+		return stepBuilderFactory.get("transformWqxAnalyticalMethodStep")
 				.tasklet(transformWqxAnalyticalMethod)
 				.build();
 	}
 
-	public Step truncateWqxRDetectQntLmt() {
-		return stepBuilderFactory.get("truncateWqxRDetectQntLmt")
+	@Bean
+	public Step truncateWqxRDetectQntLmtStep() {
+		return stepBuilderFactory.get("truncateWqxRDetectQntLmtStep")
 				.tasklet(truncateWqxRDetectQntLmt)
 				.build();
 	}
 
-	public Step transformWqxRDetectQntLmt() {
-		return stepBuilderFactory.get("transformWqxRDetectQntLmt")
+	@Bean
+	public Step transformWqxRDetectQntLmtStep() {
+		return stepBuilderFactory.get("transformWqxRDetectQntLmtStep")
 				.tasklet(transformWqxRDetectQntLmt)
 				.build();
 	}
 
-	public Step truncateWqxDetectionQuantLimit() {
-		return stepBuilderFactory.get("truncateWqxDetectionQuantLimit")
+	@Bean
+	public Step truncateWqxDetectionQuantLimitStep() {
+		return stepBuilderFactory.get("truncateWqxDetectionQuantLimitStep")
 				.tasklet(truncateWqxDetectionQuantLimit)
 				.build();
 	}
 
-	public Step transformWqxDetectionQuantLimit() {
-		return stepBuilderFactory.get("transformWqxDetectionQuantLimit")
+	@Bean
+	public Step transformWqxDetectionQuantLimitStep() {
+		return stepBuilderFactory.get("transformWqxDetectionQuantLimitStep")
 				.tasklet(transformWqxDetectionQuantLimit)
 				.build();
 	}
 
-	public Step truncateWqxResultTaxonHabit() {
-		return stepBuilderFactory.get("truncateWqxResultTaxonHabit")
+	@Bean
+	public Step truncateWqxResultTaxonHabitStep() {
+		return stepBuilderFactory.get("truncateWqxResultTaxonHabitStep")
 				.tasklet(truncateWqxResultTaxonHabit)
 				.build();
 	}
 
-	public Step transformWqxResultTaxonHabit() {
-		return stepBuilderFactory.get("transformWqxResultTaxonHabit")
+	@Bean
+	public Step transformWqxResultTaxonHabitStep() {
+		return stepBuilderFactory.get("transformWqxResultTaxonHabitStep")
 				.tasklet(transformWqxResultTaxonHabit)
 				.build();
 	}
 
-	public Step truncateWqxResultTaxonFeedingGroup() {
-		return stepBuilderFactory.get("truncateWqxResultTaxonFeedingGroup")
+	@Bean
+	public Step truncateWqxResultTaxonFeedingGroupStep() {
+		return stepBuilderFactory.get("truncateWqxResultTaxonFeedingGroupStep")
 				.tasklet(truncateWqxResultTaxonFeedingGroup)
 				.build();
 	}
 
-	public Step transformWqxResultTaxonFeedingGroup() {
-		return stepBuilderFactory.get("transformWqxResultTaxonFeedingGroup")
+	@Bean
+	public Step transformWqxResultTaxonFeedingGroupStep() {
+		return stepBuilderFactory.get("transformWqxResultTaxonFeedingGroupStep")
 				.tasklet(transformWqxResultTaxonFeedingGroup)
 				.build();
 	}
 
-	public Step truncateWqxAttachedObjectResult() {
-		return stepBuilderFactory.get("truncateWqxAttachedObjectResult")
+	@Bean
+	public Step truncateWqxAttachedObjectResultStep() {
+		return stepBuilderFactory.get("truncateWqxAttachedObjectResultStep")
 				.tasklet(truncateWqxAttachedObjectResult)
 				.build();
 	}
 
-	public Step transformWqxAttachedObjectResult() {
-		return stepBuilderFactory.get("transformWqxAttachedObjectResult")
+	@Bean
+	public Step transformWqxAttachedObjectResultStep() {
+		return stepBuilderFactory.get("transformWqxAttachedObjectResultStep")
 				.tasklet(transformWqxAttachedObjectResult)
 				.build();
 	}
 
-	public Step truncateWqxResultLabSamplePrepSum() {
-		return stepBuilderFactory.get("truncateWqxResultLabSamplePrepSum")
+	@Bean
+	public Step truncateWqxResultLabSamplePrepSumStep() {
+		return stepBuilderFactory.get("truncateWqxResultLabSamplePrepSumStep")
 				.tasklet(truncateWqxResultLabSamplePrepSum)
 				.build();
 	}
 
-	public Step transformWqxResultLabSamplePrepSum() {
-		return stepBuilderFactory.get("transformWqxResultLabSamplePrepSum")
+	@Bean
+	public Step transformWqxResultLabSamplePrepSumStep() {
+		return stepBuilderFactory.get("transformWqxResultLabSamplePrepSumStep")
 				.tasklet(transformWqxResultLabSamplePrepSum)
 				.build();
 	}
 
-	public Step truncateWqxResultFrequencyClass() {
-		return stepBuilderFactory.get("truncateWqxResultFrequencyClass")
+	@Bean
+	public Step truncateWqxResultFrequencyClassStep() {
+		return stepBuilderFactory.get("truncateWqxResultFrequencyClassStep")
 				.tasklet(truncateWqxResultFrequencyClass)
 				.build();
 	}
 
-	public Step transformWqxResultFrequencyClass() {
-		return stepBuilderFactory.get("transformWqxResultFrequencyClass")
+	@Bean
+	public Step transformWqxResultFrequencyClassStep() {
+		return stepBuilderFactory.get("transformWqxResultFrequencyClassStep")
 				.tasklet(transformWqxResultFrequencyClass)
 				.build();
 	}
 
-	public Step dropResultIndexes() {
-		return stepBuilderFactory.get("dropResultIndexes")
+	@Bean
+	public Step dropResultIndexesStep() {
+		return stepBuilderFactory.get("dropResultIndexesStep")
 				.tasklet(dropResultIndexes)
 				.build();
 	}
 
-	public Step truncateResult() {
-		return stepBuilderFactory.get("truncateResult")
+	@Bean
+	public Step truncateResultStep() {
+		return stepBuilderFactory.get("truncateResultStep")
 				.tasklet(truncateResult)
 				.build();
 	}
 
-	public Step transformResultWqx() {
-		return stepBuilderFactory.get("transformResultWqx")
+	@Bean
+	public Step transformResultWqxStep() {
+		return stepBuilderFactory.get("transformResultWqxStep")
 				.tasklet(transformResultWqx)
 				.build();
 	}
 
-	public Step transformResultStoretw() {
-		return stepBuilderFactory.get("transformResultStoretw")
+	@Bean
+	public Step transformResultStoretwStep() {
+		return stepBuilderFactory.get("transformResultStoretwStep")
 				.tasklet(transformResultStoretw)
 				.build();
 	}
 
-	public Step buildResultIndexes() {
-		return stepBuilderFactory.get("buildResultIndexes")
+	@Bean
+	public Step buildResultIndexesStep() {
+		return stepBuilderFactory.get("buildResultIndexesStep")
 				.tasklet(buildResultIndexes)
 				.build();
 	}
 
-	public Flow wqpNemiEpaCrosswalk() {
-		return new FlowBuilder<SimpleFlow>("wqpNemiEpaCrosswalk")
-				.start(truncateWqpNemiEpaCrosswalk())
+	@Bean
+	public Flow wqpNemiEpaCrosswalkFlow() {
+		return new FlowBuilder<SimpleFlow>("wqpNemiEpaCrosswalkFlow")
+				.start(truncateWqpNemiEpaCrosswalkStep())
 				//TODO mock database link - or flip to real batch ItemReader/ItemProcessor/ItemWriter
 //				.next(transformWqpNemiEpaCrosswalk())
 				.build();
 	}
 
-	public Flow wqxAnalyticalMethod() {
-		return new FlowBuilder<SimpleFlow>("wqxAnalyticalMethod")
-				.start(truncateWqxAnalyticalMethod())
-				.next(transformWqxAnalyticalMethod())
+	@Bean
+	public Flow wqxAnalyticalMethodFlow() {
+		return new FlowBuilder<SimpleFlow>("wqxAnalyticalMethodFlow")
+				.start(truncateWqxAnalyticalMethodStep())
+				.next(transformWqxAnalyticalMethodStep())
 				.build();
 	}
 
-	public Flow wqxRDetectQntLmt() {
-		return new FlowBuilder<SimpleFlow>("wqxRDetectQntLmt")
-				.start(truncateWqxRDetectQntLmt())
-				.next(transformWqxRDetectQntLmt())
-				.next(truncateWqxDetectionQuantLimit())
-				.next(transformWqxDetectionQuantLimit())
+	@Bean
+	public Flow wqxRDetectQntLmtFlow() {
+		return new FlowBuilder<SimpleFlow>("wqxRDetectQntLmtFlow")
+				.start(truncateWqxRDetectQntLmtStep())
+				.next(transformWqxRDetectQntLmtStep())
+				.next(truncateWqxDetectionQuantLimitStep())
+				.next(transformWqxDetectionQuantLimitStep())
 				.build();
 	}
 
-	public Flow wqxResultTaxonHabit() {
-		return new FlowBuilder<SimpleFlow>("wqxResultTaxonHabit")
-				.start(truncateWqxResultTaxonHabit())
-				.next(transformWqxResultTaxonHabit())
+	@Bean
+	public Flow wqxResultTaxonHabitFlow() {
+		return new FlowBuilder<SimpleFlow>("wqxResultTaxonHabitFlow")
+				.start(truncateWqxResultTaxonHabitStep())
+				.next(transformWqxResultTaxonHabitStep())
 				.build();
 	}
 
-	public Flow wqxResultTaxonFeedingGroup() {
-		return new FlowBuilder<SimpleFlow>("wqxResultTaxonFeedingGroup")
-				.start(truncateWqxResultTaxonFeedingGroup())
-				.next(transformWqxResultTaxonFeedingGroup())
+	@Bean
+	public Flow wqxResultTaxonFeedingGroupFlow() {
+		return new FlowBuilder<SimpleFlow>("wqxResultTaxonFeedingGroupFlow")
+				.start(truncateWqxResultTaxonFeedingGroupStep())
+				.next(transformWqxResultTaxonFeedingGroupStep())
 				.build();
 	}
 
-	public Flow wqxAttachedObjectResult() {
-		return new FlowBuilder<SimpleFlow>("wqxAttachedObjectResult")
-				.start(truncateWqxAttachedObjectResult())
-				.next(transformWqxAttachedObjectResult())
+	@Bean
+	public Flow wqxAttachedObjectResultFlow() {
+		return new FlowBuilder<SimpleFlow>("wqxAttachedObjectResultFlow")
+				.start(truncateWqxAttachedObjectResultStep())
+				.next(transformWqxAttachedObjectResultStep())
 				.build();
 	}
 
-	public Flow wqxResultLabSamplePrepSum() {
-		return new FlowBuilder<SimpleFlow>("wqxResultLabSamplePrepSum")
-				.start(truncateWqxResultLabSamplePrepSum())
-				.next(transformWqxResultLabSamplePrepSum())
+	@Bean
+	public Flow wqxResultLabSamplePrepSumFlow() {
+		return new FlowBuilder<SimpleFlow>("wqxResultLabSamplePrepSumFlow")
+				.start(truncateWqxResultLabSamplePrepSumStep())
+				.next(transformWqxResultLabSamplePrepSumStep())
 				.build();
 	}
 
-	public Flow wqxResultFrequencyClass() {
-		return new FlowBuilder<SimpleFlow>("wqxResultFrequencyClass")
-				.start(truncateWqxResultFrequencyClass())
-				.next(transformWqxResultFrequencyClass())
+	@Bean
+	public Flow wqxResultFrequencyClassFlow() {
+		return new FlowBuilder<SimpleFlow>("wqxResultFrequencyClassFlow")
+				.start(truncateWqxResultFrequencyClassStep())
+				.next(transformWqxResultFrequencyClassStep())
 				.build();
 	}
 
-	public Flow wqxResultStart() {
-		return new FlowBuilder<SimpleFlow>("wqxResultstart")
-				.start(dropResultIndexes())
-				.next(truncateResult())
+	@Bean
+	public Flow wqxResultStartFlow() {
+		return new FlowBuilder<SimpleFlow>("wqxResultStartFlow")
+				.start(dropResultIndexesStep())
+				.next(truncateResultStep())
 				.build();
 	}
 }

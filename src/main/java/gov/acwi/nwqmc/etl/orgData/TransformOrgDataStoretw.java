@@ -6,8 +6,11 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 
 @Component
 @StepScope
@@ -15,26 +18,18 @@ public class TransformOrgDataStoretw implements Tasklet {
 
 	private final JdbcTemplate jdbcTemplate;
 
+	@Value("classpath:sql/orgData/orgDataStoretw.sql")
+	private Resource resource;
+
 	@Autowired
 	public TransformOrgDataStoretw(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
+	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		jdbcTemplate.execute("insert /*+ append parallel(4) */\n" + 
-				"  into org_data_swap_storet (data_source_id, data_source, organization_id, organization, organization_name,\n" + 
-				"                             organization_description, organization_type)\n" + 
-				"select /*+ parallel(4) */ \n" + 
-				"       3 data_source_id,\n" + 
-				"       'STORET' data_source,\n" + 
-				"       pk_isn + 10000000  organization_id,\n" + 
-				"       organization_id organization,\n" + 
-				"       organization_name,\n" + 
-				"       organization_description,\n" + 
-				"       organization_type\n" + 
-				"  from storetw.di_org\n" + 
-				" where source_system is null and\n" +
-				"       organization_id not in(select org_id from wqp_core.storetw_transition)");
+		String sql = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
+		jdbcTemplate.execute(sql);
 		return RepeatStatus.FINISHED;
 	}
 }

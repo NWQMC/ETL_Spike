@@ -1,0 +1,48 @@
+insert /*+ append parallel(4) */
+  into activity_swap_storet (data_source_id, data_source, station_id, site_id, event_date, activity, sample_media, organization, site_type, huc, governmental_unit_code,
+                             organization_name, activity_id, activity_type_code, activity_media_subdiv_name, activity_start_time, act_start_time_zone, activity_stop_date,
+                             activity_stop_time, act_stop_time_zone, activity_depth, activity_depth_unit, activity_depth_ref_point, activity_upper_depth, activity_upper_depth_unit,
+                             activity_lower_depth, activity_lower_depth_unit, project_id, activity_conducting_org, activity_comment, sample_aqfr_name, hydrologic_condition_name,
+                             hydrologic_event_name, sample_collect_method_id, sample_collect_method_ctx, sample_collect_method_name, sample_collect_equip_name)
+select 3 data_source_id,
+       'STORET' data_source,
+       a.*
+  from (select /*+ parallel(4) */
+               station.station_id,
+               station.site_id,
+               activity_no_source.event_date,
+               activity_no_source.activity,
+               activity_no_source.sample_media,
+               station.organization,
+               station.site_type,
+               station.huc,
+               station.governmental_unit_code,
+               station.organization_name,
+               activity_no_source.activity_id,
+               activity_no_source.activity_type_code,
+               activity_no_source.activity_media_subdiv_name,
+               activity_no_source.activity_start_time,
+               activity_no_source.act_start_time_zone,
+               activity_no_source.activity_stop_date,
+               activity_no_source.activity_stop_time,
+               activity_no_source.act_stop_time_zone,
+               activity_no_source.activity_depth,
+               activity_no_source.activity_depth_unit,
+               activity_no_source.activity_depth_ref_point,
+               activity_no_source.activity_upper_depth,
+               activity_no_source.activity_upper_depth_unit,
+               activity_no_source.activity_lower_depth,
+               activity_no_source.activity_lower_depth_unit,
+               activity_no_source.project_id,
+               activity_no_source.activity_conducting_org,
+               activity_no_source.activity_comment,
+               activity_no_source.sample_aqfr_name,
+               activity_no_source.hydrologic_condition_name,
+               activity_no_source.hydrologic_event_name,
+               activity_no_source.sample_collect_method_id,
+               activity_no_source.sample_collect_method_ctx,
+               activity_no_source.sample_collect_method_name,
+               activity_no_source.sample_collect_equip_name
+          from activity_no_source
+               join station_swap_storet station
+                 on activity_no_source.station_id + 10000000 = station.station_id) a

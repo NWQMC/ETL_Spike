@@ -8,70 +8,77 @@ import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 public class OrgDataTransformation {
 
 	@Autowired
-	public StepBuilderFactory stepBuilderFactory;
+	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
 	@Qualifier("dropOrgDataIndexes")
-	public Tasklet dropOrgDataIndexes;
+	private Tasklet dropOrgDataIndexes;
 
 	@Autowired
 	@Qualifier("truncateOrgData")
-	public Tasklet truncateOrgData;
+	private Tasklet truncateOrgData;
 
 	@Autowired
 	@Qualifier("transformOrgDataWqx")
-	public Tasklet transformOrgDataWqx;
+	private Tasklet transformOrgDataWqx;
 
 	@Autowired
 	@Qualifier("transformOrgDataStoretw")
-	public Tasklet transformOrgDataStoretw;
+	private Tasklet transformOrgDataStoretw;
 
 	@Autowired
 	@Qualifier("buildOrgDataIndexes")
-	public Tasklet buildOrgDataIndexes;
+	private Tasklet buildOrgDataIndexes;
 
-	public Flow getFlow() {
-		return new FlowBuilder<SimpleFlow>("orgData")
-				.start(dropOrgDataIndexes())
-				.next(truncateOrgData())
-				.next(transformOrgDataWqx())
-				.next(transformOrgDataStoretw())
-				.next(buildOrgDataIndexes())
+	@Bean
+	public Flow orgDataFlow() {
+		return new FlowBuilder<SimpleFlow>("orgDataFlow")
+				.start(dropOrgDataIndexesStep())
+				.next(truncateOrgDataStep())
+				.next(transformOrgDataWqxStep())
+				.next(transformOrgDataStoretwStep())
+				.next(buildOrgDataIndexesStep())
 				.build();
 	}
 
-	public Step dropOrgDataIndexes() {
-		return stepBuilderFactory.get("dropOrgDataIndexes")
+	@Bean
+	public Step dropOrgDataIndexesStep() {
+		return stepBuilderFactory.get("dropOrgDataIndexesStep")
 				.tasklet(dropOrgDataIndexes)
 				.build();
 	}
 
-	public Step truncateOrgData() {
-		return stepBuilderFactory.get("truncateOrgData")
+	@Bean
+	public Step truncateOrgDataStep() {
+		return stepBuilderFactory.get("truncateOrgDataStep")
 				.tasklet(truncateOrgData)
 				.build();
 	}
 
-	public Step transformOrgDataWqx() {
-		return stepBuilderFactory.get("transformOrgDataWqx")
+	@Bean
+	public Step transformOrgDataWqxStep() {
+		return stepBuilderFactory.get("transformOrgDataWqxStep")
 				.tasklet(transformOrgDataWqx)
 				.build();
 	}
 
-	public Step transformOrgDataStoretw() {
-		return stepBuilderFactory.get("transformOrgDataStoretw")
+	@Bean
+	public Step transformOrgDataStoretwStep() {
+		return stepBuilderFactory.get("transformOrgDataStoretwStep")
 				.tasklet(transformOrgDataStoretw)
 				.build();
 	}
 
-	public Step buildOrgDataIndexes() {
-		return stepBuilderFactory.get("buildOrgDataIndexes")
+	@Bean
+	public Step buildOrgDataIndexesStep() {
+		return stepBuilderFactory.get("buildOrgDataIndexesStep")
 				.tasklet(buildOrgDataIndexes)
 				.build();
 	}

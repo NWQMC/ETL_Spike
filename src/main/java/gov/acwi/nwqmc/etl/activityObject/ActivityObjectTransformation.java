@@ -8,59 +8,65 @@ import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 public class ActivityObjectTransformation {
 
 	@Autowired
-	public StepBuilderFactory stepBuilderFactory;
+	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
 	@Qualifier("dropActivityObjectIndexes")
-	public Tasklet dropActivityObjectIndexes;
+	private Tasklet dropActivityObjectIndexes;
 
 	@Autowired
 	@Qualifier("truncateActivityObject")
-	public Tasklet truncateActivityObject;
+	private Tasklet truncateActivityObject;
 
 	@Autowired
 	@Qualifier("transformActivityObjectWqx")
-	public Tasklet transformActivityObjectWqx;
+	private Tasklet transformActivityObjectWqx;
 
 	@Autowired
 	@Qualifier("buildActivityObjectIndexes")
-	public Tasklet buildActivityObjectIndexes;
+	private Tasklet buildActivityObjectIndexes;
 
-	public Flow getFlow() {
-		return new FlowBuilder<SimpleFlow>("activityObject")
-				.start(dropActivityObjectIndexes())
-				.next(truncateActivityObject())
-				.next(transformActivityObjectWqx())
-				.next(buildActivityObjectIndexes())
+	@Bean
+	public Flow activityObjectFlow() {
+		return new FlowBuilder<SimpleFlow>("activityObjectFlow")
+				.start(dropActivityObjectIndexesStep())
+				.next(truncateActivityObjectStep())
+				.next(transformActivityObjectWqxStep())
+				.next(buildActivityObjectIndexesStep())
 				.build();
 	}
 
-	public Step dropActivityObjectIndexes() {
-		return stepBuilderFactory.get("dropActivityObjectIndexes")
+	@Bean
+	public Step dropActivityObjectIndexesStep() {
+		return stepBuilderFactory.get("dropActivityObjectIndexesStep")
 				.tasklet(dropActivityObjectIndexes)
 				.build();
 	}
 
-	public Step truncateActivityObject() {
-		return stepBuilderFactory.get("truncateActivityObject")
+	@Bean
+	public Step truncateActivityObjectStep() {
+		return stepBuilderFactory.get("truncateActivityObjectStep")
 				.tasklet(truncateActivityObject)
 				.build();
 	}
 
-	public Step transformActivityObjectWqx() {
-		return stepBuilderFactory.get("transformActivityObjectWqx")
+	@Bean
+	public Step transformActivityObjectWqxStep() {
+		return stepBuilderFactory.get("transformActivityObjectWqxStep")
 				.tasklet(transformActivityObjectWqx)
 				.build();
 	}
 
-	public Step buildActivityObjectIndexes() {
-		return stepBuilderFactory.get("buildActivityObjectIndexes")
+	@Bean
+	public Step buildActivityObjectIndexesStep() {
+		return stepBuilderFactory.get("buildActivityObjectIndexesStep")
 				.tasklet(buildActivityObjectIndexes)
 				.build();
 	}

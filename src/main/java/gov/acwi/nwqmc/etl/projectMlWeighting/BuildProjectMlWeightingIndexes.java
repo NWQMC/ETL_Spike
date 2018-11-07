@@ -15,17 +15,17 @@ import org.springframework.stereotype.Component;
 public class BuildProjectMlWeightingIndexes implements Tasklet {
 
 	private final JdbcTemplate jdbcTemplate;
-
-	@Value("#{jobParameters['datasource']}")
-	String datasource;
+	private final String datasource;
 
 	@Autowired
-	public BuildProjectMlWeightingIndexes(JdbcTemplate jdbcTemplate) {
+	public BuildProjectMlWeightingIndexes(JdbcTemplate jdbcTemplate,
+			@Value("#{jobParameters['datasource']}") String datasource) {
 		this.jdbcTemplate = jdbcTemplate;
+		this.datasource = datasource;
 	}
 
-	public RepeatStatus execute(StepContribution contribution,
-			ChunkContext chunkContext) throws Exception {
+	@Override
+	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		jdbcTemplate.update("call etl_helper_prj_ml_weighting.create_indexes(?)", datasource);
 		return RepeatStatus.FINISHED;
 	}

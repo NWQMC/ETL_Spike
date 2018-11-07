@@ -8,59 +8,65 @@ import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 public class BiologicalHabitatMetricTransformation {
 
 	@Autowired
-	public StepBuilderFactory stepBuilderFactory;
+	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
 	@Qualifier("dropBiologicalHabitatMetricIndexes")
-	public Tasklet dropBiologicalHabitatMetricIndexes;
+	private Tasklet dropBiologicalHabitatMetricIndexes;
 
 	@Autowired
 	@Qualifier("truncateBiologicalHabitatMetric")
-	public Tasklet truncateBiologicalHabitatMetric;
+	private Tasklet truncateBiologicalHabitatMetric;
 
 	@Autowired
 	@Qualifier("transformBiologicalHabitatMetricWqx")
-	public Tasklet transformBiologicalHabitatMetricWqx;
+	private Tasklet transformBiologicalHabitatMetricWqx;
 
 	@Autowired
 	@Qualifier("buildBiologicalHabitatMetricIndexes")
-	public Tasklet buildBiologicalHabitatMetricIndexes;
+	private Tasklet buildBiologicalHabitatMetricIndexes;
 
-	public Flow getFlow() {
-		return new FlowBuilder<SimpleFlow>("biologicalHabitatMetricWqx")
-				.start(dropBiologicalHabitatMetricIndexes())
-				.next(truncateBiologicalHabitatMetric())
-				.next(transformBiologicalHabitatMetricWqx())
-				.next(buildBiologicalHabitatMetricIndexes())
+	@Bean
+	public Flow biologicalHabitatMetricFlow() {
+		return new FlowBuilder<SimpleFlow>("biologicalHabitatMetricFlow")
+				.start(dropBiologicalHabitatMetricIndexesStep())
+				.next(truncateBiologicalHabitatMetricStep())
+				.next(transformBiologicalHabitatMetricWqxStep())
+				.next(buildBiologicalHabitatMetricIndexesStep())
 				.build();
 	}
 
-	public Step dropBiologicalHabitatMetricIndexes() {
-		return stepBuilderFactory.get("dropBiologicalHabitatMetricIndexes")
+	@Bean
+	public Step dropBiologicalHabitatMetricIndexesStep() {
+		return stepBuilderFactory.get("dropBiologicalHabitatMetricIndexesStep")
 				.tasklet(dropBiologicalHabitatMetricIndexes)
 				.build();
 	}
 
-	public Step truncateBiologicalHabitatMetric() {
-		return stepBuilderFactory.get("truncateBiologicalHabitatMetric")
+	@Bean
+	public Step truncateBiologicalHabitatMetricStep() {
+		return stepBuilderFactory.get("truncateBiologicalHabitatMetricStep")
 				.tasklet(truncateBiologicalHabitatMetric)
 				.build();
 	}
 
-	public Step transformBiologicalHabitatMetricWqx() {
-		return stepBuilderFactory.get("transformBiologicalHabitatMetricWqx")
+	@Bean
+	public Step transformBiologicalHabitatMetricWqxStep() {
+		return stepBuilderFactory.get("transformBiologicalHabitatMetricWqxStep")
 				.tasklet(transformBiologicalHabitatMetricWqx)
 				.build();
 	}
 
-	public Step buildBiologicalHabitatMetricIndexes() {
-		return stepBuilderFactory.get("buildBiologicalHabitatMetricIndexes")
+	@Bean
+	public Step buildBiologicalHabitatMetricIndexesStep() {
+		return stepBuilderFactory.get("buildBiologicalHabitatMetricIndexesStep")
 				.tasklet(buildBiologicalHabitatMetricIndexes)
 				.build();
 	}

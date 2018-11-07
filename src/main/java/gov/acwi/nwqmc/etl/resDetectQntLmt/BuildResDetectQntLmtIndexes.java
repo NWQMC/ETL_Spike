@@ -15,17 +15,17 @@ import org.springframework.stereotype.Component;
 public class BuildResDetectQntLmtIndexes implements Tasklet {
 
 	private final JdbcTemplate jdbcTemplate;
-
-	@Value("#{jobParameters['datasource']}")
-	String datasource;
+	private final String datasource;
 
 	@Autowired
-	public BuildResDetectQntLmtIndexes(JdbcTemplate jdbcTemplate) {
+	public BuildResDetectQntLmtIndexes(JdbcTemplate jdbcTemplate,
+			@Value("#{jobParameters['datasource']}") String datasource) {
 		this.jdbcTemplate = jdbcTemplate;
+		this.datasource = datasource;
 	}
 
-	public RepeatStatus execute(StepContribution contribution,
-			ChunkContext chunkContext) throws Exception {
+	@Override
+	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		jdbcTemplate.update("call etl_helper_r_detect_qnt_lmt.create_indexes(?)", datasource);
 		return RepeatStatus.FINISHED;
 	}
