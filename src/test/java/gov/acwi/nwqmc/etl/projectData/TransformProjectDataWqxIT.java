@@ -32,7 +32,7 @@ import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
 import gov.acwi.nwqmc.etl.ColumnSensingFlatXMLDataSetLoader;
-import gov.acwi.nwqmc.etl.TestJobConfiguration;
+//import gov.acwi.nwqmc.etl.TestJobConfiguration;
 
 //@SpringBatchTest
 //@RunWith(SpringRunner.class)

@@ -110,6 +110,10 @@ public class ResultTransformation {
 	@Qualifier("buildResultIndexes")
 	private Tasklet buildResultIndexes;
 
+	@Autowired
+	@Qualifier("transformWqpNemiEpaCrosswalkStep")
+	private Step transformWqpNemiEpaCrosswalkStep;
+
 	@Bean
 	public Flow resultFlow() {
 		return new FlowBuilder<SimpleFlow>("resultFlow")
@@ -132,12 +136,12 @@ public class ResultTransformation {
 				.build();
 	}
 
-	@Bean
-	public Step transformWqpNemiEpaCrosswalkStep() {
-		return stepBuilderFactory.get("transformWqpNemiEpaCrosswalkStep")
-				.tasklet(transformWqpNemiEpaCrosswalk)
-				.build();
-	}
+//	@Bean
+//	public Step transformWqpNemiEpaCrosswalkStep() {
+//		return stepBuilderFactory.get("transformWqpNemiEpaCrosswalkStep")
+//				.tasklet(transformWqpNemiEpaCrosswalk)
+//				.build();
+//	}
 
 	@Bean
 	public Step truncateWqxAnalyticalMethodStep() {
@@ -292,6 +296,7 @@ public class ResultTransformation {
 				.start(truncateWqpNemiEpaCrosswalkStep())
 				//TODO mock database link - or flip to real batch ItemReader/ItemProcessor/ItemWriter
 //				.next(transformWqpNemiEpaCrosswalk())
+				.next(transformWqpNemiEpaCrosswalkStep)
 				.build();
 	}
 

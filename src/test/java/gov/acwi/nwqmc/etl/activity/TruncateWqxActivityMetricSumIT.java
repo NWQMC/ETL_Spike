@@ -9,9 +9,9 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
-import gov.acwi.nwqmc.etl.BaseIT;
+import gov.acwi.nwqmc.etl.BaseJdbcIT;
 
-public abstract class TruncateWqxActivityMetricSumIT extends BaseIT {
+public abstract class TruncateWqxActivityMetricSumIT extends BaseJdbcIT {
 
 	@Test
 	@DatabaseSetup(value="classpath:/testData/wqp/wqxActivityMetricSum/wqxActivityMetricSum.xml")

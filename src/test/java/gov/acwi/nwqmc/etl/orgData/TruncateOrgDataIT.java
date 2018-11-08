@@ -10,9 +10,9 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
-import gov.acwi.nwqmc.etl.BaseIT;
+import gov.acwi.nwqmc.etl.BaseJdbcIT;
 
-public abstract class TruncateOrgDataIT extends BaseIT {
+public class TruncateOrgDataIT extends BaseJdbcIT {
 
 	@Test
 	@DatabaseSetup(value="classpath:/testData/wqp/orgData/storet/org_data_swap_storet.xml")

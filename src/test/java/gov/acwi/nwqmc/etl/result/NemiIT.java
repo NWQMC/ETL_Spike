@@ -1,4 +1,4 @@
-package gov.acwi.nwqmc.etl.orgData;
+package gov.acwi.nwqmc.etl.result;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -15,7 +15,7 @@ import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
 import gov.acwi.nwqmc.etl.BaseStepIT;
 
-public class TransformOrgDataWqxIT extends BaseStepIT {
+public class NemiIT extends BaseStepIT {
 
 	@Test
 	@DatabaseSetup(value="classpath:/testData/wqp/orgData/storet/empty.xml")
@@ -26,7 +26,7 @@ public class TransformOrgDataWqxIT extends BaseStepIT {
 			.addString("datasource", "STORET")
 			.toJobParameters();
 		try {
-			JobExecution jobExecution = jobLauncherTestUtils.launchStep("transformOrgDataWqxStep", jobParameters);
+			JobExecution jobExecution = jobLauncherTestUtils.launchStep("transformWqpNemiEpaCrosswalkStep", jobParameters);
 			assertEquals(ExitStatus.COMPLETED, jobExecution.getExitStatus());
 		} catch (Exception e) {
 			e.printStackTrace();
