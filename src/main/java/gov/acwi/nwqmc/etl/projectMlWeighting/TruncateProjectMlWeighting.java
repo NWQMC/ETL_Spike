@@ -22,7 +22,6 @@ public class TruncateProjectMlWeighting implements Tasklet {
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-//TODO make dynamic
 		jdbcTemplate.execute("truncate table prj_ml_weighting_swap_storet");
 		return RepeatStatus.FINISHED;
 	}

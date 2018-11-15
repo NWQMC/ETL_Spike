@@ -23,7 +23,7 @@ public class TruncateOrgDataIT extends BaseJdbcIT {
 			assertEquals(RepeatStatus.FINISHED, truncateOrgData.execute(null, null));
 		} catch (Exception e) {
 			e.printStackTrace();
-			fail();
+			fail(e.getLocalizedMessage());
 		}
 	}
 }

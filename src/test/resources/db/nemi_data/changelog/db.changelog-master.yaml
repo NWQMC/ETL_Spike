@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - preConditions:
+    - dbms:
+        type: oracle
+
+  - changeSet:
+      id: load.nemi_data.wqp_nemi_epa_crosswalk
+      author: drsteini
+      runOnChange: true
+      changes:
+        - delete:
+            tableName: wqp_nemi_epa_crosswalk
+        - loadData:
+            encoding: UTF-8
+            file: wqp_nemi_epa_crosswalk.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: wqp_nemi_epa_crosswalk
+        - rollback: truncate table wqp_nemi_epa_crosswalk

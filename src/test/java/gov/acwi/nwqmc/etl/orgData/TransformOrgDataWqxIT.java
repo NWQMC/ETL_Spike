@@ -30,7 +30,7 @@ public class TransformOrgDataWqxIT extends BaseStepIT {
 			assertEquals(ExitStatus.COMPLETED, jobExecution.getExitStatus());
 		} catch (Exception e) {
 			e.printStackTrace();
-			fail();
+			fail(e.getLocalizedMessage());
 		}
 	}
 

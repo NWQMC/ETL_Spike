@@ -1,4 +1,4 @@
-package gov.acwi.nwqmc.etl.result;
+package gov.acwi.nwqmc.etl.projectObject;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -15,22 +15,22 @@ import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
 import gov.acwi.nwqmc.etl.BaseStepIT;
 
-public class NemiIT extends BaseStepIT {
+public class TransformProjectObjectWqxIT extends BaseStepIT {
 
 	@Test
-	@DatabaseSetup(value="classpath:/testData/wqp/orgData/storet/empty.xml")
-	@ExpectedDatabase(value="classpath:/testData/wqp/orgData/storet/org_data_swap_storet.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
+	@DatabaseSetup(value="classpath:/testData/wqp/projectObject/storet/empty.xml")
+	@ExpectedDatabase(value="classpath:/testData/wqp/projectObject/storet/project_object_swap_storet.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
 	public void transformTest() {
 		JobParameters jobParameters = new JobParametersBuilder()
-			.addJobParameters(jobLauncherTestUtils.getUniqueJobParameters())
-			.addString("datasource", "STORET")
-			.toJobParameters();
+				.addJobParameters(jobLauncherTestUtils.getUniqueJobParameters())
+				.addString("datasource", "STORET")
+				.toJobParameters();
 		try {
-			JobExecution jobExecution = jobLauncherTestUtils.launchStep("transformWqpNemiEpaCrosswalkStep", jobParameters);
+			JobExecution jobExecution = jobLauncherTestUtils.launchStep("transformProjectObjectWqxStep", jobParameters);
 			assertEquals(ExitStatus.COMPLETED, jobExecution.getExitStatus());
 		} catch (Exception e) {
 			e.printStackTrace();
-			fail();
+			fail(e.getLocalizedMessage());
 		}
 	}
 

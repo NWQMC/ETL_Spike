@@ -1,59 +1,69 @@
 package gov.acwi.nwqmc.etl.result;
 
-import org.springframework.batch.core.StepContribution;
-import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.core.scope.context.ChunkContext;
-import org.springframework.batch.core.step.tasklet.Tasklet;
-import org.springframework.batch.repeat.RepeatStatus;
+import java.io.IOException;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
+import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.database.JdbcBatchItemWriter;
+import org.springframework.batch.item.database.JdbcCursorItemReader;
+import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
+import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.jdbc.core.ColumnMapRowMapper;
+import org.springframework.util.FileCopyUtils;
 
-@Component
-@StepScope
-public class TransformWqpNemiEpaCrosswalk implements Tasklet {
+import gov.acwi.nwqmc.etl.MapItemSqlParameterSourceProvider;
 
-	private final JdbcTemplate jdbcTemplate;
-
-	@Value("classpath:sql/result/wqxResultTaxonFeedingGroup.sql")
-	private Resource resource;
+@Configuration
+public class TransformWqpNemiEpaCrosswalk {
 
 	@Autowired
-	public TransformWqpNemiEpaCrosswalk(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
+	@Qualifier("wqpDataSource")
+	DataSource wqpDataSource;
+	@Autowired
+	@Qualifier("nemiDataSource")
+	DataSource nemiDataSource;
+	@Autowired
+	StepBuilderFactory stepBuilderFactory;
+	@Value("classpath:sql/result/readWqpNemiEpaCrosswalk.sql")
+	private Resource readerResource;
+	@Value("classpath:sql/result/writeWqpNemiEpaCrosswalk.sql")
+	private Resource writerResource;
+
+	@Bean
+	public JdbcCursorItemReader<Map<String, Object>> myItemReader() throws IOException {
+		return new JdbcCursorItemReaderBuilder<Map<String, Object>>()
+				.dataSource(nemiDataSource)
+				.name("nemiWqpNemiEpaCrosswalk")
+				.sql(new String(FileCopyUtils.copyToByteArray(readerResource.getInputStream())))
+				.rowMapper(new ColumnMapRowMapper())
+				.build();
 	}
 
-	@Override
-//TODO mock database link - or flip to real batch ItemReader/ItemProcessor/ItemWriter
-	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		jdbcTemplate.execute("insert /*+ append parallel(4) */\n" + 
-				"  into wqp_nemi_epa_crosswalk\n" + 
-				"select /*+ parallel(4) */\n" + 
-				"       wqp_source,\n" + 
-				"       analytical_procedure_source,\n" + 
-				"       analytical_procedure_id,\n" + 
-				"       source_method_identifier,\n" + 
-				"       method_id,\n" + 
-				"       method_source,\n" + 
-				"       method_type,\n" + 
-				"       case\n" + 
-				"         when method_id is not null\n" + 
-				"           then\n" + 
-				"             case method_type\n" + 
-				"               when 'analytical'\n" + 
-				"                 then 'https://www.nemi.gov/methods/method_summary/' || method_id || '/'\n" + 
-				"               when 'statistical'\n" + 
-				"                 then 'https://www.nemi.gov/methods/sams_method_summary/' || method_id || '/'\n" + 
-				"               end\n" + 
-				"         else\n" + 
-				"           null\n" + 
-				"       end\n" + 
-				"  from (select wqp_nemi_epa_crosswalk.*,\n" + 
-				"               count(*) over (partition by analytical_procedure_source, analytical_procedure_id) cnt\n" + 
-				"          from wqp_nemi_epa_crosswalk@nemi.er.usgs.gov)\n" + 
-				" where cnt = 1");
-		return RepeatStatus.FINISHED;
+	@Bean
+	public JdbcBatchItemWriter<Map<String, Object>> myWriter() throws IOException {
+		return new JdbcBatchItemWriterBuilder<Map<String, Object>>()
+				.itemSqlParameterSourceProvider(new MapItemSqlParameterSourceProvider())
+				.sql(new String(FileCopyUtils.copyToByteArray(writerResource.getInputStream())))
+				.dataSource(wqpDataSource)
+				.build();
+	}
+
+	@Bean
+	public Step transformWqpNemiEpaCrosswalkStep() throws IOException {
+		return stepBuilderFactory.get("transformWqpNemiEpaCrosswalkStep")
+				.<Map<String, Object>, Map<String, Object>> chunk(1)
+				.reader(myItemReader())
+				.processor(new WqpNemiEpaCrosswalkItemProcessor())
+				.writer(myWriter())
+				.build();
 	}
 }

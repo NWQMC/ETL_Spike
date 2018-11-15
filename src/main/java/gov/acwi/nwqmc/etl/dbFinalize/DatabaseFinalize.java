@@ -42,7 +42,7 @@ public class DatabaseFinalize {
 		return new FlowBuilder<SimpleFlow>("databaseFinalizeFlow")
 				.start(addRiStep())
 				.next(analyzeStep())
-//TODO				.next(validateStep())
+				.next(validateStep())
 				.next(installStep())
 				.next(finalizeStep())
 				.build();

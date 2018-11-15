@@ -6,7 +6,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.activity_metric
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: activity_metric
@@ -21,7 +21,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.organization
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: organization
@@ -36,7 +36,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.tribe
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: tribe
@@ -51,7 +51,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.org_electronic_address
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: org_electronic_address
@@ -66,7 +66,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.electronic_address_type
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: electronic_address_type
@@ -81,7 +81,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.org_phone
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: org_phone
@@ -96,7 +96,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.phone_type
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: phone_type
@@ -111,7 +111,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.org_address
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: org_address
@@ -126,7 +126,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.address_type
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: address_type
@@ -141,7 +141,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.country
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: country
@@ -156,7 +156,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.state
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: state
@@ -171,7 +171,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.county
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: county
@@ -186,7 +186,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.project
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: project
@@ -201,7 +201,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.sampling_design_type
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: sampling_design_type
@@ -216,7 +216,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.attached_object
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: attached_object
@@ -231,7 +231,7 @@ databaseChangeLog:
   - changeSet:
       id: load.wqx.monitoring_location_weight
       author: drsteini
-      runalways: true
+      runAlways: true
       changes:
         - delete:
             tableName: monitoring_location_weight
@@ -242,3 +242,18 @@ databaseChangeLog:
             separator: \t
             tableName: monitoring_location_weight
         - rollback: truncate table monitoring_location_weight
+
+  - changeSet:
+      id: load.wqx.monitoring_location
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: monitoring_location
+        - loadData:
+            encoding: UTF-8
+            file: monitoring_location.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: monitoring_location
+        - rollback: truncate table monitoring_location

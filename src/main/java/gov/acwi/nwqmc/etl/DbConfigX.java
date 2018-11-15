@@ -14,26 +14,26 @@ public class DbConfigX {
 	@Bean
 	@Primary
 	@ConfigurationProperties("app.datasource.wqp")
-	public DataSourceProperties firstDataSourceProperties() {
+	public DataSourceProperties wqpDataSourceProperties() {
 		return new DataSourceProperties();
 	}
 
 	@Bean
 	@Primary
 	@ConfigurationProperties("app.datasource.wqp")
-	public DataSource firstDataSource() {
-		return firstDataSourceProperties().initializeDataSourceBuilder().build();
+	public DataSource wqpDataSource() {
+		return wqpDataSourceProperties().initializeDataSourceBuilder().build();
 	}
 
 	@Bean
 	@ConfigurationProperties("app.datasource.nemi")
-	public DataSourceProperties secondDataSourceProperties() {
+	public DataSourceProperties nemiDataSourceProperties() {
 		return new DataSourceProperties();
 	}
 
 	@Bean
 	@ConfigurationProperties("app.datasource.nemi")
-	public DataSource secondDataSource() {
-		return secondDataSourceProperties().initializeDataSourceBuilder().build();
+	public DataSource nemiDataSource() {
+		return nemiDataSourceProperties().initializeDataSourceBuilder().build();
 	}
 }

@@ -22,7 +22,6 @@ public class TruncateActivity implements Tasklet {
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-//TODO make dynamic
 		jdbcTemplate.execute("truncate table activity_swap_storet");
 		return RepeatStatus.FINISHED;
 	}

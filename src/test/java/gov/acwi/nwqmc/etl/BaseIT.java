@@ -9,8 +9,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DbUnitConfiguration;
@@ -23,7 +21,6 @@ import com.github.springtestdbunit.annotation.DbUnitConfiguration;
 	TransactionDbUnitTestExecutionListener.class })
 @DbUnitConfiguration(dataSetLoader=ColumnSensingFlatXMLDataSetLoader.class)
 @AutoConfigureTestDatabase(replace=Replace.NONE)
-@Transactional(propagation=Propagation.NOT_SUPPORTED)
 public abstract class BaseIT {
 
 }

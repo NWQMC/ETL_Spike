@@ -24,7 +24,7 @@ public abstract class TruncateProjectDataIT extends BaseJdbcIT {
 			assertEquals(RepeatStatus.FINISHED, truncateProject.execute(null, null));
 		} catch (Exception e) {
 			e.printStackTrace();
-			fail();
+			fail(e.getLocalizedMessage());
 		}
 	}
 }

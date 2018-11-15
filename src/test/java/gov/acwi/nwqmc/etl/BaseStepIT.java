@@ -19,7 +19,7 @@ import org.springframework.context.annotation.ComponentScan.Filter;
 		@Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
 		@Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class),
 		@Filter(type = FilterType.REGEX, pattern = "gov.acwi.nwqmc.etl.Application")})
-public class BaseStepIT extends BaseIT {
+public abstract class BaseStepIT extends BaseIT {
 
 	@Autowired
 	protected JobLauncherTestUtils jobLauncherTestUtils;

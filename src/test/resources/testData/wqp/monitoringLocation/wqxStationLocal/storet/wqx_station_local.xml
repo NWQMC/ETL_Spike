@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <wqx_station_local station_source="WQX"
+                       station_id="212"
+                       site_id="STORET"
+                       latitude="-88.977"
+                       longitude="43.383"
+                       hrdat_uid="2"
+                       cntry_cd="US"
+                       st_fips_cd="55"
+                       cnty_fips_cd="017"
+                       calculated_huc_12='070707070707'
+                       calculated_fips="55017"
+                       geom="MDSYS.SDO_GEOMETRY(2001, 4269, MDSYS.SDO_POINT_TYPE(-88.9776094, 43.383024, NULL), NULL, NULL)"
+                       />
+    <wqx_station_local station_source="WQX"
+                       station_id="1070"
+                       site_id="WIDNR_WQX-143030"
+                       latitude="43.558292"
+                       longitude="-88.92052"
+                       hrdat_uid="2"
+                       huc="07090001"
+                       cntry_cd="US"
+                       st_fips_cd="55"
+                       cnty_fips_cd="027"
+                       calculated_huc_12='070900010902'
+                       calculated_fips="55027"
+                       geom="MDSYS.SDO_GEOMETRY(2001,4269,MDSYS.SDO_POINT_TYPE(-88.92052,43.558292,NULL),NULL,NULL)"
+                       />
+    <wqx_station_local station_source="WQX"
+                       station_id="993"
+                       site_id="WIDNR_WQX-143268"
+                       latitude="43.380123"
+                       longitude="-88.894035"
+                       hrdat_uid="2"
+                       huc="07090001"
+                       cntry_cd="US"
+                       st_fips_cd="55"
+                       cnty_fips_cd="027"
+                       calculated_huc_12='070900010905'
+                       calculated_fips="55027"
+                       geom="MDSYS.SDO_GEOMETRY(2001,4269,MDSYS.SDO_POINT_TYPE(-88.894035,43.380123,NULL),NULL,NULL)"
+                       />
+    <wqx_station_local station_source="WQX"
+                       station_id="578971"
+                       site_id="-SB14"
+                       latitude="40.56297"
+                       longitude="-74.85612"
+                       hrdat_uid="2"
+                       huc="02030105"
+                       cntry_cd="US"
+                       st_fips_cd="34"
+                       cnty_fips_cd="019"
+                       calculated_huc_12='020301051234'
+                       calculated_fips="34019"
+                       geom="MDSYS.SDO_GEOMETRY(2001, 4269, MDSYS.SDO_POINT_TYPE(-74.85612, 40.56297, NULL), NULL, NULL)"
+                       />
+    <wqx_station_local station_source="STORETW"
+                       station_id="213"
+                       site_id="STORET"
+                       latitude="-89.007"
+                       longitude="43.436"
+                       hrdat_uid="2"
+                       cntry_cd="US"
+                       st_fips_cd="55"
+                       cnty_fips_cd="017"
+                       calculated_huc_12='070707070707'
+                       calculated_fips="55017"
+                       geom="MDSYS.SDO_GEOMETRY(2001, 4269, MDSYS.SDO_POINT_TYPE(-89.0076094, 43.436024, NULL), NULL, NULL)"
+                       />
+</dataset>

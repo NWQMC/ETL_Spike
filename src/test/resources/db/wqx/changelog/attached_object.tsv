@@ -1,0 +1,3 @@
+atobj_uid	org_uid	ref_uid	tbl_uid	atobj_file_name	atobj_type	atobj_content
+1	605	212	1	test.pdf	pdf	objects/test.pdf
+2	605	51659	1	text.csv	csv	objects/zyx.csv

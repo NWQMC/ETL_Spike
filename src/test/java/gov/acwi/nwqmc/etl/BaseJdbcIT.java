@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @JdbcTest
 @AutoConfigureTestDatabase(replace=Replace.NONE)
 @Transactional(propagation=Propagation.NOT_SUPPORTED)
-@Import(DBTestConfig.class)
+@Import({DBTestConfig.class, DbConfigX.class})
 public abstract class BaseJdbcIT extends BaseIT {
 
 	@MockBean

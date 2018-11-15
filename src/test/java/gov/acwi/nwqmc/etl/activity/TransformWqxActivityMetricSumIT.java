@@ -23,9 +23,8 @@ public abstract class TransformWqxActivityMetricSumIT extends BaseJdbcIT {
 		try {
 			assertEquals(RepeatStatus.FINISHED, transformWqxActivityMetricSum.execute(null, null));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			fail(e.getLocalizedMessage());
 		}
-		fail("need to implement");
 	}
 }

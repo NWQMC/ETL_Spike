@@ -1,6 +1,7 @@
 package gov.acwi.nwqmc.etl.activity;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.springframework.batch.repeat.RepeatStatus;
@@ -21,8 +22,8 @@ public abstract class TruncateWqxActivityMetricSumIT extends BaseJdbcIT {
 		try {
 			assertEquals(RepeatStatus.FINISHED, truncateWqxActivityMetricSum.execute(null, null));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			fail(e.getLocalizedMessage());
 		}
 	}
 }

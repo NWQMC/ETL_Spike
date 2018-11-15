@@ -6,6 +6,10 @@ import org.junit.Test;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
 
+import com.github.springtestdbunit.annotation.DatabaseSetup;
+import com.github.springtestdbunit.annotation.DbUnitConfiguration;
+
+@DbUnitConfiguration(dataSetLoader=CsvDataSetLoader.class)
 public class NewIT extends BaseStepIT {
 
 	@Before
@@ -14,6 +18,7 @@ public class NewIT extends BaseStepIT {
 	}
 
 	@Test
+	@DatabaseSetup(value="classpath:/testData/wqp/etlThreshold/")
 	public void endToEndTest() throws Exception {
 		JobExecution jobExecution = jobLauncherTestUtils.launchJob(getJobParameters());
 		Assert.assertEquals(ExitStatus.COMPLETED, jobExecution.getExitStatus());

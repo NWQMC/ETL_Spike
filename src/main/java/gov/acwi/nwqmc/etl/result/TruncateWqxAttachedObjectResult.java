@@ -22,7 +22,6 @@ public class TruncateWqxAttachedObjectResult implements Tasklet {
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-//TODO make dynamic
 		jdbcTemplate.execute("truncate table wqx_attached_object_result");
 		return RepeatStatus.FINISHED;
 	}
