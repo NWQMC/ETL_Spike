@@ -119,27 +119,27 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.6.2</version>
-                <configuration>
-                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-                    <changeLogFile>src/test/resources/db/wqx/changelog/db.changelog-master.yaml</changeLogFile>
-                    <driver>oracle.jdbc.driver.OracleDriver</driver>
-                    <url>${etl.url}</url>
-                    <username>${etl.username}</username>
-                    <password>${etl.password}</password>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+<!--             <plugin> -->
+<!--                 <groupId>org.liquibase</groupId> -->
+<!--                 <artifactId>liquibase-maven-plugin</artifactId> -->
+<!--                 <version>3.6.2</version> -->
+<!--                 <configuration> -->
+<!--                     <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase> -->
+<!--                     <changeLogFile>src/test/resources/db/wqx/changelog/db.changelog-master.yaml</changeLogFile> -->
+<!--                     <driver>oracle.jdbc.driver.OracleDriver</driver> -->
+<!--                     <url>${etl.url}</url> -->
+<!--                     <username>${etl.username}</username> -->
+<!--                     <password>${etl.password}</password> -->
+<!--                 </configuration> -->
+<!--                 <executions> -->
+<!--                     <execution> -->
+<!--                         <phase>process-resources</phase> -->
+<!--                         <goals> -->
+<!--                             <goal>update</goal> -->
+<!--                         </goals> -->
+<!--                     </execution> -->
+<!--                 </executions> -->
+<!--             </plugin> -->
         </plugins>
     </build>
 
