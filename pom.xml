@@ -81,6 +81,11 @@
             <id>cida-thirdparty</id>
             <url>${cida.maven.url}/content/repositories/cida-thirdparty/</url>
         </repository>
+        <repository>
+            <id>nexus</id>
+            <name>CIDA Nexus</name>
+            <url>${cida.maven.url}/content/groups/public/</url>
+        </repository>
     </repositories>
 
     <distributionManagement>
