@@ -30,7 +30,7 @@ public abstract class BaseStepIT extends BaseIT {
 	protected JobParameters getJobParameters() {
 		return new JobParametersBuilder()
 			.addJobParameters(jobLauncherTestUtils.getUniqueJobParameters())
-			.addString("datasource", "STORET")
+			.addString(Application.DATASOURCE, Application.DATASOURCE_STORET)
 			.toJobParameters();
 	}
 

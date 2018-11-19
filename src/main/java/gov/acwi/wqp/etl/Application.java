@@ -3,32 +3,77 @@ package gov.acwi.wqp.etl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
+import org.springframework.batch.core.explore.JobExplorer;
 import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.JobOperator;
+import org.springframework.batch.core.launch.NoSuchJobException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application { //implements CommandLineRunner {
+public class Application implements CommandLineRunner {
 	private static final Logger LOG = LoggerFactory.getLogger(Application.class);
 
-	@Autowired
-	JobLauncher jobLauncher;
+	public static final String JOB_ID = "jobId";
+	public static final String DATASOURCE = "datasource";
+	public static final String DATASOURCE_STORET = "STORET";
 
 	@Autowired
-	Job job;
+	private Job job;
+	@Autowired
+	private JobIncrementer jobIncrementer;
+	@Autowired
+	private JobLauncher jobLauncher;
+	@Autowired
+	private JobOperator jobOperator;
+	@Autowired
+	private JobExplorer jobExplorer;
 
 	public static void main(String[] args) {
 		LOG.info(args.toString());
 		SpringApplication.run(Application.class, args);
 	}
 
-//	@Override
-//	public void run(String... args) throws Exception {
-//		JobParameters params = new JobParametersBuilder()
-//				.addString("JobID", String.valueOf(System.currentTimeMillis()))
-//				.addString("datasource", "STORET")
-//				.toJobParameters();
-//		jobLauncher.run(job, params);
-//	}
+	@Override
+	public void run(String... args) throws Exception {
+		try {
+			if (!jobOperator.getRunningExecutions(job.getName()).isEmpty()) {
+				LOG.info("This run cancelled, there is already a job running for " + job.getName());
+			}
+		} catch (NoSuchJobException e) {
+			LOG.info("Attempting to restart " + job.getName());
+			reStartJob();
+		}
+	}
+
+	protected JobParametersBuilder getJobParametersBuilder() {
+		return new JobParametersBuilder(jobExplorer)
+				.addString(DATASOURCE, DATASOURCE_STORET, true);
+	}
+
+	protected void reStartJob() throws Exception {
+		JobParameters parameters = getJobParametersBuilder()
+				.addLong(JOB_ID, jobIncrementer.getCurrent(), true)
+				.toJobParameters();
+		try {
+			jobLauncher.run(job, parameters);
+		} catch (JobInstanceAlreadyCompleteException e) {
+			LOG.info("Job " + job.getName() + " #" + parameters.getString(JOB_ID) + " has already completed successfully.");
+			startNewJobInstance();
+		}
+	}
+
+	protected void startNewJobInstance() throws Exception {
+		JobParameters parameters = getJobParametersBuilder()
+				.getNextJobParameters(job)
+				.toJobParameters();
+		LOG.info("Attempting to start run job " + job.getName() + " #" + parameters.getString(JOB_ID));
+		jobLauncher.run(job, parameters);
+	}
+
 }

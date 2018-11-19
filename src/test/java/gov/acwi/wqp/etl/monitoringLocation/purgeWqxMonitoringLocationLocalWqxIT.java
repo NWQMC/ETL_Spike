@@ -13,6 +13,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
+import gov.acwi.wqp.etl.Application;
 import gov.acwi.wqp.etl.BaseStepIT;
 
 public class purgeWqxMonitoringLocationLocalWqxIT extends BaseStepIT {
@@ -26,7 +27,7 @@ public class purgeWqxMonitoringLocationLocalWqxIT extends BaseStepIT {
 	public void transformTest() {
 		JobParameters jobParameters = new JobParametersBuilder()
 			.addJobParameters(jobLauncherTestUtils.getUniqueJobParameters())
-			.addString("datasource", "STORET")
+			.addString(Application.DATASOURCE, Application.DATASOURCE_STORET)
 			.toJobParameters();
 		try {
 			JobExecution jobExecution = jobLauncherTestUtils.launchStep("purgeWqxMonitoringLocationLocalWqxStep", jobParameters);

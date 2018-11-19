@@ -29,7 +29,7 @@ public class WqpNemiEpaCrosswalkItemProcessor implements ItemProcessor<Map<Strin
 		} else {
 			newMap.put(NEMI_URL, null);
 		}
-		LOG.info(newMap.toString());
+		LOG.debug(newMap.toString());
 		return newMap;
 	}
 
