@@ -19,11 +19,11 @@ public class JobIncrementer implements JobParametersIncrementer {
 	@Override
 	public JobParameters getNext(JobParameters parameters) {
 		Long id = jdbcTemplate.queryForObject("select wqx_etl_job_instance.nextval from dual", Long.class);
-		jdbcTemplate.update("update wql_etl_current_job set id = ?", id);
+		jdbcTemplate.update("update wqx_etl_current_job set id = ?", id);
 		return new JobParametersBuilder().addLong(Application.JOB_ID, id).toJobParameters();
 	}
 
 	public long getCurrent() {
-		return jdbcTemplate.queryForObject("select id from wql_etl_current_job", Long.class);
+		return jdbcTemplate.queryForObject("select id from wqx_etl_current_job", Long.class);
 	}
 }
