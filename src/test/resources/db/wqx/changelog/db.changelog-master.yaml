@@ -1,0 +1,259 @@
+databaseChangeLog:
+  - preConditions:
+    - dbms:
+        type: oracle
+
+  - changeSet:
+      id: load.wqx.activity_metric
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: activity_metric
+        - loadData:
+            encoding: UTF-8
+            file: activity_metric.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: activity_metric
+        - rollback: truncate table activity_metric
+
+  - changeSet:
+      id: load.wqx.organization
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: organization
+        - loadData:
+            encoding: UTF-8
+            file: organization.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: organization
+        - rollback: truncate table organization
+
+  - changeSet:
+      id: load.wqx.tribe
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: tribe
+        - loadData:
+            encoding: UTF-8
+            file: tribe.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: tribe
+        - rollback: truncate table tribe
+
+  - changeSet:
+      id: load.wqx.org_electronic_address
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: org_electronic_address
+        - loadData:
+            encoding: UTF-8
+            file: org_electronic_address.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: org_electronic_address
+        - rollback: truncate table org_electronic_address
+
+  - changeSet:
+      id: load.wqx.electronic_address_type
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: electronic_address_type
+        - loadData:
+            encoding: UTF-8
+            file: electronic_address_type.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: electronic_address_type
+        - rollback: truncate table electronic_address_type
+
+  - changeSet:
+      id: load.wqx.org_phone
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: org_phone
+        - loadData:
+            encoding: UTF-8
+            file: org_phone.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: org_phone
+        - rollback: truncate table org_phone
+
+  - changeSet:
+      id: load.wqx.phone_type
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: phone_type
+        - loadData:
+            encoding: UTF-8
+            file: phone_type.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: phone_type
+        - rollback: truncate table phone_type
+
+  - changeSet:
+      id: load.wqx.org_address
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: org_address
+        - loadData:
+            encoding: UTF-8
+            file: org_address.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: org_address
+        - rollback: truncate table org_address
+
+  - changeSet:
+      id: load.wqx.address_type
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: address_type
+        - loadData:
+            encoding: UTF-8
+            file: address_type.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: address_type
+        - rollback: truncate table address_type
+
+  - changeSet:
+      id: load.wqx.country
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: country
+        - loadData:
+            encoding: UTF-8
+            file: country.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: country
+        - rollback: truncate table country
+
+  - changeSet:
+      id: load.wqx.state
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: state
+        - loadData:
+            encoding: UTF-8
+            file: state.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: state
+        - rollback: truncate table state
+
+  - changeSet:
+      id: load.wqx.county
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: county
+        - loadData:
+            encoding: UTF-8
+            file: county.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: county
+        - rollback: truncate table county
+
+  - changeSet:
+      id: load.wqx.project
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: project
+        - loadData:
+            encoding: UTF-8
+            file: project.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: project
+        - rollback: truncate table project
+
+  - changeSet:
+      id: load.wqx.sampling_design_type
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: sampling_design_type
+        - loadData:
+            encoding: UTF-8
+            file: sampling_design_type.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: sampling_design_type
+        - rollback: truncate table county
+
+  - changeSet:
+      id: load.wqx.attached_object
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: attached_object
+        - loadData:
+            encoding: UTF-8
+            file: attached_object.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: attached_object
+        - rollback: truncate table attached_object
+
+  - changeSet:
+      id: load.wqx.monitoring_location_weight
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: monitoring_location_weight
+        - loadData:
+            encoding: UTF-8
+            file: monitoring_location_weight.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: monitoring_location_weight
+        - rollback: truncate table monitoring_location_weight
+
+  - changeSet:
+      id: load.wqx.monitoring_location
+      author: drsteini
+      runAlways: true
+      changes:
+        - delete:
+            tableName: monitoring_location
+        - loadData:
+            encoding: UTF-8
+            file: monitoring_location.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            tableName: monitoring_location
+        - rollback: truncate table monitoring_location

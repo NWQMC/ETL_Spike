@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <wqp_nemi_epa_crosswalk wqp_source="storet" analytical_procedure_source="USEPA" analytical_procedure_id="610" source_method_identifier="610" method_source="EPA-EAD" method_type="analytical" nemi_url="https://www.nemi.gov/methods/method_summary/4713"/>
+</dataset>

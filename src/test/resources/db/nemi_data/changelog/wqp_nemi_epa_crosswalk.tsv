@@ -1,0 +1,4 @@
+wqp_source	analytical_procedure_source	analytical_procedure_id	source_method_identifier	method_id	method_source	method_type
+storet	USEPA	610	610	4713	EPA-EAD	analytical
+storet	21ARIZ	EPA 601/602	601	5227	EPA-EAD	analytical
+storet	21ARIZ	EPA 601/602	602	5228	EPA-EAD	analytical
