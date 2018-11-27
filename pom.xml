@@ -11,7 +11,7 @@
 
     <ciManagement>
         <system>Jenkins</system>
-        <url>https://cida-eros-wqpdev.er.usgs.gov:8444/jenkins/view/Web%20Services/job/qw_portal_services/</url> 
+        <url>https://cida-eros-wqpdev.er.usgs.gov:8444/jenkins/job/ETL_Spike/</url> 
     </ciManagement>
 
     <scm>
