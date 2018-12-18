@@ -56,8 +56,6 @@ public class Application implements CommandLineRunner {
 		}
 		if (null == jobExecution 
 				|| ExitStatus.UNKNOWN.equals(jobExecution.getExitStatus())
-				|| ExitStatus.EXECUTING.equals(jobExecution.getExitStatus())
-				|| ExitStatus.NOOP.equals(jobExecution.getExitStatus())
 				|| ExitStatus.FAILED.equals(jobExecution.getExitStatus())
 				|| ExitStatus.STOPPED.equals(jobExecution.getExitStatus())) {
 			throw new RuntimeException("Job did not complete as planned.");
