@@ -54,7 +54,10 @@ public class Application implements CommandLineRunner {
 			LOG.info("Attempting to restart " + job.getName());
 			jobExecution = reStartJob();
 		}
-		if (null == jobExecution || ExitStatus.FAILED.equals(jobExecution.getExitStatus())) {
+		if (null == jobExecution 
+				|| ExitStatus.UNKNOWN.equals(jobExecution.getExitStatus())
+				|| ExitStatus.FAILED.equals(jobExecution.getExitStatus())
+				|| ExitStatus.STOPPED.equals(jobExecution.getExitStatus())) {
 			throw new RuntimeException("Job did not complete as planned.");
 		}
 	}
