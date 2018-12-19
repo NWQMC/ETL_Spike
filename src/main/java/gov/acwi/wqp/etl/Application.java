@@ -55,9 +55,9 @@ public class Application implements CommandLineRunner {
 			jobExecution = reStartJob();
 		}
 		if (null == jobExecution 
-				|| ExitStatus.UNKNOWN.equals(jobExecution.getExitStatus())
-				|| ExitStatus.FAILED.equals(jobExecution.getExitStatus())
-				|| ExitStatus.STOPPED.equals(jobExecution.getExitStatus())) {
+				|| ExitStatus.UNKNOWN.getExitCode().contentEquals(jobExecution.getExitStatus().getExitCode())
+				|| ExitStatus.FAILED.getExitCode().contentEquals(jobExecution.getExitStatus().getExitCode())
+				|| ExitStatus.STOPPED.getExitCode().contentEquals(jobExecution.getExitStatus().getExitCode())) {
 			throw new RuntimeException("Job did not complete as planned.");
 		}
 	}
