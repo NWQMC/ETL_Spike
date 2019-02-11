@@ -4,7 +4,7 @@ insert into organization_sum_swap_storet
      five_year_last_result, five_year_site_count, five_year_activity_count,
      current_year_last_result, current_year_site_count, current_year_activity_count,
      all_time_summary, five_year_summary, current_year_summary, organization_type)
-select /*+ leading(org_data org_sum) full(org_data) use_hash(org_data) full(org_sum) use_hash(org_sum) */
+select /*+ leading(org_data org_sum year_summary) full(org_data) use_hash(org_data) full(org_sum) use_hash(org_sum) full(year_summary) use_hash(year_summary) */
        org_data.data_source_id,
        org_data.data_source,
        org_data.organization_id,
@@ -20,9 +20,9 @@ select /*+ leading(org_data org_sum) full(org_data) use_hash(org_data) full(org_
        org_sum.event_date_current_year current_year_last_result,
        nvl2(org_sum.event_date_current_year, org_sum.site_count_current_year, null) current_year_site_count,
        nvl2(org_sum.event_date_current_year, org_sum.activity_count_current_year, null) current_year_activity_count,
-       null all_time_summary,
-       null five_year_summary,
-       null current_year_summary,
+       year_summary.all_time_summary,
+       year_summary.five_year_summary,
+       year_summary.current_year_summary,
        org_data.organization_type
   from (select data_source_id,
                data_source,
@@ -32,6 +32,9 @@ select /*+ leading(org_data org_sum) full(org_data) use_hash(org_data) full(org_
                '/provider/' || data_source || '/' || organization organization_url,
                organization_type
           from org_data_swap_storet) org_data,
-       org_sum_temp_storet org_sum
+       org_sum_temp_storet org_sum,
+       year_sum_temp_storet year_summary
  where org_data.data_source_id = org_sum.data_source_id(+) and
-       org_data.organization   = org_sum.organization(+)
+       org_data.organization   = org_sum.organization(+) and
+       org_data.data_source_id = year_summary.data_source_id(+) and
+       org_data.organization   = year_summary.organization(+)
