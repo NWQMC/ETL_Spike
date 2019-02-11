@@ -42,6 +42,14 @@ public class CreateSummaries {
 	private Tasklet CreateOrgSumTemp;
 
 	@Autowired
+	@Qualifier("dropYearSumTemp")
+	private Tasklet DropYearSumTemp;
+
+	@Autowired
+	@Qualifier("createYearSumTemp")
+	private Tasklet CreateYearSumTemp;
+
+	@Autowired
 	@Qualifier("dropOrganizationSumIndexes")
 	private Tasklet DropOrganizationSumIndexes;
 
@@ -116,6 +124,20 @@ public class CreateSummaries {
 	}
 
 	@Bean
+	public Step DropYearSumTempStep() {
+		return stepBuilderFactory.get("DropYearSumTempStep")
+				.tasklet(DropYearSumTemp)
+				.build();
+	}
+
+	@Bean
+	public Step CreateYearSumTempStep() {
+		return stepBuilderFactory.get("CreateYearSumTempStep")
+				.tasklet(CreateYearSumTemp)
+				.build();
+	}
+
+	@Bean
 	public Step DropOrganizationSumIndexesStep() {
 		return stepBuilderFactory.get("DropOrganizationSumIndexesStep")
 				.tasklet(DropOrganizationSumIndexes)
@@ -175,6 +197,8 @@ public class CreateSummaries {
 		return new FlowBuilder<SimpleFlow>("createOrganizationSumFlow")
 				.start(DropOrgSumTempStep())
 				.next(CreateOrgSumTempStep())
+				.next(DropYearSumTempStep())
+				.next(CreateYearSumTempStep())
 				.next(DropOrganizationSumIndexesStep())
 				.next(TruncateOrganizationSumStep())
 				.next(createOrganizationSumStep())
