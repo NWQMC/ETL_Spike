@@ -104,8 +104,8 @@ public class BatchConfiguration {
 				.next(createSummariesFlow)
 				.next(createCodesFlow)
 				.next(databaseFinalizeFlow)
-				.build() // Is this double build intentional?
-				.build();
+				.build() // build the flow
+				.build(); // build the job
 	}
 
 }

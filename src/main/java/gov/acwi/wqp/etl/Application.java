@@ -38,8 +38,7 @@ public class Application implements CommandLineRunner {
 	@Autowired
 	private JobExplorer jobExplorer;
 
-	// I noticed this system property annotation is only used in tests. Trying it here.
-	// attempt to load date as a system property because it contains spaces
+	// Load date as a system property because it contains spaces
 	@Value("${app.job.id.date}")
 	private String jobIdDate;
 
@@ -64,7 +63,6 @@ public class Application implements CommandLineRunner {
 		} catch (NoSuchJobException e) {
 			// OUCH! THis is the happy path controlled by an exception.
 			LOG.info("Attempting to restart " + job.getName());
-			// might want to pass both args through: Job ID Date and Data Source Name
 			exitStatus = startJob(jobIdDate);
 		}
 		if (null == exitStatus
@@ -77,7 +75,6 @@ public class Application implements CommandLineRunner {
 
 	protected JobParameters getJobParametersBuilder(String jobIdDate) {
 		return new JobParametersBuilder(jobExplorer)
-				// this constant could have originally been one of the unused args
 				.addString(DATASOURCE, DATASOURCE_STORET, true)
 				// this is the new date based job ID
 				.addString(JOB_ID, jobIdDate, true)
@@ -92,8 +89,7 @@ public class Application implements CommandLineRunner {
 		} catch (JobInstanceAlreadyCompleteException e) {
 			// log the new date job ID
 			LOG.info("Job " + job.getName() + " for '" + parameters.getString(JOB_ID) + "' has already completed successfully.");
+			return ExitStatus.COMPLETED; // If it was already done then things are A.O.K.
 		}
-
-		return ExitStatus.COMPLETED; // Is this correct? Seems so to me. If it was already done then things are A.O.K.
 	}
 }
