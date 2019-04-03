@@ -15,8 +15,6 @@ public class BatchConfiguration {
 
 	@Autowired
 	private JobBuilderFactory jobBuilderFactory;
-	@Autowired
-	private JobIncrementer jobIncrementer;
 
 	@Autowired
 	@Qualifier("orgDataFlow")
@@ -89,7 +87,6 @@ public class BatchConfiguration {
 	@Bean
 	public Job wqxEtl() {
 		return jobBuilderFactory.get("WQX_ETL")
-				.incrementer(jobIncrementer)
 				.start(databaseSetupFlow)
 				.next(orgDataFlow)
 				.next(projectDataFlow)
@@ -107,8 +104,8 @@ public class BatchConfiguration {
 				.next(createSummariesFlow)
 				.next(createCodesFlow)
 				.next(databaseFinalizeFlow)
-				.build()
-				.build();
+				.build() // build the flow
+				.build(); // build the job
 	}
 
 }
