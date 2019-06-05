@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <county_storet
+        data_source_id="1"
+        code_value="US:18:033"
+        description="US, Indiana, DeKalb County"
+        description_wo_country_state="DeKalb County"
+    />
+</dataset>

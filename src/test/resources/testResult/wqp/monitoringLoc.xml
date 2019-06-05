@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <monitoring_loc_storet
+        data_source_id="1"
+        code_value="ARS-INSJ-INSJALG"
+        description="INSJALG"
+        organization="ARS"
+        search_text="ARS-INSJ-INSJALG INSJALG"
+    />
+    <monitoring_loc_storet
+        data_source_id="1"
+        code_value="ARS-INSJ-INSJAXL"
+        description="INSJAXL"
+        organization="ARS"
+        search_text="ARS-INSJ-INSJAXL INSJAXL"
+    />
+    <monitoring_loc_storet
+        data_source_id="1"
+        code_value="ARS-INSJ-INSJCLG"
+        description="INSJCLG"
+        organization="ARS"
+        search_text="ARS-INSJ-INSJCLG INSJCLG"
+    />
+    <monitoring_loc_storet
+        data_source_id="1"
+        code_value="ARS-INSJ-INSJF34"
+        description="INSJF34"
+        organization="ARS"
+        search_text="ARS-INSJ-INSJF34 INSJF34"
+    />
+</dataset>

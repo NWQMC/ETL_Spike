@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <state_storet
+        data_source_id="1"
+        code_value="US:18"
+        description_with_country="US, Indiana"
+        description_with_out_country="Indiana"
+    />
+</dataset>

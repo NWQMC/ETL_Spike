@@ -21,16 +21,8 @@ public class BatchConfiguration {
 	private Flow orgDataFlow;
 
 	@Autowired
-	@Qualifier("databaseSetupFlow")
-	private Flow databaseSetupFlow;
-
-	@Autowired
 	@Qualifier("projectDataFlow")
 	private Flow projectDataFlow;
-
-	@Autowired
-	@Qualifier("projectObjectFlow")
-	private Flow projectObjectFlow;
 
 	@Autowired
 	@Qualifier("monitoringLocationFlow")
@@ -41,16 +33,8 @@ public class BatchConfiguration {
 	private Flow biologicalHabitatMetricFlow;
 
 	@Autowired
-	@Qualifier("monitoringLocationObjectFlow")
-	private Flow monitoringLocationObjectFlow;
-
-	@Autowired
 	@Qualifier("activityFlow")
 	private Flow activityFlow;
-
-	@Autowired
-	@Qualifier("activityObjectFlow")
-	private Flow activityObjectFlow;
 
 	@Autowired
 	@Qualifier("activityMetricFlow")
@@ -61,51 +45,42 @@ public class BatchConfiguration {
 	private Flow resultFlow;
 
 	@Autowired
-	@Qualifier("resultObjectFlow")
-	private Flow resultObjectFlow;
+	@Qualifier("resDetectQntLimitFlow")
+	private Flow resDetectQntLimitFlow;
 
 	@Autowired
-	@Qualifier("resDetectQntLmtFlow")
-	private Flow resDetectQntLmtFlow;
+	@Qualifier("projectMLWeightingFlow")
+	private Flow projectMLWeightingFlow;
+	
 
 	@Autowired
-	@Qualifier("projectMlWeightingFlow")
-	private Flow projectMlWeightingFlow;
-
-	@Autowired
-	@Qualifier("createSummariesFlow")
+	@Qualifier(EtlConstantUtils.CREATE_SUMMARIES_FLOW)
 	private Flow createSummariesFlow;
 
 	@Autowired
-	@Qualifier("createCodesFlow")
-	private Flow createCodesFlow;
+	@Qualifier(EtlConstantUtils.CREATE_LOOKUP_CODES_FLOW)
+	private Flow createLookupCodesFlow;
 
 	@Autowired
-	@Qualifier("databaseFinalizeFlow")
+	@Qualifier(EtlConstantUtils.CREATE_DATABASE_FINALIZE_FLOW)
 	private Flow databaseFinalizeFlow;
 
 	@Bean
 	public Job wqxEtl() {
-		return jobBuilderFactory.get("WQX_ETL")
-				.start(databaseSetupFlow)
-				.next(orgDataFlow)
+		return jobBuilderFactory.get("WQP_STORET_WQX_ETL")
+				.start(orgDataFlow)
 				.next(projectDataFlow)
-				.next(projectObjectFlow)
 				.next(monitoringLocationFlow)
 				.next(biologicalHabitatMetricFlow)
-				.next(monitoringLocationObjectFlow)
 				.next(activityFlow)
-				.next(activityObjectFlow)
 				.next(activityMetricFlow)
 				.next(resultFlow)
-				.next(resultObjectFlow)
-				.next(resDetectQntLmtFlow)
-				.next(projectMlWeightingFlow)
+				.next(resDetectQntLimitFlow)
+				.next(projectMLWeightingFlow)
 				.next(createSummariesFlow)
-				.next(createCodesFlow)
+				.next(createLookupCodesFlow)
 				.next(databaseFinalizeFlow)
-				.build() // build the flow
-				.build(); // build the job
+				.build()
+				.build();
 	}
-
 }

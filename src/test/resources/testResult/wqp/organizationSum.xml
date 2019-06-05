@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <organization_sum_storet
+        data_source_id="1"
+        data_source="STEWARDS"
+        organization_id="3000000"
+        organization="ARS"
+        organization_name="Agricultural Research Service"
+        all_time_last_result="2007-02-18"
+        all_time_site_count="4"
+        all_time_activity_count="25"
+        five_year_site_count="0"
+        five_year_activity_count="0"
+        current_year_site_count="0"
+        current_year_activity_count="0"
+    />
+</dataset>

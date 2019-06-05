@@ -2,3 +2,27 @@ spring:
   batch:
     job:
       enabled: false
+    initialize-schema: always
+  datasource-wqp:
+    url: jdbc:postgresql://${WQP_DATABASE_ADDRESS}:${WQP_DATABASE_PORT}/${WQP_DATABASE_NAME}
+    username: ${WQP_SCHEMA_OWNER_USERNAME}
+    password: ${WQP_SCHEMA_OWNER_PASSWORD}
+    hikari:
+      maximumPoolSize: 10
+  datasource-wqx:
+    url: jdbc:postgresql://${WQP_DATABASE_ADDRESS}:${WQP_DATABASE_PORT}/${WQP_DATABASE_NAME}
+    username: ${WQX_SCHEMA_OWNER_USERNAME}
+    password: ${WQX_SCHEMA_OWNER_PASSWORD}
+    hikari:
+      maximumPoolSize: 10
+  datasource-nwis:
+    url: jdbc:postgresql://${NWIS_DATABASE_ADDRESS}:${NWIS_DATABASE_PORT}/${NWIS_DATABASE_NAME}
+    username: ${NWIS_SCHEMA_OWNER_USERNAME}
+    password: ${NWIS_SCHEMA_OWNER_PASSWORD}
+    hikari:
+      maximumPoolSize: 10
+  liquibase:
+    change-log: db/changelog/db.changelog-wqx.yaml
+    parameters:
+      WQP_SCHEMA_NAME: ${WQP_SCHEMA_NAME}
+      ETL_OWNER_USERNAME: ${WQX_SCHEMA_OWNER_USERNAME}
