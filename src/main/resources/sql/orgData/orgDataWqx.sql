@@ -89,5 +89,4 @@ select 3 data_source_id,
         left join addresses addresses3
           on organization."ORG_UID" = addresses3.org_uid and
              3 = addresses3.addr_num
-         on organization.org_uid = org_address.org_uid
  where organization."ORG_UID" not between 2000 and 2999
