@@ -46,7 +46,7 @@ public class TransformActivityMetric {
 		return new FlowBuilder<SimpleFlow>("activityMetricFlow")
 				.start(setupActivityMetricSwapTableFlow)
 				//TODO - WQP-1425
-//				.next(transformActivityMetricWqxStep())
+				.next(transformActivityMetricWqxStep())
 				.next(afterLoadActivityMetricFlow)
 				.build();
 	}
