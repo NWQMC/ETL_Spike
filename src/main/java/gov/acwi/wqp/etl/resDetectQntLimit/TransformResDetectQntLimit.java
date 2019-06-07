@@ -54,7 +54,7 @@ public class TransformResDetectQntLimit {
 		return new FlowBuilder<SimpleFlow>("resDetectQntLimitFlow")
 				.start(setupResDetectQntLimitSwapTableFlow)
 				//TODO - WQP-1428
-//				.next(transformResDetectQntLimitWqxStep())
+				.next(transformResDetectQntLimitWqxStep())
 //				.next(transformResDetectQntLimitStoretwStep())
 				.next(afterLoadResDetectQntLimitFlow)
 				.build();

@@ -28,10 +28,10 @@ insert
                            res_lab_accred_yn, res_lab_accred_authority, res_taxonomist_accred_yn, res_taxonomist_accred_authorty, prep_method_id, prep_method_context,
                            prep_method_name, prep_method_qual_type, prep_method_desc, analysis_prep_date_tx, prep_start_time, prep_start_timezone, prep_end_date,
                            prep_end_time, prep_end_timezone, prep_dilution_factor, project_name, monitoring_location_name,
-						   --result_object_name, result_object_type, result_file_url,
+                           --result_object_name, result_object_type, result_file_url,
                            last_updated,
-						   -- res_detect_qnt_lmt_url,
-						   lab_sample_prep_url, frequency_class_code_1, frequency_class_code_2, frequency_class_code_3,
+                           -- res_detect_qnt_lmt_url,
+                           lab_sample_prep_url, frequency_class_code_1, frequency_class_code_2, frequency_class_code_3,
                            frequency_class_unit_1, frequency_class_unit_2, frequency_class_unit_3, frequency_class_lower_bound_1, frequency_class_lower_bound_2,
                            frequency_class_lower_bound_3, frequency_class_upper_bound_1, frequency_class_upper_bound_2, frequency_class_upper_bound_3)
 select activity_swap_storet.data_source_id,
