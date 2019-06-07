@@ -15,7 +15,7 @@ insert
                              act_sam_prep_meth_desc, sample_container_type, sample_container_color, act_sam_chemical_preservative,
                              thermal_preservative_name, act_sam_transport_storage_desc--, activity_object_name, activity_object_type,
 --                             activity_file_url, activity_metric_url
-							)
+                            )
 select 3 data_source_id,
        'STORET' data_source,
        activity."MLOC_UID" station_id, 
@@ -35,10 +35,10 @@ select 3 data_source_id,
        to_char(activity."ACT_START_TIME", 'hh24:mi:ss') activity_start_time,
        start_time_zone."TMZONE_CD" act_start_time_zone,
        to_char(activity."ACT_END_DATE", 'yyyy-mm-dd') activity_stop_date,
-	   case
-	     when activity."ACT_END_DATE" is not null
-		   then to_char(activity."ACT_END_TIME", 'hh24:mi:ss')
-	   end activity_stop_time,
+       case
+         when activity."ACT_END_DATE" is not null
+           then to_char(activity."ACT_END_TIME", 'hh24:mi:ss')
+       end activity_stop_time,
        end_time_zone."TMZONE_CD" act_stop_time_zone,
        relative_depth."RELDPTH_NAME" activity_relative_depth_name,
        activity."ACT_DEPTH_HEIGHT" activity_depth,
@@ -166,8 +166,8 @@ select 3 data_source_id,
        left join wqx."HORIZONTAL_REFERENCE_DATUM" horizontal_reference_datum
          on activity."HRDAT_UID" = horizontal_reference_datum."HRDAT_UID"
        left join wqx."ASSEMBLAGE" assemblage
-         on activity."ASMBLG_UID" = assemblage."ASMBLG_UID" 
-       left join wqx."MEASUREMENT_UNIT" collection_duration	 
+         on activity."ASMBLG_UID" = assemblage."ASMBLG_UID"
+       left join wqx."MEASUREMENT_UNIT" collection_duration
          on activity."MSUNT_UID_COLLECTION_DURATION" = collection_duration."MSUNT_UID"
        left join wqx."MEASUREMENT_UNIT" reach_length
          on activity."MSUNT_UID_REACH_LENGTH" = reach_length."MSUNT_UID"

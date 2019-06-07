@@ -28,18 +28,18 @@ select 3 data_source_id,
        horizontal_collection_method."HCMTH_NAME" geopositioning_method,
        horizontal_reference_datum."HRDAT_NAME" hdatum_id_code,
        monitoring_location."MLOC_VERTICAL_MEASURE" elevation_value,
-	   case
-	     when monitoring_location."MLOC_VERTICAL_MEASURE" is not null
-		   then measurement_unit."MSUNT_CD"
-	   end elevation_unit,
        case
-	     when monitoring_location."MLOC_VERTICAL_MEASURE" is not null
-		   then vertical_collection_method."VCMTH_NAME"
-	   end elevation_method,
+         when monitoring_location."MLOC_VERTICAL_MEASURE" is not null
+           then measurement_unit."MSUNT_CD"
+       end elevation_unit,
        case
-	     when monitoring_location."MLOC_VERTICAL_MEASURE" is not null
-		   then vertical_reference_datum."VRDAT_NAME"
-	   end vdatum_id_code,
+         when monitoring_location."MLOC_VERTICAL_MEASURE" is not null
+           then vertical_collection_method."VCMTH_NAME"
+       end elevation_method,
+       case
+         when monitoring_location."MLOC_VERTICAL_MEASURE" is not null
+           then vertical_reference_datum."VRDAT_NAME"
+       end vdatum_id_code,
        monitoring_location."MLOC_HORIZONTAL_ACCURACY" geoposition_accy_value,
        hmeasurement_unit."MSUNT_CD" geoposition_accy_unit
   from wqx."MONITORING_LOCATION" monitoring_location

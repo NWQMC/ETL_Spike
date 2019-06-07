@@ -22,7 +22,7 @@ public class TruncateWqxResultTaxonHabit implements Tasklet {
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		jdbcTemplate.execute("truncate table wqx_result_taxon_habit");
+		jdbcTemplate.execute("truncate table wqx.result_taxon_habit_aggregated");
 		return RepeatStatus.FINISHED;
 	}
 }

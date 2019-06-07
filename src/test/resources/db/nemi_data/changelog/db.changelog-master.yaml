@@ -4,16 +4,16 @@ databaseChangeLog:
         type: oracle
 
   - changeSet:
-      id: load.nemi_data.wqp_nemi_epa_crosswalk
+      id: load.nemi_data.wqx.nemi_wqp_to_epa_crosswalk
       author: drsteini
       runOnChange: true
       changes:
         - delete:
-            tableName: wqp_nemi_epa_crosswalk
+            tableName: wqx.nemi_wqp_to_epa_crosswalk
         - loadData:
             encoding: UTF-8
-            file: wqp_nemi_epa_crosswalk.tsv
+            file: wqx.nemi_wqp_to_epa_crosswalk.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: wqp_nemi_epa_crosswalk
-        - rollback: truncate table wqp_nemi_epa_crosswalk
+            tableName: wqx.nemi_wqp_to_epa_crosswalk
+        - rollback: truncate table wqx.nemi_wqp_to_epa_crosswalk

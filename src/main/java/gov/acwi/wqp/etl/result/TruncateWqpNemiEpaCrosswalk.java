@@ -22,7 +22,7 @@ public class TruncateWqpNemiEpaCrosswalk implements Tasklet {
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		jdbcTemplate.execute("truncate table wqp_nemi_epa_crosswalk");
+		jdbcTemplate.execute("truncate table wqx.nemi_wqp_to_epa_crosswalk");
 		return RepeatStatus.FINISHED;
 	}
 }

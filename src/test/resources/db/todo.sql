@@ -135,3 +135,99 @@ create unlogged table if not exists wqx.activity_metric_sum
 with (fillfactor = 100);
 -- wqp_core needs all? on ^
 
+create unlogged table if not exists wqx.nemi_wqp_to_epa_crosswalk
+(wqp_source                     character varying (6)
+,analytical_procedure_source    character varying (256)
+,analytical_procedure_id        character varying (256)
+,source_method_identifier       character varying (30)
+,method_id                      numeric
+,method_source                  character varying (20)
+,method_type                    character varying (100)
+,nemi_url                       text
+)
+with (fillfactor = 100);
+-- wqp_core needs all? on ^
+
+create unlogged table if not exists wqx.analytical_method_plus_nemi
+(anlmth_uid                     numeric
+,anlmth_id                      character varying(20)
+,amctx_cd                       character varying(30)
+,anlmth_name                    character varying(120)
+,anlmth_url                     character varying(256)
+,anlmth_qual_type               character varying(25)
+,nemi_url                       text
+)
+with (fillfactor = 100);
+-- wqp_core needs all? on ^
+
+create unlogged table if not exists wqx.r_detect_qnt_lmt
+(res_uid                        numeric
+,rdqlmt_uid                     numeric
+,rdqlmt_measure                 character varying(12)
+,msunt_cd                       character varying(12)
+,dqltyp_uid                     numeric
+,dqltyp_name                    character varying(35)
+)
+with (fillfactor = 100);
+-- wqp_core needs all? on ^
+
+create unlogged table if not exists wqx.result_taxon_habit_aggregated
+(res_uid                        numeric
+,habit_name_list                text
+)
+with (fillfactor = 100);
+-- wqp_core needs all? on ^
+
+create unlogged table if not exists wqx.result_taxon_feeding_group_aggregated
+(res_uid                        numeric
+,feeding_group_list             text
+)
+with (fillfactor = 100);
+-- wqp_core needs all? on ^
+
+create unlogged table if not exists wqx.result_lab_sample_prep_sum
+(res_uid                        numeric
+,result_lab_sample_prep_count   numeric
+)
+with (fillfactor = 100);
+-- wqp_core needs all? on ^
+
+create unlogged table if not exists wqx.result_frequency_class_aggregated
+(res_uid                        numeric
+,frequency_class_code_1         text
+,frequency_class_unit_1         text
+,frequency_class_lower_bound_1  text
+,frequency_class_upper_bound_1  text
+,frequency_class_code_2         text
+,frequency_class_unit_2         text
+,frequency_class_lower_bound_2  text
+,frequency_class_upper_bound_2  text
+,frequency_class_code_3         text
+,frequency_class_unit_3         text
+,frequency_class_lower_bound_3  text
+,frequency_class_upper_bound_3  text
+)
+with (fillfactor = 100);
+-- wqp_core needs all? on ^
+
+create unlogged table if not exists wqx.detection_quant_limit
+(res_uid                        numeric
+,rdqlmt_measure                 character varying(12)
+,msunt_cd                       character varying(12)
+,dqltyp_name                    character varying(35)
+)
+with (fillfactor = 100);
+-- wqp_core needs all? on ^
+
+create unlogged table if not exists wqx.dql_hierarchy
+(hierarchy_value                numeric
+,dqltyp_uid                     numeric
+,dqltyp_name                    character varying(35)
+,constraint dql_hierarchy_pk primary key (hierarchy_value)
+,constraint dql_hierarchy_ak unique (dqltyp_uid)
+)
+with (fillfactor = 100);
+-- wqp_core needs all? on ^
+--LOAD TABLE ^ WITH DATA
+
+
