@@ -101,6 +101,7 @@ create unlogged table if not exists wqx.monitoring_location_local
 ,constraint wqx_monitoring_location_local_pk primary key (monitoring_location_source, station_id)
 ,constraint wqx_monitoring_location_local_uk unique (monitoring_location_source, site_id)
 );
+-- wqp_core needs update/select/delete on ^
 
 create unlogged table if not exists wqx.site_type_conversion
 (mltyp_uid                      numeric

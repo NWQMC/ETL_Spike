@@ -4,8 +4,7 @@ insert
                             geopositioning_method, hdatum_id_code, elevation_value, elevation_unit, elevation_method, vdatum_id_code,
                             geoposition_accy_value, geoposition_accy_unit
                            )
-select 
-       3 data_source_id,
+select 3 data_source_id,
        'STORET' data_source,
        monitoring_location."MLOC_UID" station_id,
        org."ORG_UID" || '-' || monitoring_location."MLOC_ID" site_id,
