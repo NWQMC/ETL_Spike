@@ -101,7 +101,7 @@ create unlogged table if not exists wqx.monitoring_location_local
 ,constraint wqx_monitoring_location_local_pk primary key (monitoring_location_source, station_id)
 ,constraint wqx_monitoring_location_local_uk unique (monitoring_location_source, site_id)
 );
--- wqp_core needs update/select/delete on ^
+-- wqp_core needs update/select/delete? on ^
 
 create unlogged table if not exists wqx.site_type_conversion
 (mltyp_uid                      numeric
@@ -109,5 +109,29 @@ create unlogged table if not exists wqx.site_type_conversion
 ,station_group_type             character varying (256)
 ,constraint site_type_conversion_pk
   primary key (mltyp_uid)
-);
+)
+with (fillfactor = 100);
 --LOAD TABLE ^ WITH DATA
+
+create unlogged table if not exists wqx.activity_project_aggregated
+(act_uid                        numeric
+,project_id_list                text
+,project_name_list              text
+)
+with (fillfactor = 100);
+-- wqp_core needs all? on ^
+
+create unlogged table if not exists wqx.activity_conducting_org_aggregated
+(act_uid                        numeric
+,acorg_name_list                text
+)
+with (fillfactor = 100);
+-- wqp_core needs all? on ^
+
+create unlogged table if not exists wqx.activity_metric_sum
+(act_uid                        numeric
+,activity_metric_count          numeric
+)
+with (fillfactor = 100);
+-- wqp_core needs all? on ^
+
