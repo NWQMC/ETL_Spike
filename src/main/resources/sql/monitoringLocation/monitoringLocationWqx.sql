@@ -1,59 +1,68 @@
-insert /*+ append parallel(4) */
+insert
   into station_swap_storet (data_source_id, data_source, station_id, site_id, organization, site_type, huc, governmental_unit_code,
                             geom, station_name, organization_name, description_text, station_type_name, latitude, longitude, map_scale,
                             geopositioning_method, hdatum_id_code, elevation_value, elevation_unit, elevation_method, vdatum_id_code,
                             geoposition_accy_value, geoposition_accy_unit
                            )
-select /*+ parallel(4) */
+select 
        3 data_source_id,
        'STORET' data_source,
-       monitoring_location.mloc_uid station_id,
-       org.org_id || '-' || monitoring_location.mloc_id site_id,
-       org.org_id organization,
-       wqx_site_type_conversion.station_group_type site_type,
-       nvl(wqx_station_local.calculated_huc_12, nvl(mloc_huc_12, mloc_huc_8)) huc,
+       monitoring_location."MLOC_UID" station_id,
+       org."ORG_UID" || '-' || monitoring_location."MLOC_ID" site_id,
+       org."ORG_UID" organization,
+       site_type_conversion.station_group_type site_type,
+       coalesce(monitoring_location_local.calculated_huc_12, coalesce("MLOC_HUC_12", "MLOC_HUC_8")) huc,
        case
-         when wqx_station_local.calculated_fips is null or
-              substr(wqx_station_local.calculated_fips, 3) = '000'
-           then wqx_station_local.cntry_cd || ':' || wqx_station_local.st_fips_cd || ':' || wqx_station_local.cnty_fips_cd
-         else 'US:' || substr(wqx_station_local.calculated_fips, 1, 2) || ':' || substr(wqx_station_local.calculated_fips, 3, 3)
+         when monitoring_location_local.calculated_fips is null or
+              substr(monitoring_location_local.calculated_fips, 3) = '000'
+           then monitoring_location_local.cntry_cd || ':' || monitoring_location_local.st_fips_cd || ':' || monitoring_location_local.cnty_fips_cd
+         else 'US:' || substr(monitoring_location_local.calculated_fips, 1, 2) || ':' || substr(monitoring_location_local.calculated_fips, 3, 3)
        end governmental_unit_code, 
-       wqx_station_local.geom,
-       trim(monitoring_location.mloc_name) station_name,
-       org.org_name organization_name,
-       trim(monitoring_location.mloc_desc) description_text,
-       monitoring_location_type.mltyp_name station_type_name,
-       monitoring_location.mloc_latitude latitude,
-       monitoring_location.mloc_longitude longitude,
-       cast(monitoring_location.mloc_source_map_scale as varchar2(4000 char)) map_scale,
-       horizontal_collection_method.hcmth_name geopositioning_method,
-       horizontal_reference_datum.hrdat_name hdatum_id_code,
-       monitoring_location.mloc_vertical_measure elevation_value,
-       nvl2(monitoring_location.mloc_vertical_measure, measurement_unit.msunt_cd, null) elevation_unit,
-       nvl2(monitoring_location.mloc_vertical_measure, vertical_collection_method.vcmth_name, null) elevation_method,
-       nvl2(monitoring_location.mloc_vertical_measure, vertical_reference_datum.vrdat_name, null) vdatum_id_code,
-       monitoring_location.mloc_horizontal_accuracy geoposition_accy_value,
-       hmeasurement_unit.msunt_cd geoposition_accy_unit
-  from wqx.monitoring_location
-       left join wqx_station_local
-         on monitoring_location.mloc_uid = wqx_station_local.station_id and
-            'WQX' = wqx_station_local.station_source
-       left join wqx.vertical_reference_datum
-         on monitoring_location.vrdat_uid = vertical_reference_datum.vrdat_uid
-       left join wqx.vertical_collection_method
-         on monitoring_location.vcmth_uid = vertical_collection_method.vcmth_uid
-       left join wqx.measurement_unit
-         on monitoring_location.msunt_uid_vertical_measure = measurement_unit.msunt_uid
-       left join wqx.measurement_unit hmeasurement_unit
-         on monitoring_location.msunt_uid_horizontal_accuracy = hmeasurement_unit.msunt_uid
-       left join wqx.horizontal_reference_datum
-         on monitoring_location.hrdat_uid = horizontal_reference_datum.hrdat_uid
-       left join wqx.horizontal_collection_method
-         on monitoring_location.hcmth_uid = horizontal_collection_method.hcmth_uid
-       left join wqx.organization org
-         on monitoring_location.org_uid = org.org_uid
-       left join wqx.monitoring_location_type
-         on monitoring_location.mltyp_uid = monitoring_location_type.mltyp_uid
-       left join wqx_site_type_conversion
-         on monitoring_location.mltyp_uid = wqx_site_type_conversion.mltyp_uid
- where org.org_uid not between 2000 and 2999
+       monitoring_location_local.geom,
+       trim(monitoring_location."MLOC_NAME") station_name,
+       org."ORG_NAME" organization_name,
+       trim(monitoring_location."MLOC_DESC") description_text,
+       monitoring_location_type."MLTYP_NAME" station_type_name,
+       monitoring_location."MLOC_LATITUDE" latitude,
+       monitoring_location."MLOC_LONGITUDE" longitude,
+       monitoring_location."MLOC_SOURCE_MAP_SCALE"::text map_scale,
+       horizontal_collection_method."HCMTH_NAME" geopositioning_method,
+       horizontal_reference_datum."HRDAT_NAME" hdatum_id_code,
+       monitoring_location."MLOC_VERTICAL_MEASURE" elevation_value,
+	   case
+	     when monitoring_location."MLOC_VERTICAL_MEASURE" is not null
+		   then measurement_unit."MSUNT_CD"
+	   end elevation_unit,
+       case
+	     when monitoring_location."MLOC_VERTICAL_MEASURE" is not null
+		   then vertical_collection_method."VCMTH_NAME"
+	   end elevation_method,
+       case
+	     when monitoring_location."MLOC_VERTICAL_MEASURE" is not null
+		   then vertical_reference_datum."VRDAT_NAME"
+	   end vdatum_id_code,
+       monitoring_location."MLOC_HORIZONTAL_ACCURACY" geoposition_accy_value,
+       hmeasurement_unit."MSUNT_CD" geoposition_accy_unit
+  from wqx."MONITORING_LOCATION" monitoring_location
+       left join wqx.monitoring_location_local
+         on monitoring_location."MLOC_UID" = monitoring_location_local.station_id and
+            'WQX' = wqx.monitoring_location_local.monitoring_location_source
+       left join wqx."VERTICAL_REFERENCE_DATUM" vertical_reference_datum
+         on monitoring_location."VRDAT_UID" = vertical_reference_datum."VRDAT_UID"
+       left join wqx."VERTICAL_COLLECTION_METHOD" vertical_collection_method
+         on monitoring_location."VCMTH_UID" = vertical_collection_method."VCMTH_UID"
+       left join wqx."MEASUREMENT_UNIT" measurement_unit
+         on monitoring_location."MSUNT_UID_VERTICAL_MEASURE" = measurement_unit."MSUNT_UID"
+       left join wqx."MEASUREMENT_UNIT" hmeasurement_unit
+         on monitoring_location."MSUNT_UID_HORIZONTAL_ACCURACY" = hmeasurement_unit."MSUNT_UID"
+       left join wqx."HORIZONTAL_REFERENCE_DATUM" horizontal_reference_datum
+         on monitoring_location."HRDAT_UID" = horizontal_reference_datum."HRDAT_UID"
+       left join wqx."HORIZONTAL_COLLECTION_METHOD" horizontal_collection_method
+         on monitoring_location."HCMTH_UID" = horizontal_collection_method."HCMTH_UID"
+       left join wqx."ORGANIZATION" org
+         on monitoring_location."ORG_UID" = org."ORG_UID"
+       left join wqx."MONITORING_LOCATION_TYPE" monitoring_location_type
+         on monitoring_location."MLTYP_UID" = monitoring_location_type."MLTYP_UID"
+       left join wqx.site_type_conversion
+         on monitoring_location."MLTYP_UID" = site_type_conversion.mltyp_uid
+ where org."ORG_UID" not between 2000 and 2999

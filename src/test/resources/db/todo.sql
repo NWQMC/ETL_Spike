@@ -83,3 +83,30 @@ select distinct
                        ) wqx
          on nwis.country_cd = wqx.cntry_cd and
             nwis.state_cd = wqx.st_fips_cd;
+
+create unlogged table if not exists wqx.monitoring_location_local
+(monitoring_location_source     character varying (7)
+,station_id                     numeric
+,site_id                        text
+,latitude                       numeric
+,longitude                      numeric
+,hrdat_uid                      numeric
+,huc                            character varying (12)
+,cntry_cd                       character varying (2)
+,st_fips_cd                     character varying (2)
+,cnty_fips_cd                   character varying (3)
+,calculated_huc_12              character varying (12)
+,calculated_fips                character varying (5)
+,geom                           geometry(point,4269)
+,constraint wqx_monitoring_location_local_pk primary key (monitoring_location_source, station_id)
+,constraint wqx_monitoring_location_local_uk unique (monitoring_location_source, site_id)
+);
+
+create unlogged table if not exists wqx.site_type_conversion
+(mltyp_uid                      numeric
+,mltyp_name                     character varying (45)
+,station_group_type             character varying (256)
+,constraint site_type_conversion_pk
+  primary key (mltyp_uid)
+);
+--LOAD TABLE ^ WITH DATA
