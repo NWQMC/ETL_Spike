@@ -44,7 +44,7 @@ public class TransformProjectMLWeighting {
 		return new FlowBuilder<SimpleFlow>("projectMLWeightingFlow")
 				.start(setupProjectMLWeightingSwapTableFlow)
 				//TODO - WQP-1429
-//				.next(transformProjectMlWeightingWqxStep())
+				.next(transformProjectMLWeightingWqxStep())
 				.next(afterLoadProjectMLWeightingFlow)
 				.build();
 	}
