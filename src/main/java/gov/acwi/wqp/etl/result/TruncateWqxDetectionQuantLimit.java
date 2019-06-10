@@ -22,7 +22,7 @@ public class TruncateWqxDetectionQuantLimit implements Tasklet {
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		jdbcTemplate.execute("truncate table wqx_detection_quant_limit");
+		jdbcTemplate.execute("truncate table wqx.detection_quant_limit");
 		return RepeatStatus.FINISHED;
 	}
 }
