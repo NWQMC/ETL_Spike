@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 
 import gov.acwi.wqp.etl.EtlConstantUtils;
 
@@ -175,12 +176,15 @@ public class TransformActivity {
 	public Flow activityFlow() throws IOException {
 		return new FlowBuilder<SimpleFlow>("activityFlow")
 				.start(setupActivitySwapTableFlow)
-				//TODO - WQP-1419
-//				.next(wqxActivityProjectFlow())
-//				.split(new SimpleAsyncTaskExecutor())
-//				.add(wqxActivityConductingOrgFlow(), wqxAttachedObjectActivityFlow(),
-//						wqxActivityMetricSumFlow(), wqxActivityStartFlow())
-//				.next(transformActivityWqxStep())
+				//TODO - WQP-1419 & urlencoding & blob urls
+				.split(new SimpleAsyncTaskExecutor())
+					.add(
+							wqxActivityProjectFlow(),
+							wqxActivityConductingOrgFlow(),
+//							wqxAttachedObjectActivityFlow(),
+							wqxActivityMetricSumFlow()
+						)
+				.next(transformActivityWqxStep())
 //				.next(transformActivityStoretwStep())
 				.next(afterLoadActivityFlow)
 				.build();

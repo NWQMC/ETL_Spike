@@ -1,10 +1,9 @@
-insert /*+ append parallel(4) */
+insert
   into r_detect_qnt_lmt_swap_storet(data_source_id, data_source, station_id, site_id, event_date, activity, analytical_method,
                                     characteristic_name, characteristic_type, sample_media, organization, site_type, huc, governmental_unit_code,
                                     organization_name, project_id, assemblage_sampled_name, sample_tissue_taxonomic_name, activity_id,
                                     result_id, detection_limit_id, detection_limit, detection_limit_unit, detection_limit_desc)
-select /*+ parallel(4) */
-       result_swap_storet.data_source_id,
+select result_swap_storet.data_source_id,
        result_swap_storet.data_source,
        result_swap_storet.station_id,
        result_swap_storet.site_id,
@@ -24,10 +23,10 @@ select /*+ parallel(4) */
        result_swap_storet.sample_tissue_taxonomic_name,
        result_swap_storet.activity_id,
        result_swap_storet.result_id,
-       wqx_r_detect_qnt_lmt.rdqlmt_uid,
-       wqx_r_detect_qnt_lmt.rdqlmt_measure,
-       wqx_r_detect_qnt_lmt.msunt_cd,
-       wqx_r_detect_qnt_lmt.dqltyp_name
-  from wqx_r_detect_qnt_lmt
+       r_detect_qnt_lmt.rdqlmt_uid,
+       r_detect_qnt_lmt.rdqlmt_measure,
+       r_detect_qnt_lmt.msunt_cd,
+       r_detect_qnt_lmt.dqltyp_name
+  from wqx.r_detect_qnt_lmt
        join result_swap_storet
-         on wqx_r_detect_qnt_lmt.res_uid = result_swap_storet.result_id
+         on r_detect_qnt_lmt.res_uid = result_swap_storet.result_id

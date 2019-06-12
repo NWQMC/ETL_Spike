@@ -1,4 +1,4 @@
-insert /*+ append parallel(4) */
+insert
   into result_swap_storet (data_source_id, data_source, station_id, site_id, event_date, analytical_method, activity,
                            characteristic_name, characteristic_type, sample_media, organization, site_type, huc, governmental_unit_code,
                            organization_name, activity_id, activity_type_code, activity_media_subdiv_name, activity_start_time,
@@ -27,20 +27,22 @@ insert /*+ append parallel(4) */
                            analysis_end_time, analysis_end_timezone, rlcom_cd, lab_remark, detection_limit, detection_limit_unit, detection_limit_desc,
                            res_lab_accred_yn, res_lab_accred_authority, res_taxonomist_accred_yn, res_taxonomist_accred_authorty, prep_method_id, prep_method_context,
                            prep_method_name, prep_method_qual_type, prep_method_desc, analysis_prep_date_tx, prep_start_time, prep_start_timezone, prep_end_date,
-                           prep_end_time, prep_end_timezone, prep_dilution_factor, project_name, monitoring_location_name, result_object_name, result_object_type,
-                           result_file_url, last_updated, res_detect_qnt_lmt_url, lab_sample_prep_url, frequency_class_code_1, frequency_class_code_2, frequency_class_code_3,
+                           prep_end_time, prep_end_timezone, prep_dilution_factor, project_name, monitoring_location_name,
+                           --result_object_name, result_object_type, result_file_url,
+                           last_updated,
+                           -- res_detect_qnt_lmt_url,
+                           lab_sample_prep_url, frequency_class_code_1, frequency_class_code_2, frequency_class_code_3,
                            frequency_class_unit_1, frequency_class_unit_2, frequency_class_unit_3, frequency_class_lower_bound_1, frequency_class_lower_bound_2,
                            frequency_class_lower_bound_3, frequency_class_upper_bound_1, frequency_class_upper_bound_2, frequency_class_upper_bound_3)
-select /*+ parallel(4) */
-       activity_swap_storet.data_source_id,
+select activity_swap_storet.data_source_id,
        activity_swap_storet.data_source,
        activity_swap_storet.station_id, 
        activity_swap_storet.site_id,
        activity_swap_storet.event_date,
-       wqx_analytical_method.nemi_url analytical_method,
+       analytical_method_plus_nemi.nemi_url analytical_method,
        activity_swap_storet.activity,
-       characteristic.chr_name characteristic_name,
-       nvl(di_characteristic.characteristic_group_type, 'Not Assigned') characteristic_type,
+       characteristic."CHR_NAME" characteristic_name,
+       coalesce(characteristic_group."CHRGRP_NAME", 'Not Assigned') characteristic_type,
        activity_swap_storet.sample_media,
        activity_swap_storet.organization,
        activity_swap_storet.site_type,
@@ -110,78 +112,78 @@ select /*+ parallel(4) */
        activity_swap_storet.act_sam_chemical_preservative,
        activity_swap_storet.thermal_preservative_name,
        activity_swap_storet.act_sam_transport_storage_desc,
-       result.res_uid result_id,
-       result.res_data_logger_line,
-       result_detection_condition.rdcnd_name result_detection_condition_tx,
-       method_speciation.mthspc_name method_specification_name,
-       sample_fraction.smfrc_name sample_fraction_type,
-       result.res_measure result_measure_value,
-       rmeasurement_unit.msunt_cd result_unit,
-       result_measure_qualifier.rmqlf_cd result_meas_qual_code,
-       result_status.ressta_name result_value_status,
-       result_statistical_base.rsbas_cd statistic_type,
-       result_value_type.rvtyp_name result_value_type,
-       result_weight_basis.rwbas_name weight_basis_type,
-       result_time_basis.rtimb_name duration_basis,
-       result_temperature_basis.rtmpb_name temperature_basis_level,
-       result.res_particle_size_basis particle_size,
-       result.res_measure_precision precision,
-       result.res_measure_bias,
-       result.res_measure_conf_interval,
-       result.res_measure_upper_conf_limit,
-       result.res_measure_lower_conf_limit,
-       result.res_comments result_comment,
-       result.res_depth_height result_depth_meas_value,
-       dhmeasurement_unit.msunt_cd result_depth_meas_unit_code,
-       result.res_depth_altitude_ref_point result_depth_alt_ref_pt_txt,
-       result.res_sampling_point_name,
-       biological_intent.bioint_name biological_intent,
-       result.res_bio_individual_id,
-       taxon.tax_name sample_tissue_taxonomic_name,
-       result.res_species_id UnidentifiedSpeciesIdentifier,
-       sample_tissue_anatomy.stant_name sample_tissue_anatomy_name,
-       result.res_group_summary_ct_wt,
-       group_summ_ct_wt.msunt_cd res_group_summary_ct_wt_unit,
-       cell_form.celfrm_name cell_form_name,
-       cell_shape.celshp_name cell_shape_name,
-       wqx_result_taxon_habit.habit_name_list habit_name,
-       voltinism.volt_name,
-       result_taxon_detail.rtdet_pollution_tolerance,
-       result_taxon_detail.rtdet_pollution_tolernce_scale,
-       result_taxon_detail.rtdet_trophic_level,
-       wqx_result_taxon_feeding_group.feeding_group_list rtfgrp_functional_feeding_grp,
-       taxon_citation.citatn_title,
-       taxon_citation.citatn_creator,
-       taxon_citation.citatn_subject,
-       taxon_citation.citatn_publisher,
-       taxon_citation.citatn_date,
-       taxon_citation.citatn_id,
+       result."RES_UID" result_id,
+       result."RES_DATA_LOGGER_LINE" res_data_logger_line,
+       result_detection_condition."RDCND_NAME" result_detection_condition_tx,
+       method_speciation."MTHSPC_NAME" method_specification_name,
+       sample_fraction."SMFRC_NAME" sample_fraction_type,
+       result."RES_MEASURE" result_measure_value,
+       rmeasurement_unit."MSUNT_CD" result_unit,
+       result_measure_qualifier."RMQLF_CD" result_meas_qual_code,
+       result_status."RESSTA_NAME" result_value_status,
+       result_statistical_base."RSBAS_CD" statistic_type,
+       result_value_type."RVTYP_NAME" result_value_type,
+       result_weight_basis."RWBAS_NAME" weight_basis_type,
+       result_time_basis."RTIMB_NAME" duration_basis,
+       result_temperature_basis."RTMPB_NAME" temperature_basis_level,
+       result."RES_PARTICLE_SIZE_BASIS" particle_size,
+       result."RES_MEASURE_PRECISION" "precision",
+       result."RES_MEASURE_BIAS",
+       result."RES_MEASURE_CONF_INTERVAL",
+       result."RES_MEASURE_UPPER_CONF_LIMIT",
+       result."RES_MEASURE_LOWER_CONF_LIMIT",
+       result."RES_COMMENTS" result_comment,
+       result."RES_DEPTH_HEIGHT" result_depth_meas_value,
+       dhmeasurement_unit."MSUNT_CD" result_depth_meas_unit_code,
+       result."RES_DEPTH_ALTITUDE_REF_POINT" result_depth_alt_ref_pt_txt,
+       result."RES_SAMPLING_POINT_NAME" res_sampling_point_name,
+       biological_intent."BIOINT_NAME" biological_intent,
+       result."RES_BIO_INDIVIDUAL_ID" res_bio_individual_id,
+       taxon."TAX_NAME" sample_tissue_taxonomic_name,
+       result."RES_SPECIES_ID" UnidentifiedSpeciesIdentifier,
+       sample_tissue_anatomy."STANT_NAME" sample_tissue_anatomy_name,
+       result."RES_GROUP_SUMMARY_CT_WT" res_group_summary_ct_wt,
+       group_summ_ct_wt."MSUNT_CD" res_group_summary_ct_wt_unit,
+       cell_form."CELFRM_NAME" cell_form_name,
+       cell_shape."CELSHP_NAME" cell_shape_name,
+       result_taxon_habit_aggregated.habit_name_list habit_name,
+       voltinism."VOLT_NAME",
+       result_taxon_detail."RTDET_POLLUTION_TOLERANCE" rtdet_pollution_tolerance,
+       result_taxon_detail."RTDET_POLLUTION_TOLERNCE_SCALE" rtdet_pollution_tolernce_scale,
+       result_taxon_detail."RTDET_TROPHIC_LEVEL" rtdet_trophic_level,
+       result_taxon_feeding_group_aggregated.feeding_group_list rtfgrp_functional_feeding_grp,
+       taxon_citation."CITATN_TITLE" citatn_title,
+       taxon_citation."CITATN_CREATOR" citatn_creator,
+       taxon_citation."CITATN_SUBJECT" citatn_subject,
+       taxon_citation."CITATN_PUBLISHER" citatn_publisher,
+       taxon_citation."CITATN_DATE" citatn_date,
+       taxon_citation."CITATN_ID" citatn_id,
        /* FrequencyClassInformation 0-3 of these per BiologicalResultDescription*/
        /*frequency_class_descriptor.*/ null fcdsc_name,
        /*result_frequency.msunt_cd*/ null frequency_class_unit,
        /*result_frequency_class.*/ null fcdsc_lower_bound,
        /*result_frequency_class.*/ null fcdsc_upper_bound,
-       wqx_analytical_method.anlmth_id analytical_procedure_id,
-       wqx_analytical_method.amctx_cd analytical_procedure_source,
-       wqx_analytical_method.anlmth_name analytical_method_name,
-       wqx_analytical_method.anlmth_qual_type,
-       wqx_analytical_method.anlmth_url analytical_method_citation,
-       result.res_lab_name lab_name,
-       to_char(result.res_lab_analysis_start_date, 'yyyy-mm-dd') analysis_start_date,
-       result.res_lab_analysis_start_time,
-       analysis_start.tmzone_cd analysis_start_timezone,
-       result.res_lab_analysis_end_date,
-       result.res_lab_analysis_end_time,
-       analysis_end.tmzone_cd analysis_end_timezone,
-       result_lab_comment.rlcom_cd,
-       result_lab_comment.rlcom_desc lab_remark,
-       wqx_detection_quant_limit.rdqlmt_measure detection_limit,
-       wqx_detection_quant_limit.msunt_cd detection_limit_unit,
-       wqx_detection_quant_limit.dqltyp_name detection_limit_desc,
-       result.res_lab_accred_yn,
-       result.res_lab_accred_authority,
-       result.res_taxonomist_accred_yn,
-       result.res_taxonomist_accred_authorty,
+       analytical_method_plus_nemi.anlmth_id analytical_procedure_id,
+       analytical_method_plus_nemi.amctx_cd analytical_procedure_source,
+       analytical_method_plus_nemi.anlmth_name analytical_method_name,
+       analytical_method_plus_nemi.anlmth_qual_type,
+       analytical_method_plus_nemi.anlmth_url analytical_method_citation,
+       result."RES_LAB_NAME" lab_name,
+       to_char(result."RES_LAB_ANALYSIS_START_DATE", 'yyyy-mm-dd') analysis_start_date,
+       result."RES_LAB_ANALYSIS_START_TIME",
+       analysis_start."TMZONE_CD" analysis_start_timezone,
+       result."RES_LAB_ANALYSIS_END_DATE" res_lab_analysis_end_date,
+       result."RES_LAB_ANALYSIS_END_TIME" res_lab_analysis_end_time,
+       analysis_end."TMZONE_CD" analysis_end_timezone,
+       result_lab_comment."RLCOM_CD" rlcom_cd,
+       result_lab_comment."RLCOM_DESC" lab_remark,
+       wqx.detection_quant_limit.rdqlmt_measure detection_limit,
+       wqx.detection_quant_limit.msunt_cd detection_limit_unit,
+       wqx.detection_quant_limit.dqltyp_name detection_limit_desc,
+       result."RES_LAB_ACCRED_YN" res_lab_accred_yn,
+       result."RES_LAB_ACCRED_AUTHORITY" res_lab_accred_authority,
+       result."RES_TAXONOMIST_ACCRED_YN" res_taxonomist_accred_yn,
+       result."RES_TAXONOMIST_ACCRED_AUTHORTY" res_taxonomist_accred_authorty,
        /* LabSamplePreparation 0-many per result */
        /*result_lab_sample_prep.*/ null rlsprp_method_id,
        /*result_lab_sample_prep.*/ null rlsprp_method_context,
@@ -197,114 +199,114 @@ select /*+ parallel(4) */
        /*result_lab_sample_prep.*/ null rlsprp_dilution_factor,
        activity_swap_storet.project_name,
        activity_swap_storet.monitoring_location_name,
-       wqx_attached_object_result.result_object_name,
-       wqx_attached_object_result.result_object_type,
-       case
-         when wqx_attached_object_result.ref_uid is null
-           then null
-         else
-           '/organizations/' ||
-               pkg_dynamic_list.url_escape(activity_swap_storet.organization, 'true') || '/activities/' ||
-               pkg_dynamic_list.url_escape(activity_swap_storet.activity, 'true') || '/results/' ||
-               pkg_dynamic_list.url_escape(activity_swap_storet.organization, 'true') || '-' ||
-               pkg_dynamic_list.url_escape(result.res_uid, 'true') || '/files'
-       end result_file_url,
-       result.res_last_change_date last_updated,
+--       wqx_attached_object_result.result_object_name,
+--       wqx_attached_object_result.result_object_type,
+--       case
+--         when wqx.attached_object_result.ref_uid is null
+--           then null
+--         else
+--           '/organizations/' ||
+--               pkg_dynamic_list.url_escape(activity_swap_storet.organization, 'true') || '/activities/' ||
+--               pkg_dynamic_list.url_escape(activity_swap_storet.activity, 'true') || '/results/' ||
+--               pkg_dynamic_list.url_escape(activity_swap_storet.organization, 'true') || '-' ||
+--               pkg_dynamic_list.url_escape(result.res_uid, 'true') || '/files'
+--       end result_file_url,
+       result."RES_LAST_CHANGE_DATE" last_updated,
+--       case 
+--         when detection_quant_limit.res_uid is null
+--           then null
+--         else 
+--           '/activities/' ||
+--               pkg_dynamic_list.url_escape(activity_swap_storet.activity, 'true') || '/results/' ||
+--               pkg_dynamic_list.url_escape(activity_swap_storet.organization, 'true') || '-' ||
+--               pkg_dynamic_list.url_escape(result.res_uid, 'true') || '/resdetectqntlmts'
+--       end res_detect_qnt_lmt_url,
        case 
-         when wqx_detection_quant_limit.res_uid is null
-           then null
-         else 
-           '/activities/' ||
-               pkg_dynamic_list.url_escape(activity_swap_storet.activity, 'true') || '/results/' ||
-               pkg_dynamic_list.url_escape(activity_swap_storet.organization, 'true') || '-' ||
-               pkg_dynamic_list.url_escape(result.res_uid, 'true') || '/resdetectqntlmts'
-       end res_detect_qnt_lmt_url,
-       case 
-         when wqx_result_lab_sample_prep_sum.res_uid is null
+         when result_lab_sample_prep_sum.res_uid is null
            then null
          else
            null
        end lab_sample_prep_url,
-       wqx_result_frequency_class.one_fcdsc_name frequency_class_code_1,
-       wqx_result_frequency_class.two_fcdsc_name frequency_class_code_2,
-       wqx_result_frequency_class.three_fcdsc_name frequency_class_code_3,
-       wqx_result_frequency_class.one_msunt_cd frequency_class_unit_1,
-       wqx_result_frequency_class.two_msunt_cd frequency_class_unit_2,
-       wqx_result_frequency_class.three_msunt_cd frequency_class_unit_3,
-       wqx_result_frequency_class.one_fcdsc_lower_bound frequency_class_lower_bound_1,
-       wqx_result_frequency_class.two_fcdsc_lower_bound frequency_class_lower_bound_2,
-       wqx_result_frequency_class.three_fcdsc_lower_bound frequency_class_lower_bound_3,
-       wqx_result_frequency_class.one_fcdsc_upper_bound frequency_class_upper_bound_1,
-       wqx_result_frequency_class.two_fcdsc_upper_bound frequency_class_upper_bound_2,
-       wqx_result_frequency_class.three_fcdsc_upper_bound frequency_class_upper_bound_3
+       result_frequency_class_aggregated.frequency_class_code_1,
+       result_frequency_class_aggregated.frequency_class_code_2,
+       result_frequency_class_aggregated.frequency_class_code_3,
+       result_frequency_class_aggregated.frequency_class_unit_1,
+       result_frequency_class_aggregated.frequency_class_unit_2,
+       result_frequency_class_aggregated.frequency_class_unit_3,
+       result_frequency_class_aggregated.frequency_class_lower_bound_1,
+       result_frequency_class_aggregated.frequency_class_lower_bound_2,
+       result_frequency_class_aggregated.frequency_class_lower_bound_3,
+       result_frequency_class_aggregated.frequency_class_upper_bound_1,
+       result_frequency_class_aggregated.frequency_class_upper_bound_2,
+       result_frequency_class_aggregated.frequency_class_upper_bound_3
   from activity_swap_storet
-       join wqx.result
-         on activity_swap_storet.activity_id = result.act_uid
-       left join wqx.method_speciation
-         on result.mthspc_uid = method_speciation.mthspc_uid
-       left join wqx.biological_intent
-         on result.bioint_uid = biological_intent.bioint_uid
-       left join wqx.characteristic
-         on result.chr_uid = characteristic.chr_uid
-       left join wqx.result_detection_condition
-         on result.rdcnd_uid = result_detection_condition.rdcnd_uid
-       left join wqx.sample_fraction
-         on result.smfrc_uid = sample_fraction.smfrc_uid
-       left join wqx.measurement_unit rmeasurement_unit
-         on result.msunt_uid_measure = rmeasurement_unit.msunt_uid
-       left join wqx.result_measure_qualifier
-         on result.rmqlf_uid = result_measure_qualifier.rmqlf_uid
-       left join wqx.result_status
-         on result.ressta_uid = result_status.ressta_uid
-       left join wqx.result_statistical_base
-         on result.rsbas_uid = result_statistical_base.rsbas_uid
-       left join wqx.result_value_type
-         on result.rvtyp_uid = result_value_type.rvtyp_uid
-       left join wqx.result_weight_basis
-         on result.rwbas_uid = result_weight_basis.rwbas_uid
-       left join wqx.result_time_basis
-         on result.rtimb_uid = result_time_basis.rtimb_uid
-       left join wqx.result_temperature_basis
-         on result.rtmpb_uid = result_temperature_basis.rtmpb_uid
-       left join wqx.measurement_unit dhmeasurement_unit
-         on result.msunt_uid_depth_height = dhmeasurement_unit.msunt_uid
-       left join wqx.measurement_unit group_summ_ct_wt
-         on result.msunt_uid_group_summary_ct_wt = group_summ_ct_wt.msunt_uid
-       left join wqx_analytical_method
-         on result.anlmth_uid = wqx_analytical_method.anlmth_uid
-       left join wqx_detection_quant_limit
-         on result.res_uid = wqx_detection_quant_limit.res_uid
-       left join wqx_result_lab_sample_prep_sum
-         on result.res_uid = wqx_result_lab_sample_prep_sum.res_uid
-       left join wqx.time_zone analysis_start
-         on result.tmzone_uid_lab_analysis_start = analysis_start.tmzone_uid
-       left join wqx.time_zone analysis_end
-         on result.tmzone_uid_lab_analysis_end = analysis_end.tmzone_uid 
-       left join wqx.taxon
-         on result.tax_uid = taxon.tax_uid
-       left join wqx.sample_tissue_anatomy
-         on result.stant_uid = sample_tissue_anatomy.stant_uid
-       left join wqx.result_lab_comment
-         on result.rlcom_uid = result_lab_comment.rlcom_uid
-       left join storetw.di_characteristic
-         on characteristic.chr_storet_id = di_characteristic.pk_isn
-       left join wqx_result_taxon_habit
-         on result.res_uid = wqx_result_taxon_habit.res_uid
-       left join wqx.result_taxon_detail
-         on result.res_uid = result_taxon_detail.res_uid
-       left join wqx.voltinism
-         on result_taxon_detail.volt_uid = voltinism.volt_uid
-       left join wqx_result_taxon_feeding_group
-         on result.res_uid = wqx_result_taxon_feeding_group.res_uid
-       left join wqx.citation taxon_citation
-         on result_taxon_detail.citatn_uid = taxon_citation.citatn_uid
-       left join wqx.cell_form
-         on result_taxon_detail.celfrm_uid = cell_form.celfrm_uid
-       left join wqx.cell_shape
-         on result_taxon_detail.celshp_uid = cell_shape.celshp_uid
-       left join wqx_attached_object_result
-         on result.org_uid = wqx_attached_object_result.org_uid and
-            result.res_uid = wqx_attached_object_result.ref_uid
-       left join wqx_result_frequency_class
-         on result.res_uid = wqx_result_frequency_class.res_uid
- where result.ressta_uid != 4
+       join wqx."RESULT" result
+         on activity_swap_storet.activity_id = result."ACT_UID"
+       left join wqx."METHOD_SPECIATION" method_speciation
+         on result."MTHSPC_UID" = method_speciation."MTHSPC_UID"
+       left join wqx."BIOLOGICAL_INTENT" biological_intent
+         on result."BIOINT_UID" = biological_intent."BIOINT_UID"
+       left join wqx."CHARACTERISTIC" characteristic
+         on result."CHR_UID" = characteristic."CHR_UID"
+       left join wqx."RESULT_DETECTION_CONDITION" result_detection_condition
+         on result."RDCND_UID" = result_detection_condition."RDCND_UID"
+       left join wqx."SAMPLE_FRACTION" sample_fraction
+         on result."SMFRC_UID" = sample_fraction."SMFRC_UID"
+       left join wqx."MEASUREMENT_UNIT" rmeasurement_unit
+         on result."MSUNT_UID_MEASURE" = rmeasurement_unit."MSUNT_UID"
+       left join wqx."RESULT_MEASURE_QUALIFIER" result_measure_qualifier
+         on result."RMQLF_UID" = result_measure_qualifier."RMQLF_UID"
+       left join wqx."RESULT_STATUS" result_status
+         on result."RESSTA_UID" = result_status."RESSTA_UID"
+       left join wqx."RESULT_STATISTICAL_BASE" result_statistical_base
+         on result."RSBAS_UID" = result_statistical_base."RSBAS_UID"
+       left join wqx."RESULT_VALUE_TYPE" result_value_type
+         on result."RVTYP_UID" = result_value_type."RVTYP_UID"
+       left join wqx."RESULT_WEIGHT_BASIS" result_weight_basis
+         on result."RWBAS_UID" = result_weight_basis."RWBAS_UID"
+       left join wqx."RESULT_TIME_BASIS" result_time_basis
+         on result."RTIMB_UID" = result_time_basis."RTIMB_UID"
+       left join wqx."RESULT_TEMPERATURE_BASIS" result_temperature_basis
+         on result."RTMPB_UID" = result_temperature_basis."RTMPB_UID"
+       left join wqx."MEASUREMENT_UNIT" dhmeasurement_unit
+         on result."MSUNT_UID_DEPTH_HEIGHT" = dhmeasurement_unit."MSUNT_UID"
+       left join wqx."MEASUREMENT_UNIT" group_summ_ct_wt
+         on result."MSUNT_UID_GROUP_SUMMARY_CT_WT" = group_summ_ct_wt."MSUNT_UID"
+       left join wqx.analytical_method_plus_nemi
+         on result."ANLMTH_UID" = analytical_method_plus_nemi.anlmth_uid
+       left join wqx.detection_quant_limit
+         on result."RES_UID" = wqx.detection_quant_limit.res_uid
+       left join wqx.result_lab_sample_prep_sum
+         on result."RES_UID" = wqx.result_lab_sample_prep_sum.res_uid
+       left join wqx."TIME_ZONE" analysis_start
+         on result."TMZONE_UID_LAB_ANALYSIS_START" = analysis_start."TMZONE_UID"
+       left join wqx."TIME_ZONE" analysis_end
+         on result."TMZONE_UID_LAB_ANALYSIS_END" = analysis_end."TMZONE_UID" 
+       left join wqx."TAXON" taxon
+         on result."TAX_UID" = taxon."TAX_UID"
+       left join wqx."SAMPLE_TISSUE_ANATOMY" sample_tissue_anatomy
+         on result."STANT_UID" = sample_tissue_anatomy."STANT_UID"
+       left join wqx."RESULT_LAB_COMMENT" result_lab_comment
+         on result."RLCOM_UID" = result_lab_comment."RLCOM_UID"
+       left join wqx."CHARACTERISTIC_GROUP" characteristic_group
+         on characteristic."CHRGRP_UID" = characteristic_group."CHRGRP_UID"
+       left join wqx.result_taxon_habit_aggregated
+         on result."RES_UID" = result_taxon_habit_aggregated.res_uid
+       left join wqx."RESULT_TAXON_DETAIL" result_taxon_detail
+         on result."RES_UID" = result_taxon_detail."RES_UID"
+       left join wqx."VOLTINISM" voltinism
+         on result_taxon_detail."VOLT_UID" = voltinism."VOLT_UID"
+       left join wqx.result_taxon_feeding_group_aggregated
+         on result."RES_UID" = result_taxon_feeding_group_aggregated.res_uid
+       left join wqx."CITATION" taxon_citation
+         on result_taxon_detail."CITATN_UID" = taxon_citation."CITATN_UID"
+       left join wqx."CELL_FORM" cell_form
+         on result_taxon_detail."CELFRM_UID" = cell_form."CELFRM_UID"
+       left join wqx."CELL_SHAPE" cell_shape
+         on result_taxon_detail."CELSHP_UID" = cell_shape."CELSHP_UID"
+--       left join wqx_attached_object_result
+--         on result.org_uid = wqx_attached_object_result.org_uid and
+--            result."RES_UID" = wqx_attached_object_result.ref_uid
+       left join wqx.result_frequency_class_aggregated
+         on result."RES_UID" = result_frequency_class_aggregated.res_uid
+ where result."RESSTA_UID" != 4

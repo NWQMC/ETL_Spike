@@ -1,4 +1,4 @@
-insert /*+ append parallel(4) */
+insert
   into prj_ml_weighting_swap_storet (data_source_id,
                                      project_id,
                                      station_id,
@@ -37,29 +37,29 @@ select  3 data_source_id,
         station_swap_storet.huc huc,
         station_swap_storet.governmental_unit_code governmental_unit_code,
         project_data_swap_storet.project_identifier project_identifier,
-        monitoring_location_weight.mlwt_weighting_factor measure_value,
-        measurement_unit.msunt_cd unit_code,
-        monitoring_location_weight.mlwt_stratum statistical_stratum,
-        monitoring_location_weight.mlwt_category location_category,
-        monitoring_location_weight.mlwt_status location_status,
-        reference_location_type.rltyp_cd ref_location_type_code,
-        monitoring_location_weight.mlwt_ref_loc_start_date ref_location_start_date,
-        monitoring_location_weight.mlwt_ref_loc_end_date ref_location_end_date,
-        citation.citatn_title resource_title,
-        citation.citatn_creator resource_creator,
-        citation.citatn_subject resource_subject,
-        citation.citatn_publisher resource_publisher,
-        citation.citatn_date resource_date,
-        citation.citatn_id resource_identifier,
-        monitoring_location_weight.mlwt_comment comment_text
-  from wqx.monitoring_location_weight
-        left join wqx.reference_location_type
-          on monitoring_location_weight.rltyp_uid = reference_location_type.rltyp_uid
-        join wqx.measurement_unit
-          on monitoring_location_weight.msunt_uid = measurement_unit.msunt_uid
-        join wqx.citation
-          on monitoring_location_weight.citatn_uid = citation.citatn_uid
-        join wqp_core.station_swap_storet
-          on monitoring_location_weight.mloc_uid = station_swap_storet.station_id
-        join wqp_core.project_data_swap_storet
-          on monitoring_location_weight.prj_uid = project_data_swap_storet.project_id
+        monitoring_location_weight."MLWT_WEIGHTING_FACTOR" measure_value,
+        measurement_unit."MSUNT_CD" unit_code,
+        monitoring_location_weight."MLWT_STRATUM" statistical_stratum,
+        monitoring_location_weight."MLWT_CATEGORY" location_category,
+        monitoring_location_weight."MLWT_STATUS" location_status,
+        reference_location_type."RLTYP_CD" ref_location_type_code,
+        monitoring_location_weight."MLWT_REF_LOC_START_DATE" ref_location_start_date,
+        monitoring_location_weight."MLWT_REF_LOC_END_DATE" ref_location_end_date,
+        citation."CITATN_TITLE" resource_title,
+        citation."CITATN_CREATOR" resource_creator,
+        citation."CITATN_SUBJECT" resource_subject,
+        citation."CITATN_PUBLISHER" resource_publisher,
+        citation."CITATN_DATE" resource_date,
+        citation."CITATN_ID" resource_identifier,
+        monitoring_location_weight."MLWT_COMMENT" comment_text
+  from wqx."MONITORING_LOCATION_WEIGHT" monitoring_location_weight
+        left join wqx."REFERENCE_LOCATION_TYPE" reference_location_type
+          on monitoring_location_weight."RLTYP_UID" = reference_location_type."RLTYP_UID"
+        join wqx."MEASUREMENT_UNIT" measurement_unit
+          on monitoring_location_weight."MSUNT_UID" = measurement_unit."MSUNT_UID"
+        join wqx."CITATION" citation
+          on monitoring_location_weight."CITATN_UID" = citation."CITATN_UID"
+        join station_swap_storet
+          on monitoring_location_weight."MLOC_UID" = station_swap_storet.station_id
+        join project_data_swap_storet
+          on monitoring_location_weight."PRJ_UID" = project_data_swap_storet.project_id

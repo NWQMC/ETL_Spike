@@ -53,8 +53,8 @@ public class TransformProjectData {
 	public Flow projectDataFlow() {
 		return new FlowBuilder<SimpleFlow>("projectDataFlow")
 				.start(setupProjectDataSwapTableFlow)
-				//TODO - WQP-1416
-//				.next(transformProjectDataWqxStep())
+				//TODO - WQP-1416 & urlencoding & blob urls
+				.next(transformProjectDataWqxStep())
 //				.next(transformProjectDataStoretwStep())
 				.next(afterLoadProjectDataFlow)
 				.build();

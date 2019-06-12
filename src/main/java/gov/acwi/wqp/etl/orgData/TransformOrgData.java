@@ -54,7 +54,7 @@ public class TransformOrgData {
 		return new FlowBuilder<SimpleFlow>("orgDataFlow")
 				.start(setupOrgDataSwapTableFlow)
 				//TODO - WQP-1415
-//				.next(transformOrgDataWqxStep())
+				.next(transformOrgDataWqxStep())
 //				.next(transformOrgDataStoretwStep())
 				.next(afterLoadOrgDataFlow)
 				.build();

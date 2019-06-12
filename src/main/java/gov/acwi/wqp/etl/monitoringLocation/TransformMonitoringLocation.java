@@ -120,13 +120,13 @@ public class TransformMonitoringLocation {
 		return new FlowBuilder<SimpleFlow>("monitoringLocationFlow")
 				.start(setupMonitoringLocationSwapTableFlow)
 				//TODO - WQP-1418
-//				.next(purgeWqxMonitoringLocationLocalWqxStep())
-//				.next(updateWqxMonitoringLocationLocalWqxStep())
+				.next(purgeWqxMonitoringLocationLocalWqxStep())
+				.next(updateWqxMonitoringLocationLocalWqxStep())
 //				.next(purgeWqxMonitoringLocationLocalStoretwStep())
 //				.next(updateWqxMonitoringLocationLocalStoretwStep())
-//				.next(calculateHucStep())
+				.next(calculateHucStep())
 //				.next(calculateGeopoliticalDataStep())
-//				.next(transformMonitoringLocationWqxStep())
+				.next(transformMonitoringLocationWqxStep())
 //				.next(transformMonitoringLocationStoretwStep())
 				.next(afterLoadMonitoringLocationFlow)
 				.build();

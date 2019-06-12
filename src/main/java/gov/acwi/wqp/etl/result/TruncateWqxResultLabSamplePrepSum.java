@@ -22,7 +22,7 @@ public class TruncateWqxResultLabSamplePrepSum implements Tasklet {
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		jdbcTemplate.execute("truncate table wqx_result_lab_sample_prep_sum");
+		jdbcTemplate.execute("truncate table wqx.result_lab_sample_prep_sum");
 		return RepeatStatus.FINISHED;
 	}
 }

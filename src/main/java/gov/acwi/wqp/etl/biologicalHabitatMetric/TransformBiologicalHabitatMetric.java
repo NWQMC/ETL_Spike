@@ -43,7 +43,7 @@ public class TransformBiologicalHabitatMetric {
 		return new FlowBuilder<SimpleFlow>("biologicalHabitatMetricFlow")
 				.start(setupBiologicalHabitatMetricSwapTableFlow)
 				//TODO - WQP-1458
-//				.next(transformBiologicalHabitatMetricWqxStep())
+				.next(transformBiologicalHabitatMetricWqxStep())
 				.next(afterLoadBiologicalHabitatMetricFlow)
 				.build();
 	}

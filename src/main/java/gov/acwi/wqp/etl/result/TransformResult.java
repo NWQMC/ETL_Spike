@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 
 import gov.acwi.wqp.etl.EtlConstantUtils;
 
@@ -311,15 +312,21 @@ public class TransformResult {
 	@Bean
 	public Flow resultFlow() {
 		return new FlowBuilder<SimpleFlow>("resultFlow")
-				.start(setupResultSwapTableFlow)
-				//TODO - WQP-1426
+				.start(setupResultSwapTableFlow) //REMOVE & REPLACE WITH BELOW...
+				//TODO - WQP-1426 & urlencoding & blob urls
 //				.start(wqpNemiEpaCrosswalkFlow())
-//				.split(new SimpleAsyncTaskExecutor())
-//				.add(wqxAnalyticalMethodFlow(), wqxRDetectQntLmtFlow(),
-//						wqxResultTaxonHabitFlow(), wqxResultTaxonFeedingGroupFlow(),
-//						wqxAttachedObjectResultFlow(), wqxResultLabSamplePrepSumFlow(),
-//						wqxResultFrequencyClassFlow(), setupResultSwapTableFlow)
-//				.next(transformResultWqxStep())
+				.split(new SimpleAsyncTaskExecutor())
+					.add(
+							wqxAnalyticalMethodFlow(),
+							wqxRDetectQntLmtFlow(),
+							wqxResultTaxonHabitFlow(),
+							wqxResultTaxonFeedingGroupFlow(),
+//							wqxAttachedObjectResultFlow(),
+							wqxResultLabSamplePrepSumFlow(),
+							wqxResultFrequencyClassFlow()
+//							setupResultSwapTableFlow
+							)
+				.next(transformResultWqxStep())
 //				.next(transformResultStoretwStep())
 				.next(afterLoadResultFlow)
 				.build();
