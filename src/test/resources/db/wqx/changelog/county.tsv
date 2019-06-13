@@ -1,4 +1,4 @@
-cnty_uid	st_uid	cnty_name	cnty_fips_cd	cnty_last_change_date	usr_uid_last_change
+CNTY_UID	ST_UID	CNTY_NAME	CNTY_FIPS_CD	CNTY_LAST_CHANGE_DATE	USR_UID_LAST_CHANGE
 1486	26	Harrison	081	8/12/2006 12:21:21 AM	1
 1487	26	Henry	083	8/12/2006 12:21:21 AM	1
 1488	26	Hickory	085	8/12/2006 12:21:21 AM	1

@@ -7,8 +7,8 @@ insert
 select 3 data_source_id,
        'STORET' data_source,
        monitoring_location."MLOC_UID" station_id,
-       org."ORG_UID" || '-' || monitoring_location."MLOC_ID" site_id,
-       org."ORG_UID" organization,
+       org."ORG_ID" || '-' || monitoring_location."MLOC_ID" site_id,
+       org."ORG_ID" organization,
        site_type_conversion.station_group_type site_type,
        coalesce(monitoring_location_local.calculated_huc_12, coalesce("MLOC_HUC_12", "MLOC_HUC_8")) huc,
        case
@@ -64,4 +64,4 @@ select 3 data_source_id,
          on monitoring_location."MLTYP_UID" = monitoring_location_type."MLTYP_UID"
        left join wqx.site_type_conversion
          on monitoring_location."MLTYP_UID" = site_type_conversion.mltyp_uid
- where org."ORG_UID" not between 2000 and 2999
+ where monitoring_location."ORG_UID" not between 2000 and 2999

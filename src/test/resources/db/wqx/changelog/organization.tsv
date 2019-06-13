@@ -1,5 +1,5 @@
-org_uid	trb_uid	org_id	org_name	org_desc	org_last_change_date	org_type	usr_uid_last_change	org_trans_id	org_in_sync_with_test_yn
-605		WIDNR_WQX	Wisconsin Department of Natural Resources	Wisconsin Department of Natural Resources.	11/1/2018 5:46:20 AM	*State/US Government	776	_19b54e63-4661-4e08-bc61-4dcb04b2ee9c	N
-221		21GAEPD_WQX	Georgia DNR Environmental Protection Division	Georgia DNR Environmental Protection Division	10/11/2018 10:50:05 AM	*State/US Government	11222	_1c2aebfa-7df2-4cd3-a4d8-21ed0a78b84c	N
-585	115	STORLVD_WQX	Lac Vieux Desert Band of Lake Superior Chippewa Indians of Michigan	LAC VIEUX DESERT BAND OF LAKE SUPERIOR CHIPPEWA;	11/30/2017 11:04:49 AM	Tribal	7340	_69fb9f92-6a7a-40c3-972c-d4155b60da1a	Y
-2002		WQXWEBTRAINING2	Training Organization 2		2/15/2018 3:38:13 PM	Volunteer	902	_77795c03-b26f-4c56-9cdf-46e20517e313	Y
+ORG_UID	TRB_UID	ORG_ID	ORG_NAME	ORG_DESC	ORG_LAST_CHANGE_DATE	ORG_TYPE	USR_UID_LAST_CHANGE	ORG_TRANS_ID	ORG_IN_SYNC_WITH_TEST_YN
+605		WIDNR_WQX	Wisconsin Department of Natural Resources	Wisconsin Department of Natural Resources.	2018-11-01 05:46:20	*State/US Government	776	_19b54e63-4661-4e08-bc61-4dcb04b2ee9c	N
+221		21GAEPD_WQX	Georgia DNR Environmental Protection Division	Georgia DNR Environmental Protection Division	2018-10-10 10:50:05	*State/US Government	11222	_1c2aebfa-7df2-4cd3-a4d8-21ed0a78b84c	N
+585	115	STORLVD_WQX	Lac Vieux Desert Band of Lake Superior Chippewa Indians of Michigan	LAC VIEUX DESERT BAND OF LAKE SUPERIOR CHIPPEWA;	2017-11-30 11:04:49	Tribal	7340	_69fb9f92-6a7a-40c3-972c-d4155b60da1a	Y
+2002		WQXWEBTRAINING2	Training Organization 2		2018-02-15 15:38:13	Volunteer	902	_77795c03-b26f-4c56-9cdf-46e20517e313	Y

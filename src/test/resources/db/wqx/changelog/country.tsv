@@ -1,4 +1,4 @@
-cntry_uid	cntry_cd	cntry_name	cntry_last_change_date	usr_uid_last_change
+CNTRY_UID	CNTRY_CD	CNTRY_NAME	CNTRY_LAST_CHANGE_DATE	USR_UID_LAST_CHANGE
 1	US	United States	7/26/2006 10:57:47 AM	1
 2	CA	Canada	1/4/2017 8:03:06 AM	100
 3	MX	Mexico	7/26/2006 10:57:47 AM	1

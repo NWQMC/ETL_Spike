@@ -1,259 +1,310 @@
 databaseChangeLog:
   - preConditions:
     - dbms:
-        type: oracle
+        type: postgresql
 
   - changeSet:
-      id: load.wqx.activity_metric
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.activity_metric
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: activity_metric
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: ACTIVITY_METRIC
         - loadData:
             encoding: UTF-8
             file: activity_metric.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: activity_metric
-        - rollback: truncate table activity_metric
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: ACTIVITY_METRIC
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.ACTIVITY_METRIC
 
   - changeSet:
-      id: load.wqx.organization
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.organization
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: organization
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: ORGANIZATION
         - loadData:
             encoding: UTF-8
             file: organization.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: organization
-        - rollback: truncate table organization
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: ORGANIZATION
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.organization
 
   - changeSet:
-      id: load.wqx.tribe
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.tribe
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: tribe
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: TRIBE
         - loadData:
             encoding: UTF-8
             file: tribe.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: tribe
-        - rollback: truncate table tribe
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: TRIBE
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.tribe
 
   - changeSet:
-      id: load.wqx.org_electronic_address
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.org_electronic_address
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: org_electronic_address
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: ORG_ELECTRONIC_ADDRESS
         - loadData:
             encoding: UTF-8
             file: org_electronic_address.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: org_electronic_address
-        - rollback: truncate table org_electronic_address
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: ORG_ELECTRONIC_ADDRESS
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.org_electronic_address
 
   - changeSet:
-      id: load.wqx.electronic_address_type
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.electronic_address_type
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: electronic_address_type
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: ELECTRONIC_ADDRESS_TYPE
         - loadData:
             encoding: UTF-8
             file: electronic_address_type.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: electronic_address_type
-        - rollback: truncate table electronic_address_type
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: ELECTRONIC_ADDRESS_TYPE
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.electronic_address_type
 
   - changeSet:
-      id: load.wqx.org_phone
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.org_phone
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: org_phone
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: ORG_PHONE
         - loadData:
             encoding: UTF-8
             file: org_phone.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: org_phone
-        - rollback: truncate table org_phone
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: ORG_PHONE
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.org_phone
 
   - changeSet:
-      id: load.wqx.phone_type
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.phone_type
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: phone_type
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: PHONE_TYPE
         - loadData:
             encoding: UTF-8
             file: phone_type.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: phone_type
-        - rollback: truncate table phone_type
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: PHONE_TYPE
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.phone_type
 
   - changeSet:
-      id: load.wqx.org_address
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.org_address
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: org_address
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: ORG_ADDRESS
         - loadData:
             encoding: UTF-8
             file: org_address.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: org_address
-        - rollback: truncate table org_address
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: ORG_ADDRESS
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.org_address
 
   - changeSet:
-      id: load.wqx.address_type
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.address_type
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: address_type
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: ADDRESS_TYPE
         - loadData:
             encoding: UTF-8
             file: address_type.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: address_type
-        - rollback: truncate table address_type
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: ADDRESS_TYPE
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.address_type
 
   - changeSet:
-      id: load.wqx.country
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.country
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: country
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: COUNTRY
         - loadData:
             encoding: UTF-8
             file: country.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: country
-        - rollback: truncate table country
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: COUNTRY
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.country
 
   - changeSet:
-      id: load.wqx.state
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.state
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: state
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: STATE
         - loadData:
             encoding: UTF-8
             file: state.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: state
-        - rollback: truncate table state
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: STATE
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.state
 
   - changeSet:
-      id: load.wqx.county
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.county
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: county
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: COUNTY
         - loadData:
             encoding: UTF-8
             file: county.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: county
-        - rollback: truncate table county
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: COUNTY
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.county
 
   - changeSet:
-      id: load.wqx.project
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.project
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: project
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: PROJECT
         - loadData:
             encoding: UTF-8
             file: project.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: project
-        - rollback: truncate table project
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: PROJECT
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.project
 
   - changeSet:
-      id: load.wqx.sampling_design_type
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.sampling_design_type
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: sampling_design_type
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: SAMPLING_DESIGN_TYPE
         - loadData:
             encoding: UTF-8
             file: sampling_design_type.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: sampling_design_type
-        - rollback: truncate table county
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: SAMPLING_DESIGN_TYPE
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.sampling_design_type
+
+#  - changeSet:
+#    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+#      id: load.${WQX_SCHEMA_NAME}.attached_object
+#      author: drsteini
+#      runAlways: true
+#      changes:
+#        - delete:
+#            schemaName: ${WQX_SCHEMA_NAME}
+#            tableName: attached_object
+#        - loadData:
+#            encoding: UTF-8
+#            file: attached_object.tsv
+#            relativeToChangelogFile: true
+#            separator: \t
+#            schemaName: ${WQX_SCHEMA_NAME}
+#            tableName: attached_object
+#        - rollback: truncate table ${WQX_SCHEMA_NAME}.attached_object
 
   - changeSet:
-      id: load.wqx.attached_object
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.monitoring_location_weight
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: attached_object
-        - loadData:
-            encoding: UTF-8
-            file: attached_object.tsv
-            relativeToChangelogFile: true
-            separator: \t
-            tableName: attached_object
-        - rollback: truncate table attached_object
-
-  - changeSet:
-      id: load.wqx.monitoring_location_weight
-      author: drsteini
-      runAlways: true
-      changes:
-        - delete:
-            tableName: monitoring_location_weight
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: MONITORING_LOCATION_WEIGHT
         - loadData:
             encoding: UTF-8
             file: monitoring_location_weight.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: monitoring_location_weight
-        - rollback: truncate table monitoring_location_weight
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: MONITORING_LOCATION_WEIGHT
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.monitoring_location_weight
 
   - changeSet:
-      id: load.wqx.monitoring_location
+    - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+      id: load.${WQX_SCHEMA_NAME}.monitoring_location
       author: drsteini
       runAlways: true
       changes:
         - delete:
-            tableName: monitoring_location
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: MONITORING_LOCATION
         - loadData:
             encoding: UTF-8
             file: monitoring_location.tsv
             relativeToChangelogFile: true
             separator: \t
-            tableName: monitoring_location
-        - rollback: truncate table monitoring_location
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: MONITORING_LOCATION
+        - rollback: truncate table ${WQX_SCHEMA_NAME}.monitoring_location

@@ -1,4 +1,4 @@
-insert /*+ append parallel(4) */
+insert
   into r_detect_qnt_lmt_swap_storet(data_source_id, data_source, station_id, site_id, event_date, activity, analytical_method,
                                     characteristic_name, characteristic_type, sample_media, organization, site_type, huc, governmental_unit_code,
                                     organization_name, project_id, assemblage_sampled_name, sample_tissue_taxonomic_name, activity_id,
@@ -6,8 +6,7 @@ insert /*+ append parallel(4) */
 select 3 data_source_id,
        'STORET' data_source,
        a.*
-  from (select /*+ parallel(4) */
-               station.station_id,
+  from (select station.station_id,
                station.site_id,
                result_no_source.event_date,
                result_no_source.activity,
@@ -29,6 +28,6 @@ select 3 data_source_id,
                result_no_source.detection_limit,
                result_no_source.detection_limit_unit,
                result_no_source.detection_limit_desc
-          from result_no_source
+          from storetw.result_no_source
                join station_swap_storet station
                  on result_no_source.station_id + 10000000 = station.station_id) a

@@ -1,5 +1,5 @@
-delete from wqx_station_local
- where station_source = 'STORETW' and
+delete from wqx.monitoring_location_local
+ where monitoring_location_source = 'STORETW' and
        not exists (select null
-                     from station_no_source
-                    where wqx_station_local.station_id = station_no_source.station_id)
+                     from storetw.station_no_source
+                    where monitoring_location_local.station_id = station_no_source.station_id)

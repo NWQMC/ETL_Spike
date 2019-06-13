@@ -21,7 +21,7 @@ import org.springframework.util.FileCopyUtils;
 
 import gov.acwi.wqp.etl.MapItemSqlParameterSourceProvider;
 
-//TODO - WQP-1428
+//TODO - WQP-1428/WQP-1476
 //@Configuration
 public class TransformWqpNemiEpaCrosswalk {
 
