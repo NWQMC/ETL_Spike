@@ -8,7 +8,7 @@
                               project_identifier="MR003"
                               project_name="2003-04 AMBIENT MONITORING"
                               description="Mississippi River"
-                              project_file_url="/organizations/WIDNR_WQX/projects/MR003/files" />
+    />
     <project_data_swap_storet data_source_id="3"
                               project_id="51659"
                               data_source="STORET"
@@ -20,6 +20,5 @@
                               sampling_design_type_code="Probabilistic - A probability sampling method is any method of sampling that utilizes some form of random selection. In order to have a random selection method, you must set up some process or procedure that assures that the different units in your population have equal probabilities of being chosen."
                               qapp_approved_indicator="N"
                               qapp_approval_agency_name="Test Approval"
-                              project_file_url="/organizations/WIDNR_WQX/projects/BEACH_SEQ%3D87/files"
-                              monitoring_location_weight_url="/organizations/WIDNR_WQX/projects/BEACH_SEQ%3D87/projectMonitoringLocationWeightings" />
+    />
 </dataset>

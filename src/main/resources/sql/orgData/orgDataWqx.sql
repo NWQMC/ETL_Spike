@@ -16,7 +16,27 @@ with addresses as (select org_address."ORG_UID" org_uid,
                           left join wqx.state
                             on org_address."ST_UID" = state.st_uid
                           left join wqx.county
-                            on org_address."CNTY_UID" = county.cnty_uid)
+                            on org_address."CNTY_UID" = county.cnty_uid
+                  ),
+     phones as (select "ORG_UID" org_uid,
+                       string_agg("ORGPH_NUM" ||
+                                      case when "ORGPH_EXT" is not null then ' x' || "ORGPH_EXT" else '' end ||
+                                      ' (' || "PHTYP_NAME" || ')',
+                                  ';'
+                                  order by "ORGPH_UID"
+                                 ) telephonic
+                  from wqx."ORG_PHONE" org_phone
+                       join wqx."PHONE_TYPE" phone_type
+                         on org_phone."PHTYP_UID" = phone_type."PHTYP_UID"
+                    group by org_uid
+               ),
+     emails as (select "ORG_UID" org_uid,
+                       string_agg("ORGEA_TEXT" || ' (' || "EATYP_NAME" || ')', ';' order by "ORGEA_UID") electronic_address
+                  from wqx."ORG_ELECTRONIC_ADDRESS" org_electronic_address
+                       join wqx."ELECTRONIC_ADDRESS_TYPE" electronic_address_type
+                         on org_electronic_address."EATYP_UID" = electronic_address_type."EATYP_UID"
+                    group by org_uid
+               )
 insert
   into org_data_swap_storet (data_source_id, data_source, organization_id, organization, organization_name,
                              organization_description, organization_type, tribal_code, electronic_address, telephonic, address_type_1,
@@ -63,22 +83,9 @@ select 3 data_source_id,
   from wqx."ORGANIZATION" organization
        left join wqx."TRIBE" tribe
          on organization."TRB_UID" = tribe."TRB_UID"
-       left join (select "ORG_UID" org_uid,
-                         string_agg("ORGEA_TEXT" || ' (' || "EATYP_NAME" || ')', ';' order by "ORGEA_UID") electronic_address
-                    from wqx."ORG_ELECTRONIC_ADDRESS" org_electronic_address
-                         join wqx."ELECTRONIC_ADDRESS_TYPE" electronic_address_type
-                           on org_electronic_address."EATYP_UID" = electronic_address_type."EATYP_UID"
-                      group by org_uid) org_electronic_address
+       left join emails org_electronic_address
          on organization."ORG_UID" = org_electronic_address.org_uid
-       left join (select "ORG_UID" org_uid,
-                         string_agg("ORGPH_NUM" ||
-                                   case when "ORGPH_EXT" is not null then ' x' || "ORGPH_EXT" end || 
-                                   ' (' || "PHTYP_NAME" || ')', ';'
-                             order by "ORGPH_UID") telephonic
-                    from wqx."ORG_PHONE" org_phone
-                         join wqx."PHONE_TYPE" phone_type
-                           on org_phone."PHTYP_UID" = phone_type."PHTYP_UID"
-                      group by org_uid) org_phone
+       left join phones org_phone
          on organization."ORG_UID" = org_phone.org_uid
        left join addresses addresses1
           on organization."ORG_UID" = addresses1.org_uid and

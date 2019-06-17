@@ -1,0 +1,16 @@
+activity_metric
+organization
+tribe
+org_electronic_address
+electronic_address_type
+org_phone
+phone_type
+org_address
+address_type
+country
+state
+county
+project
+sampling_design_type
+monitoring_location_weight
+monitoring_location
