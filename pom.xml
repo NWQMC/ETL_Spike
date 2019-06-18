@@ -190,20 +190,20 @@
                                     <WQP_SCHEMA_OWNER_PASSWORD>changeMe</WQP_SCHEMA_OWNER_PASSWORD>
                                     <WQP_READ_ONLY_USERNAME>wqp_user</WQP_READ_ONLY_USERNAME>
                                     <WQP_READ_ONLY_PASSWORD>changeMe</WQP_READ_ONLY_PASSWORD>
-<!--                                     <ARS_DATABASE_ADDRESS>127.0.0.1</ARS_DATABASE_ADDRESS> -->
-<!--                                     <ARS_DATABASE_NAME>wqp_db</ARS_DATABASE_NAME> -->
-<!--                                     <ARS_DB_OWNER_USERNAME>wqp_core</ARS_DB_OWNER_USERNAME> -->
-<!--                                     <ARS_DB_OWNER_PASSWORD>changeMe</ARS_DB_OWNER_PASSWORD> -->
-<!--                                     <ARS_SCHEMA_NAME>ars</ARS_SCHEMA_NAME> -->
-<!--                                     <ARS_SCHEMA_OWNER_USERNAME>ars_owner</ARS_SCHEMA_OWNER_USERNAME> -->
-<!--                                     <ARS_SCHEMA_OWNER_PASSWORD>changeMe</ARS_SCHEMA_OWNER_PASSWORD> -->
-<!--                                     <BIODATA_DATABASE_ADDRESS>127.0.0.1</BIODATA_DATABASE_ADDRESS> -->
-<!--                                     <BIODATA_DATABASE_NAME>wqp_db</BIODATA_DATABASE_NAME> -->
-<!--                                     <BIODATA_DB_OWNER_USERNAME>wqp_core</BIODATA_DB_OWNER_USERNAME> -->
-<!--                                     <BIODATA_DB_OWNER_PASSWORD>changeMe</BIODATA_DB_OWNER_PASSWORD> -->
-<!--                                     <BIODATA_SCHEMA_NAME>biodata</BIODATA_SCHEMA_NAME> -->
-<!--                                     <BIODATA_SCHEMA_OWNER_USERNAME>biodata_owner</BIODATA_SCHEMA_OWNER_USERNAME> -->
-<!--                                     <BIODATA_SCHEMA_OWNER_PASSWORD>changeMe</BIODATA_SCHEMA_OWNER_PASSWORD> -->
+                                    <ARS_DATABASE_ADDRESS>127.0.0.1</ARS_DATABASE_ADDRESS>
+                                    <ARS_DATABASE_NAME>wqp_db</ARS_DATABASE_NAME>
+                                    <ARS_DB_OWNER_USERNAME>wqp_core</ARS_DB_OWNER_USERNAME>
+                                    <ARS_DB_OWNER_PASSWORD>changeMe</ARS_DB_OWNER_PASSWORD>
+                                    <ARS_SCHEMA_NAME>ars</ARS_SCHEMA_NAME>
+                                    <ARS_SCHEMA_OWNER_USERNAME>ars_owner</ARS_SCHEMA_OWNER_USERNAME>
+                                    <ARS_SCHEMA_OWNER_PASSWORD>changeMe</ARS_SCHEMA_OWNER_PASSWORD>
+                                    <BIODATA_DATABASE_ADDRESS>127.0.0.1</BIODATA_DATABASE_ADDRESS>
+                                    <BIODATA_DATABASE_NAME>wqp_db</BIODATA_DATABASE_NAME>
+                                    <BIODATA_DB_OWNER_USERNAME>wqp_core</BIODATA_DB_OWNER_USERNAME>
+                                    <BIODATA_DB_OWNER_PASSWORD>changeMe</BIODATA_DB_OWNER_PASSWORD>
+                                    <BIODATA_SCHEMA_NAME>biodata</BIODATA_SCHEMA_NAME>
+                                    <BIODATA_SCHEMA_OWNER_USERNAME>biodata_owner</BIODATA_SCHEMA_OWNER_USERNAME>
+                                    <BIODATA_SCHEMA_OWNER_PASSWORD>changeMe</BIODATA_SCHEMA_OWNER_PASSWORD>
                                     <NWIS_DATABASE_ADDRESS>127.0.0.1</NWIS_DATABASE_ADDRESS>
                                     <NWIS_DATABASE_NAME>wqp_db</NWIS_DATABASE_NAME>
                                     <NWIS_DB_OWNER_USERNAME>wqp_core</NWIS_DB_OWNER_USERNAME>
@@ -215,40 +215,19 @@
                                     <EPA_DATABASE_NAME>wqp_db</EPA_DATABASE_NAME>
                                     <EPA_DB_OWNER_USERNAME>wqp_core</EPA_DB_OWNER_USERNAME>
                                     <EPA_DB_OWNER_PASSWORD>changeMe</EPA_DB_OWNER_PASSWORD>
-                                    <EPA_SCHEMA_OWNER_USERNAME>wqx_owner</EPA_SCHEMA_OWNER_USERNAME>
+                                    <EPA_SCHEMA_OWNER_USERNAME>epa_owner</EPA_SCHEMA_OWNER_USERNAME>
                                     <EPA_SCHEMA_OWNER_PASSWORD>changeMe</EPA_SCHEMA_OWNER_PASSWORD>
                                     <WQX_SCHEMA_NAME>wqx</WQX_SCHEMA_NAME>
                                     <STORETW_SCHEMA_NAME>storetw</STORETW_SCHEMA_NAME>
                                 </env>
                                 <wait>
-                                    <time>65000</time>
+                                    <time>75000</time>
                                 </wait>
                             </run>
                         </image>
                     </images>
                 </configuration>
             </plugin>
-<!--             <plugin> -->
-<!--                 <groupId>org.liquibase</groupId> -->
-<!--                 <artifactId>liquibase-maven-plugin</artifactId> -->
-<!--                 <version>3.6.2</version> -->
-<!--                 <configuration> -->
-<!--                     <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase> -->
-<!--                     <changeLogFile>src/test/resources/db/wqx/changelog/db.changelog-master.yaml</changeLogFile> -->
-<!--                     <driver>org.postgresql.Driver</driver> -->
-<!--                     <url>127.0.0.1</url> -->
-<!--                     <username>epa_owner</username> -->
-<!--                     <password>changeMe</password> -->
-<!--                 </configuration> -->
-<!--                 <executions> -->
-<!--                     <execution> -->
-<!--                         <phase>process-resources</phase> -->
-<!--                         <goals> -->
-<!--                             <goal>update</goal> -->
-<!--                         </goals> -->
-<!--                     </execution> -->
-<!--                 </executions> -->
-<!--             </plugin> -->
         </plugins>
     </build>
 

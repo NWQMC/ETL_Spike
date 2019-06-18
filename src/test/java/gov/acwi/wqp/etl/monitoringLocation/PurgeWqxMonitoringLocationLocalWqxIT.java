@@ -18,6 +18,10 @@ public class PurgeWqxMonitoringLocationLocalWqxIT extends WqxBaseFlowIT {
 	@Test
 	@DatabaseSetup(
 			connection=WqxBaseFlowIT.CONNECTION_WQX,
+			value="classpath:/testData/wqx/csv/"
+			)
+	@DatabaseSetup(
+			connection=WqxBaseFlowIT.CONNECTION_WQX,
 			value="classpath:/testData/wqx/monitoringLocationLocal/monitoring_location_local.xml"
 			)
 	//TODO Handle GEOM & better test data (select bits from geom for compare OR override geom to be comparable)

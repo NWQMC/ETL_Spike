@@ -1,4 +1,0 @@
-EATYP_UID	EATYP_NAME	EATYP_DESC	EATYP_LAST_CHANGE_DATE	USR_UID_LAST_CHANGE
-1	Email	The electronic address type defined as an electronic mail (e-mail) address consisting of a username, the @ sign, and a mail domain name.	2006-07-26 10:57:47	1
-2	Internet	The electronic address type defined as an interconnected system of networks that connects computers around the world via the TCP/IP protocol.	2006-07-26 10:57:47	1
-3	Intranet	The electronic address type defined as a privately maintained computer network that can be accessed only by authorized persons, especially members or employees of the organization that owns it.	2006-07-26 10:57:47	1
