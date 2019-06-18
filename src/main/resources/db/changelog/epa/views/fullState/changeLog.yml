@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - preConditions:
+    - dbms:
+        type: postgresql
+
+  - changeSet:
+      author: drsteini
+      id: "create.view.${WQX_SCHEMA_NAME}.full_state"
+      preConditions:
+        - onFail: MARK_RAN
+        - onError: HALT
+        - not:
+          - viewExists:
+              schemaName: ${WQX_SCHEMA_NAME}
+              viewName: full_state
+      changes:
+        - sqlFile:
+            path: fullState.sql
+            relativeToChangelogFile: true
+        - rollback: drop view if exists ${WQX_SCHEMA_NAME}.full_state cascade;

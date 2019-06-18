@@ -3,7 +3,6 @@ package gov.acwi.wqp.etl.projectData;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
@@ -14,10 +13,13 @@ import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
 import gov.acwi.wqp.etl.WqxBaseFlowIT;
 
-@Ignore
 public class TransformProjectDataWqxIT extends WqxBaseFlowIT {
 
 	@Test
+	@DatabaseSetup(
+			connection=WqxBaseFlowIT.CONNECTION_WQX,
+			value="classpath:/testData/wqx/csv/"
+			)
 	@DatabaseSetup(value="classpath:/testData/wqp/projectData/storet/empty.xml")
 	@ExpectedDatabase(value="classpath:/testData/wqp/projectData/storet/project_data_swap_storet.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
 	public void transformTest() {

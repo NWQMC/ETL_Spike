@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - preConditions:
+    - dbms:
+        type: postgresql
+
+  - changeSet:
+      author: drsteini
+      id: "create.table.${WQX_SCHEMA_NAME}.activity_conducting_org_aggregated"
+      preConditions:
+        - onFail: MARK_RAN
+        - onError: HALT
+        - not:
+          - tableExists:
+              schemaName: ${WQX_SCHEMA_NAME}
+              tableName: activity_conducting_org_aggregated
+      changes:
+        - sqlFile:
+            path: activityConductingOrgAggregated.sql
+            relativeToChangelogFile: true
+        - rollback: drop table if exists ${WQX_SCHEMA_NAME}.activity_conducting_org_aggregated cascade;
+

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <monitoring_location_local monitoring_location_source="WQX"
+                       station_id="212"
+                       site_id="STORET"
+                       latitude="-88.977"
+                       longitude="43.383"
+                       hrdat_uid="2"
+                       cntry_cd="US"
+                       st_fips_cd="55"
+                       cnty_fips_cd="017"
+                       calculated_huc_12='070707070707'
+                       calculated_fips="55017"
+                       geom="0101000020AD100000C8500427913E56C0A3CA30EE06B14540"
+                       />
+    <monitoring_location_local monitoring_location_source="WQX"
+                       station_id="1070"
+                       site_id="WIDNR_WQX-143030"
+                       latitude="43.558292"
+                       longitude="-88.92052"
+                       hrdat_uid="2"
+                       huc="07090001"
+                       cntry_cd="US"
+                       st_fips_cd="55"
+                       cnty_fips_cd="027"
+                       calculated_huc_12='070900010902'
+                       calculated_fips="55027"
+                       geom="0101000020AD10000017D4B7CCE93A56C029CFBC1C76C74540"
+                       />
+    <monitoring_location_local monitoring_location_source="WQX"
+                       station_id="993"
+                       site_id="WIDNR_WQX-143268"
+                       latitude="43.380123"
+                       longitude="-88.894035"
+                       hrdat_uid="2"
+                       huc="07090001"
+                       cntry_cd="US"
+                       st_fips_cd="55"
+                       cnty_fips_cd="027"
+                       calculated_huc_12='070900010905'
+                       calculated_fips="55027"
+                       geom="0101000020AD100000AE9E93DE373956C08CBAD6DEA7B04540"
+                       />
+    <monitoring_location_local monitoring_location_source="WQX"
+                       station_id="578971"
+                       site_id="-SB14"
+                       latitude="40.56297"
+                       longitude="-74.85612"
+                       hrdat_uid="2"
+                       huc="02030105"
+                       cntry_cd="US"
+                       st_fips_cd="34"
+                       cnty_fips_cd="019"
+                       calculated_huc_12='020301051234'
+                       calculated_fips="34019"
+                       geom="0101000020AD100000E65C8AABCAB652C08750A5660F484440"
+                       />
+    <monitoring_location_local monitoring_location_source="STORETW"
+                       station_id="213"
+                       site_id="STORET"
+                       latitude="-89.007"
+                       longitude="43.436"
+                       hrdat_uid="2"
+                       cntry_cd="US"
+                       st_fips_cd="55"
+                       cnty_fips_cd="017"
+                       calculated_huc_12='070707070707'
+                       calculated_fips="55017"
+                       geom="0101000020AD1000001A0923AC7C4056C0B4226AA2CFB74540"
+                       />
+</dataset>

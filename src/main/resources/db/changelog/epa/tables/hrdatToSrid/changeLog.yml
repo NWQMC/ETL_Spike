@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - preConditions:
+    - dbms:
+        type: postgresql
+
+  - changeSet:
+      author: drsteini
+      id: "create.table.${WQX_SCHEMA_NAME}.hrdat_to_srid"
+      preConditions:
+        - onFail: MARK_RAN
+        - onError: HALT
+        - not:
+          - tableExists:
+              schemaName: ${WQX_SCHEMA_NAME}
+              tableName: hrdat_to_srid
+      changes:
+        - sqlFile:
+            path: hrdatToSrid.sql
+            relativeToChangelogFile: true
+        - rollback: drop table if exists ${WQX_SCHEMA_NAME}.hrdat_to_srid cascade;
+

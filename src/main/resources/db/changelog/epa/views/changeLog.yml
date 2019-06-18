@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - preConditions:
+    - dbms:
+        type: postgresql
+
+  - include:
+      file: "country/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "state/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "county/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "fullCountry/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "fullState/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "fullCounty/changeLog.yml"
+      relativeToChangelogFile: true

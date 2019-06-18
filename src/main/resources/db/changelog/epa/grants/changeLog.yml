@@ -1,0 +1,92 @@
+databaseChangeLog:
+  - preConditions:
+    - dbms:
+        type: postgresql
+
+  - changeSet:
+      author: drsteini
+      id: "grant.insert.truncate.${WQX_SCHEMA_NAME}.activity_conducting_org_aggregated.${WQP_SCHEMA_OWNER_USERNAME}"
+      changes:
+        - sql:
+            sql: grant insert,truncate on ${WQX_SCHEMA_NAME}.activity_conducting_org_aggregated to ${WQP_SCHEMA_OWNER_USERNAME};
+        - rollback: revoke insert,truncate on ${WQX_SCHEMA_NAME}.activity_conducting_org_aggregated from ${WQP_SCHEMA_OWNER_USERNAME};
+
+  - changeSet:
+      author: drsteini
+      id: "grant.insert.truncate.${WQX_SCHEMA_NAME}.activity_metric_sum.${WQP_SCHEMA_OWNER_USERNAME}"
+      changes:
+        - sql:
+            sql: grant insert,truncate on ${WQX_SCHEMA_NAME}.activity_metric_sum to ${WQP_SCHEMA_OWNER_USERNAME};
+        - rollback: revoke insert,truncate on ${WQX_SCHEMA_NAME}.activity_metric_sum from ${WQP_SCHEMA_OWNER_USERNAME};
+
+  - changeSet:
+      author: drsteini
+      id: "grant.insert.truncate.${WQX_SCHEMA_NAME}.activity_project_aggregated.${WQP_SCHEMA_OWNER_USERNAME}"
+      changes:
+        - sql:
+            sql: grant insert,truncate on ${WQX_SCHEMA_NAME}.activity_project_aggregated to ${WQP_SCHEMA_OWNER_USERNAME};
+        - rollback: revoke insert,truncate on ${WQX_SCHEMA_NAME}.activity_project_aggregated from ${WQP_SCHEMA_OWNER_USERNAME};
+
+  - changeSet:
+      author: drsteini
+      id: "grant.insert.truncate.${WQX_SCHEMA_NAME}.analytical_method_plus_nemi.${WQP_SCHEMA_OWNER_USERNAME}"
+      changes:
+        - sql:
+            sql: grant insert,truncate on ${WQX_SCHEMA_NAME}.analytical_method_plus_nemi to ${WQP_SCHEMA_OWNER_USERNAME};
+        - rollback: revoke insert,truncate on ${WQX_SCHEMA_NAME}.analytical_method_plus_nemi from ${WQP_SCHEMA_OWNER_USERNAME};
+
+  - changeSet:
+      author: drsteini
+      id: "grant.insert.truncate.${WQX_SCHEMA_NAME}.detection_quant_limit.${WQP_SCHEMA_OWNER_USERNAME}"
+      changes:
+        - sql:
+            sql: grant insert,truncate on ${WQX_SCHEMA_NAME}.detection_quant_limit to ${WQP_SCHEMA_OWNER_USERNAME};
+        - rollback: revoke insert,truncate on ${WQX_SCHEMA_NAME}.detection_quant_limit from ${WQP_SCHEMA_OWNER_USERNAME};
+
+  - changeSet:
+      author: drsteini
+      id: "grant.delete.insert.update.${WQX_SCHEMA_NAME}.monitoring_location_local.${WQP_SCHEMA_OWNER_USERNAME}"
+      changes:
+        - sql:
+            sql: grant delete,insert,update on ${WQX_SCHEMA_NAME}.monitoring_location_local to ${WQP_SCHEMA_OWNER_USERNAME};
+        - rollback: revoke delete,insert,update on ${WQX_SCHEMA_NAME}.monitoring_location_local from ${WQP_SCHEMA_OWNER_USERNAME};
+
+  - changeSet:
+      author: drsteini
+      id: "grant.insert.truncate.${WQX_SCHEMA_NAME}.r_detect_qnt_lmt.${WQP_SCHEMA_OWNER_USERNAME}"
+      changes:
+        - sql:
+            sql: grant insert,truncate on ${WQX_SCHEMA_NAME}.r_detect_qnt_lmt to ${WQP_SCHEMA_OWNER_USERNAME};
+        - rollback: revoke insert,truncate on ${WQX_SCHEMA_NAME}.r_detect_qnt_lmt from ${WQP_SCHEMA_OWNER_USERNAME};
+
+  - changeSet:
+      author: drsteini
+      id: "grant.insert.truncate.${WQX_SCHEMA_NAME}.result_frequency_class_aggregated.${WQP_SCHEMA_OWNER_USERNAME}"
+      changes:
+        - sql:
+            sql: grant insert,truncate on ${WQX_SCHEMA_NAME}.result_frequency_class_aggregated to ${WQP_SCHEMA_OWNER_USERNAME};
+        - rollback: revoke insert,truncate on ${WQX_SCHEMA_NAME}.result_frequency_class_aggregated from ${WQP_SCHEMA_OWNER_USERNAME};
+
+  - changeSet:
+      author: drsteini
+      id: "grant.insert.truncate.${WQX_SCHEMA_NAME}.result_lab_sample_prep_sum.${WQP_SCHEMA_OWNER_USERNAME}"
+      changes:
+        - sql:
+            sql: grant insert,truncate on ${WQX_SCHEMA_NAME}.result_lab_sample_prep_sum to ${WQP_SCHEMA_OWNER_USERNAME};
+        - rollback: revoke insert,truncate on ${WQX_SCHEMA_NAME}.result_lab_sample_prep_sum from ${WQP_SCHEMA_OWNER_USERNAME};
+
+  - changeSet:
+      author: drsteini
+      id: "grant.insert.truncate.${WQX_SCHEMA_NAME}.result_taxon_feeding_group_aggregated.${WQP_SCHEMA_OWNER_USERNAME}"
+      changes:
+        - sql:
+            sql: grant insert,truncate on ${WQX_SCHEMA_NAME}.result_taxon_feeding_group_aggregated to ${WQP_SCHEMA_OWNER_USERNAME};
+        - rollback: revoke insert,truncate on ${WQX_SCHEMA_NAME}.result_taxon_feeding_group_aggregated from ${WQP_SCHEMA_OWNER_USERNAME};
+
+  - changeSet:
+      author: drsteini
+      id: "grant.insert.truncate.${WQX_SCHEMA_NAME}.result_taxon_habit_aggregated.${WQP_SCHEMA_OWNER_USERNAME}"
+      changes:
+        - sql:
+            sql: grant insert,truncate on ${WQX_SCHEMA_NAME}.result_taxon_habit_aggregated to ${WQP_SCHEMA_OWNER_USERNAME};
+        - rollback: revoke insert,truncate on ${WQX_SCHEMA_NAME}.result_taxon_habit_aggregated from ${WQP_SCHEMA_OWNER_USERNAME};

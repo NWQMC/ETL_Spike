@@ -120,22 +120,25 @@
                         <WQP_SCHEMA_NAME>wqp</WQP_SCHEMA_NAME>
                         <WQP_SCHEMA_OWNER_USERNAME>wqp_core</WQP_SCHEMA_OWNER_USERNAME>
                         <WQP_SCHEMA_OWNER_PASSWORD>changeMe</WQP_SCHEMA_OWNER_PASSWORD>
-                        <ARS_DATABASE_ADDRESS>127.0.0.1</ARS_DATABASE_ADDRESS>
-                        <ARS_DATABASE_PORT>5437</ARS_DATABASE_PORT>
-                        <ARS_DATABASE_NAME>wqp_db</ARS_DATABASE_NAME>
-                        <ARS_SCHEMA_OWNER_USERNAME>ars_owner</ARS_SCHEMA_OWNER_USERNAME>
-                        <ARS_SCHEMA_OWNER_PASSWORD>changeMe</ARS_SCHEMA_OWNER_PASSWORD>
                         <NWIS_DATABASE_ADDRESS>127.0.0.1</NWIS_DATABASE_ADDRESS>
                         <NWIS_DATABASE_PORT>5437</NWIS_DATABASE_PORT>
                         <NWIS_DATABASE_NAME>wqp_db</NWIS_DATABASE_NAME>
                         <NWIS_SCHEMA_OWNER_USERNAME>nwis_ws_star</NWIS_SCHEMA_OWNER_USERNAME>
                         <NWIS_SCHEMA_OWNER_PASSWORD>changeMe</NWIS_SCHEMA_OWNER_PASSWORD>
-                        <ETL_OWNER_USERNAME>ars_owner</ETL_OWNER_USERNAME>
-                        <GEO_SCHEMA_NAME>nwis</GEO_SCHEMA_NAME>
-                        <ETL_DATA_SOURCE_ID>1</ETL_DATA_SOURCE_ID>
-                        <ETL_DATA_SOURCE>STEWARDS</ETL_DATA_SOURCE>
-                        <QWPORTAL_SUMMARY_ETL>false</QWPORTAL_SUMMARY_ETL>
-                        <NWIS_OR_EPA></NWIS_OR_EPA>
+                        <NWIS_SCHEMA_NAME>nwis</NWIS_SCHEMA_NAME>
+                        <EPA_DATABASE_ADDRESS>127.0.0.1</EPA_DATABASE_ADDRESS>
+                        <EPA_DATABASE_PORT>5437</EPA_DATABASE_PORT>
+                        <EPA_DATABASE_NAME>wqp_db</EPA_DATABASE_NAME>
+                        <EPA_SCHEMA_OWNER_USERNAME>epa_owner</EPA_SCHEMA_OWNER_USERNAME>
+                        <EPA_SCHEMA_OWNER_PASSWORD>changeMe</EPA_SCHEMA_OWNER_PASSWORD>
+                        <WQX_SCHEMA_NAME>wqx</WQX_SCHEMA_NAME>
+                        <STORETW_SCHEMA_NAME>storetw</STORETW_SCHEMA_NAME>
+                        <ETL_OWNER_USERNAME>epa_owner</ETL_OWNER_USERNAME>
+                        <GEO_SCHEMA_NAME>wqx</GEO_SCHEMA_NAME>
+                        <ETL_DATA_SOURCE_ID>3</ETL_DATA_SOURCE_ID>
+                        <ETL_DATA_SOURCE>STORET</ETL_DATA_SOURCE>
+                        <QWPORTAL_SUMMARY_ETL>true</QWPORTAL_SUMMARY_ETL>
+                        <NWIS_OR_EPA>E</NWIS_OR_EPA>
                     </environmentVariables>
                 </configuration>
                 <executions>
@@ -209,9 +212,17 @@
                                     <NWIS_SCHEMA_NAME>nwis</NWIS_SCHEMA_NAME>
                                     <NWIS_SCHEMA_OWNER_USERNAME>nwis_ws_star</NWIS_SCHEMA_OWNER_USERNAME>
                                     <NWIS_SCHEMA_OWNER_PASSWORD>changeMe</NWIS_SCHEMA_OWNER_PASSWORD>
+                                    <EPA_DATABASE_ADDRESS>127.0.0.1</EPA_DATABASE_ADDRESS>
+                                    <EPA_DATABASE_NAME>wqp_db</EPA_DATABASE_NAME>
+                                    <EPA_DB_OWNER_USERNAME>wqp_core</EPA_DB_OWNER_USERNAME>
+                                    <EPA_DB_OWNER_PASSWORD>changeMe</EPA_DB_OWNER_PASSWORD>
+                                    <EPA_SCHEMA_OWNER_USERNAME>epa_owner</EPA_SCHEMA_OWNER_USERNAME>
+                                    <EPA_SCHEMA_OWNER_PASSWORD>changeMe</EPA_SCHEMA_OWNER_PASSWORD>
+                                    <WQX_SCHEMA_NAME>wqx</WQX_SCHEMA_NAME>
+                                    <STORETW_SCHEMA_NAME>storetw</STORETW_SCHEMA_NAME>
                                 </env>
                                 <wait>
-                                    <time>65000</time>
+                                    <time>75000</time>
                                 </wait>
                             </run>
                         </image>

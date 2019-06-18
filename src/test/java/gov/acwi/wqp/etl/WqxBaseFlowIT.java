@@ -7,9 +7,14 @@ import org.springframework.context.annotation.Import;
 
 import com.github.springtestdbunit.annotation.DbUnitConfiguration;
 
-@Import({WqxDBTestConfig.class, WqxDBTestConfig.class})
+@Import({WqxDBTestConfig.class})
 @DbUnitConfiguration(
-		databaseConnection={BaseFlowIT.CONNECTION_WQP,WqxBaseFlowIT.CONNECTION_WQX,BaseFlowIT.CONNECTION_NWIS,BaseFlowIT.CONNECTION_INFORMATION_SCHEMA},
+		databaseConnection={
+				BaseFlowIT.CONNECTION_WQP,
+				WqxBaseFlowIT.CONNECTION_WQX,
+				BaseFlowIT.CONNECTION_NWIS,
+				BaseFlowIT.CONNECTION_INFORMATION_SCHEMA
+				},
 		dataSetLoader=FileSensingDataSetLoader.class
 )
 public abstract class WqxBaseFlowIT extends BaseFlowIT {

@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - preConditions:
+    - dbms:
+        type: postgresql
+
+  - changeSet:
+      author: drsteini
+      id: "create.table.${WQX_SCHEMA_NAME}.site_type_conversion"
+      preConditions:
+        - onFail: MARK_RAN
+        - onError: HALT
+        - not:
+          - tableExists:
+              schemaName: ${WQX_SCHEMA_NAME}
+              tableName: site_type_conversion
+      changes:
+        - sqlFile:
+            path: siteTypeConversion.sql
+            relativeToChangelogFile: true
+        - rollback: drop table if exists ${WQX_SCHEMA_NAME}.site_type_conversion cascade;
+
