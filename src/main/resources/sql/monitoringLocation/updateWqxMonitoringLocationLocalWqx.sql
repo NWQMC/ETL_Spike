@@ -10,7 +10,7 @@ with new_data as (select 'WQX' monitoring_location_source,
                          county.cnty_fips_cd,
                          case
                            when monitoring_location."MLOC_LONGITUDE" is not null and monitoring_location."MLOC_LATITUDE" is not null
-                             then st_SetSrid(st_MakePoint(monitoring_location."MLOC_LONGITUDE", monitoring_location."MLOC_LATITUDE"), hrdat_to_srid.srid)
+                             then st_transform(st_SetSrid(st_MakePoint(monitoring_location."MLOC_LONGITUDE", monitoring_location."MLOC_LATITUDE"), hrdat_to_srid.srid),  4269)
                          end geom
                     from wqx."MONITORING_LOCATION" monitoring_location
                          join wqx.hrdat_to_srid
