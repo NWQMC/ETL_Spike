@@ -38,7 +38,7 @@ public class DbConfig {
 	}
 
 	@Bean
-	@ConfigurationProperties(prefix="spring.datasource-wqx")
+	@ConfigurationProperties(prefix=EtlConstantUtils.SPRING_DATASOURCE_WQX)
 	public DataSourceProperties dataSourcePropertiesWqx() {
 		return new DataSourceProperties();
 	}
