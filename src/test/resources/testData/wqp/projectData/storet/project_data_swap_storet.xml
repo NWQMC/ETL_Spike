@@ -20,5 +20,6 @@
                               sampling_design_type_code="Probabilistic - A probability sampling method is any method of sampling that utilizes some form of random selection. In order to have a random selection method, you must set up some process or procedure that assures that the different units in your population have equal probabilities of being chosen."
                               qapp_approved_indicator="N"
                               qapp_approval_agency_name="Test Approval"
+                              monitoring_location_weight_url="/organizations/WIDNR_WQX/projects/BEACH_SEQ%3D87/projectMonitoringLocationWeightings"
     />
 </dataset>

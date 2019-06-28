@@ -9,9 +9,9 @@ insert
                                  description,
                                  sampling_design_type_code,
                                  qapp_approved_indicator,
-                                 qapp_approval_agency_name--,
+                                 qapp_approval_agency_name,
 --                                 project_file_url,
---                                 monitoring_location_weight_url
+                                 monitoring_location_weight_url
                                 )
 select 3 data_source_id,
        project."PRJ_UID" project_id,
@@ -23,17 +23,17 @@ select 3 data_source_id,
        project."PRJ_DESC" description,
        sampling_design_type."SDTYP_DESC" sampling_design_type_code,
        project."PRJ_QAPP_APPROVED_YN" qapp_approved_indicator,
-       project."PRJ_QAPP_APPROVAL_AGENCY_NAME" qapp_approval_agency_name--,
+       project."PRJ_QAPP_APPROVAL_AGENCY_NAME" qapp_approval_agency_name,
 --       case 
 --         when attached_object.has_blob is not null
---           then '/organizations/' || pkg_dynamic_list.url_escape(organization.org_id, 'true') || '/projects/' || pkg_dynamic_list.url_escape(project.prj_id, 'true') || '/files'
+--           then '/organizations/' || encode_uri_component(organization."ORG_ID") || '/projects/' || encode_uri_component(project."PRJ_ID") || '/files'
 --         else null
 --       end project_file_url,
---       case
---         when monitoring_location_weight.has_weight is not null
---           then '/organizations/' || pkg_dynamic_list.url_escape(organization."ORG_ID", 'true') || '/projects/' || pkg_dynamic_list.url_escape(project."PRJ_ID", 'true') || '/projectMonitoringLocationWeightings'
---         else null
---       end monitoring_location_weight_url
+       case
+         when monitoring_location_weight.has_weight is not null
+           then '/organizations/' || encode_uri_component(organization."ORG_ID") || '/projects/' || encode_uri_component(project."PRJ_ID") || '/projectMonitoringLocationWeightings'
+         else null
+       end monitoring_location_weight_url
   from wqx."PROJECT" project
        join wqx."ORGANIZATION" organization
          on project."ORG_UID" = organization."ORG_UID"

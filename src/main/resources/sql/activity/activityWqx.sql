@@ -13,8 +13,9 @@ insert
                              act_sam_collect_meth_qual_type, act_sam_collect_meth_desc, sample_collect_equip_name, act_sam_collect_equip_comments,
                              act_sam_prep_meth_id, act_sam_prep_meth_context, act_sam_prep_meth_name, act_sam_prep_meth_qual_type,
                              act_sam_prep_meth_desc, sample_container_type, sample_container_color, act_sam_chemical_preservative,
-                             thermal_preservative_name, act_sam_transport_storage_desc--, activity_object_name, activity_object_type,
---                             activity_file_url, activity_metric_url
+                             thermal_preservative_name, act_sam_transport_storage_desc,
+--                             activity_object_name, activity_object_type, activity_file_url,
+                             activity_metric_url
                             )
 select 3 data_source_id,
        'STORET' data_source,
@@ -110,7 +111,7 @@ select 3 data_source_id,
        container_color."CONCOL_NAME" sample_container_color,
        activity."ACT_SAM_CHEMICAL_PRESERVATIVE" act_sam_chemical_preservative,
        thermal_preservative."THPRSV_NAME" thermal_preservative_name,
-       activity."ACT_SAM_TRANSPORT_STORAGE_DESC" act_sam_transport_storage_desc--,
+       activity."ACT_SAM_TRANSPORT_STORAGE_DESC" act_sam_transport_storage_desc,
 --       wqx_attached_object_activity.activity_object_name,
 --       wqx_attached_object_activity.activity_object_type,
 --       case
@@ -118,18 +119,18 @@ select 3 data_source_id,
 --           then null
 --         else
 --           '/organizations/' ||
---               pkg_dynamic_list.url_escape(station.organization, 'true') || '/activities/' ||
---               pkg_dynamic_list.url_escape(station.organization, 'true') || '-' ||
---               pkg_dynamic_list.url_escape(activity.act_id, 'true') || '/files'
+--               encode_uri_component(station.organization) || '/activities/' ||
+--               encode_uri_component(station.organization) || '-' ||
+--               activity."ACT_ID" || '/files'
 --       end activity_file_url,
---       case
---         when wqx_activity_metric_sum.act_uid is null
---           then null
---           else
---             '/activities/' ||
---               pkg_dynamic_list.url_escape(station.organization, 'true') || '-' ||
---               pkg_dynamic_list.url_escape(activity.act_id, 'true') || '/activitymetrics'
---       end activity_metric_url
+       case
+         when activity_metric_sum.act_uid is null
+           then null
+           else
+             '/activities/' ||
+               encode_uri_component(station.organization) || '-' ||
+               activity."ACT_ID" || '/activitymetrics'
+       end activity_metric_url
   from wqx."ACTIVITY" activity
        join station_swap_storet station
          on activity."MLOC_UID" = station.station_id
@@ -195,4 +196,4 @@ select 3 data_source_id,
 --         on activity."ORG_UID" = wqx_attached_object_activity.org_uid and
 --            activity."ACT_UID" = wqx_attached_object_activity.ref_uid
        left join wqx.activity_metric_sum
-         on activity."ACT_UID" = wqx.activity_metric_sum.act_uid
+         on activity."ACT_UID" = activity_metric_sum.act_uid

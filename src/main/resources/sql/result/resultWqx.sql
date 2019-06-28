@@ -29,8 +29,7 @@ insert
                            prep_method_name, prep_method_qual_type, prep_method_desc, analysis_prep_date_tx, prep_start_time, prep_start_timezone, prep_end_date,
                            prep_end_time, prep_end_timezone, prep_dilution_factor, project_name, monitoring_location_name,
                            --result_object_name, result_object_type, result_file_url,
-                           last_updated,
-                           -- res_detect_qnt_lmt_url,
+                           last_updated, res_detect_qnt_lmt_url,
                            lab_sample_prep_url, frequency_class_code_1, frequency_class_code_2, frequency_class_code_3,
                            frequency_class_unit_1, frequency_class_unit_2, frequency_class_unit_3, frequency_class_lower_bound_1, frequency_class_lower_bound_2,
                            frequency_class_lower_bound_3, frequency_class_upper_bound_1, frequency_class_upper_bound_2, frequency_class_upper_bound_3)
@@ -206,21 +205,21 @@ select activity_swap_storet.data_source_id,
 --           then null
 --         else
 --           '/organizations/' ||
---               pkg_dynamic_list.url_escape(activity_swap_storet.organization, 'true') || '/activities/' ||
---               pkg_dynamic_list.url_escape(activity_swap_storet.activity, 'true') || '/results/' ||
---               pkg_dynamic_list.url_escape(activity_swap_storet.organization, 'true') || '-' ||
---               pkg_dynamic_list.url_escape(result.res_uid, 'true') || '/files'
+--               encode_uri_component(activity_swap_storet.organization) || '/activities/' ||
+--               encode_uri_component(activity_swap_storet.activity) || '/results/' ||
+--               encode_uri_component(activity_swap_storet.organization) || '-' ||
+--               result."RES_UID" || '/files'
 --       end result_file_url,
        result."RES_LAST_CHANGE_DATE" last_updated,
---       case 
---         when detection_quant_limit.res_uid is null
---           then null
---         else 
---           '/activities/' ||
---               pkg_dynamic_list.url_escape(activity_swap_storet.activity, 'true') || '/results/' ||
---               pkg_dynamic_list.url_escape(activity_swap_storet.organization, 'true') || '-' ||
---               pkg_dynamic_list.url_escape(result.res_uid, 'true') || '/resdetectqntlmts'
---       end res_detect_qnt_lmt_url,
+       case 
+         when detection_quant_limit.res_uid is null
+           then null
+         else 
+           '/activities/' ||
+               encode_uri_component(activity_swap_storet.activity) || '/results/' ||
+               encode_uri_component(activity_swap_storet.organization) || '-' ||
+               result."RES_UID" || '/resdetectqntlmts'
+       end res_detect_qnt_lmt_url,
        case 
          when result_lab_sample_prep_sum.res_uid is null
            then null
