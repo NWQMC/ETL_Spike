@@ -313,7 +313,7 @@ public class TransformResult {
 	public Flow resultFlow() {
 		return new FlowBuilder<SimpleFlow>("resultFlow")
 				.start(setupResultSwapTableFlow) //REMOVE & REPLACE WITH BELOW...
-				//TODO - WQP-1426 & urlencoding & blob urls
+				//TODO - WQP-1426 & WQP-1488 & blob urls
 //				.start(wqpNemiEpaCrosswalkFlow())
 				.split(new SimpleAsyncTaskExecutor())
 					.add(

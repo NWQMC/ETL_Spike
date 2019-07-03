@@ -125,7 +125,7 @@ public class TransformMonitoringLocation {
 //				.next(purgeWqxMonitoringLocationLocalStoretwStep())
 //				.next(updateWqxMonitoringLocationLocalStoretwStep())
 				.next(calculateHucStep())
-//				.next(calculateGeopoliticalDataStep())
+				.next(calculateGeopoliticalDataStep())
 				.next(transformMonitoringLocationWqxStep())
 //				.next(transformMonitoringLocationStoretwStep())
 				.next(afterLoadMonitoringLocationFlow)

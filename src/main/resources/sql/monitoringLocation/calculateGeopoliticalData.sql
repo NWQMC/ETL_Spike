@@ -1,14 +1,9 @@
-merge into wqx_station_local o
-      using (select /*+ parallel(4) */
-                    station_source,
-                    station_id,
-                    fips_state_code,
-                    fips_county_code
-               from county_geom,
-                    wqx_station_local
-              where sdo_contains(county_geom.geom,  wqx_station_local.geom) = 'TRUE' and
-                    cntry_cd in ('AS','PR','UM','US', 'VI') and
-                    calculated_fips is null) n
-   on (o.station_id = n.station_id and
-       o.station_source = n.station_source)
-when matched then update set calculated_fips = fips_state_code || fips_county_code
+update wqx.monitoring_location_local upd_table
+   set calculated_fips = fips_state_code || fips_county_code
+  from wqx.monitoring_location_local src_table
+       join county_geom
+         on st_covers(county_geom.geom, st_transform(src_table.geom, 4326))
+ where src_table.cntry_cd in ('AS','PR','UM','US', 'VI') and
+       src_table.calculated_fips is null and 
+       upd_table.station_id = src_table.station_id and
+       upd_table.monitoring_location_source = src_table.monitoring_location_source
