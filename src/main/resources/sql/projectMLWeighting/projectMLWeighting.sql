@@ -59,7 +59,7 @@ select 3 data_source_id,
          on monitoring_location_weight."MSUNT_UID" = measurement_unit."MSUNT_UID"
        left join wqx."CITATION" citation
          on monitoring_location_weight."CITATN_UID" = citation."CITATN_UID"
-       left join station_swap_storet
+       join station_swap_storet
          on monitoring_location_weight."MLOC_UID" = station_swap_storet.station_id
-       left join project_data_swap_storet
+       join project_data_swap_storet
          on monitoring_location_weight."PRJ_UID" = project_data_swap_storet.project_id
