@@ -25,14 +25,21 @@ select 3 data_source_id,
        project."PRJ_QAPP_APPROVED_YN" qapp_approved_indicator,
        project."PRJ_QAPP_APPROVAL_AGENCY_NAME" qapp_approval_agency_name,
 --       case 
---         when attached_object.has_blob is not null
---           then '/organizations/' || encode_uri_component(organization."ORG_ID") || '/projects/' || encode_uri_component(project."PRJ_ID") || '/files'
+--         when attached_object.has_blob is null
+--           then null
+--         else
+--           '/providers/STORET/organizations/' || encode_uri_component(organization."ORG_ID") ||
+--             '/projects/' || encode_uri_component(project."PRJ_ID") ||
+--             '/files'
 --         else null
 --       end project_file_url,
        case
-         when monitoring_location_weight.has_weight is not null
-           then '/organizations/' || encode_uri_component(organization."ORG_ID") || '/projects/' || encode_uri_component(project."PRJ_ID") || '/projectMonitoringLocationWeightings'
-         else null
+         when monitoring_location_weight.has_weight is null
+           then null
+         else
+           '/providers/STORET/organizations/' || encode_uri_component(organization."ORG_ID") ||
+             '/projects/' || encode_uri_component(project."PRJ_ID") ||
+             '/projectMonitoringLocationWeightings'
        end monitoring_location_weight_url
   from wqx."PROJECT" project
        join wqx."ORGANIZATION" organization

@@ -118,18 +118,17 @@ select 3 data_source_id,
 --         when wqx_attached_object_activity.ref_uid is null
 --           then null
 --         else
---           '/organizations/' ||
---               encode_uri_component(station.organization) || '/activities/' ||
---               encode_uri_component(station.organization) || '-' ||
---               activity."ACT_ID" || '/files'
+--             '/providers/STORET/organizations/' || encode_uri_component(station.organization) ||
+--               '/activities/' || encode_uri_component(station.organization) || '-' || activity."ACT_ID" ||
+--               '/files'
 --       end activity_file_url,
        case
          when activity_metric_sum.act_uid is null
            then null
            else
-             '/activities/' ||
-               encode_uri_component(station.organization) || '-' ||
-               activity."ACT_ID" || '/activitymetrics'
+             '/providers/STORET/organizations/' || encode_uri_component(station.organization) ||
+               '/activities/' || encode_uri_component(station.organization) || '-' || activity."ACT_ID" ||
+               '/activitymetrics'
        end activity_metric_url
   from wqx."ACTIVITY" activity
        join station_swap_storet station
