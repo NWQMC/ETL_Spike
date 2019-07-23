@@ -204,21 +204,22 @@ select activity_swap_storet.data_source_id,
 --         when wqx.attached_object_result.ref_uid is null
 --           then null
 --         else
---           '/organizations/' ||
---               encode_uri_component(activity_swap_storet.organization) || '/activities/' ||
---               encode_uri_component(activity_swap_storet.activity) || '/results/' ||
---               encode_uri_component(activity_swap_storet.organization) || '-' ||
---               result."RES_UID" || '/files'
+--           '/providers/' || encode_uri_component(activity_swap_storet.data_source) ||
+--             '/organizations/' || encode_uri_component(activity_swap_storet.organization) ||
+--             '/activities/' || encode_uri_component(activity_swap_storet.activity) ||
+--             '/results/' || result."RES_UID" ||
+--             '/files'
 --       end result_file_url,
        result."RES_LAST_CHANGE_DATE" last_updated,
        case 
          when detection_quant_limit.res_uid is null
            then null
-         else 
-           '/activities/' ||
-               encode_uri_component(activity_swap_storet.activity) || '/results/' ||
-               encode_uri_component(activity_swap_storet.organization) || '-' ||
-               result."RES_UID" || '/resdetectqntlmts'
+         else
+           '/providers/' || encode_uri_component(activity_swap_storet.data_source) ||
+             '/organizations/' || encode_uri_component(activity_swap_storet.organization) ||
+             '/activities/' || encode_uri_component(activity_swap_storet.activity) ||
+             '/results/' || result."RES_UID" ||
+             '/resdetectqntlmts'
        end res_detect_qnt_lmt_url,
        case 
          when result_lab_sample_prep_sum.res_uid is null
