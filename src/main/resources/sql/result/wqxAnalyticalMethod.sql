@@ -7,8 +7,8 @@ select analytical_method."ANLMTH_UID" anlmth_uid,
        analytical_method."ANLMTH_URL" anlmth_url,
        analytical_method."ANLMTH_QUAL_TYPE" anlmth_qual_type,
        nemi_wqp_to_epa_crosswalk.nemi_url
-  from wqx."ANALYTICAL_METHOD" analytical_method
-       left join wqx."ANALYTICAL_METHOD_CONTEXT" analytical_method_context
+  from wqx_dump."ANALYTICAL_METHOD" analytical_method
+       left join wqx_dump."ANALYTICAL_METHOD_CONTEXT" analytical_method_context
          on analytical_method."AMCTX_UID" = analytical_method_context."AMCTX_UID"
        left join wqx.nemi_wqp_to_epa_crosswalk
          on analytical_method_context."AMCTX_CD" = nemi_wqp_to_epa_crosswalk.analytical_procedure_source and

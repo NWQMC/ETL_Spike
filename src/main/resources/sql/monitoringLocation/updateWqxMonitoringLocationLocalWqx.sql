@@ -12,10 +12,10 @@ with new_data as (select 'WQX' monitoring_location_source,
                            when monitoring_location."MLOC_LONGITUDE" is not null and monitoring_location."MLOC_LATITUDE" is not null
                              then st_transform(st_SetSrid(st_MakePoint(monitoring_location."MLOC_LONGITUDE", monitoring_location."MLOC_LATITUDE"), hrdat_to_srid.srid),  4269)
                          end geom
-                    from wqx."MONITORING_LOCATION" monitoring_location
+                    from wqx_dump."MONITORING_LOCATION" monitoring_location
                          join wqx.hrdat_to_srid
                            on monitoring_location."HRDAT_UID" = hrdat_to_srid.hrdat_uid
-                         left join wqx."ORGANIZATION" org
+                         left join wqx_dump."ORGANIZATION" org
                            on monitoring_location."ORG_UID" = org."ORG_UID"
                          left join wqx.country
                            on monitoring_location."CNTRY_UID" = country.cntry_uid

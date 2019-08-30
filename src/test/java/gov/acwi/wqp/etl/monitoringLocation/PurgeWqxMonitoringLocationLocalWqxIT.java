@@ -17,8 +17,8 @@ public class PurgeWqxMonitoringLocationLocalWqxIT extends WqxBaseFlowIT {
 
 	@Test
 	@DatabaseSetup(
-			connection=WqxBaseFlowIT.CONNECTION_WQX,
-			value="classpath:/testData/wqx/csv/"
+			connection=WqxBaseFlowIT.CONNECTION_WQX_DUMP,
+			value="classpath:/testData/wqxDump/csv/"
 			)
 	@DatabaseSetup(
 			connection=WqxBaseFlowIT.CONNECTION_WQX,

@@ -8,4 +8,4 @@ select distinct
        "ST_LAST_CHANGE_DATE" st_last_change_date,
        "ER_UID" er_uid,
        "USR_UID_LAST_CHANGE" usr_uid_last_change
-  from ${WQX_SCHEMA_NAME}."STATE"
+  from ${WQX_DUMP_SCHEMA_NAME}."STATE"

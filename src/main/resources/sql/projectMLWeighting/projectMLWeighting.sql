@@ -52,12 +52,12 @@ select 3 data_source_id,
        citation."CITATN_DATE" resource_date,
        citation."CITATN_ID" resource_identifier,
        monitoring_location_weight."MLWT_COMMENT" comment_text
-  from wqx."MONITORING_LOCATION_WEIGHT" monitoring_location_weight
-       left join wqx."REFERENCE_LOCATION_TYPE" reference_location_type
+  from wqx_dump."MONITORING_LOCATION_WEIGHT" monitoring_location_weight
+       left join wqx_dump."REFERENCE_LOCATION_TYPE" reference_location_type
          on monitoring_location_weight."RLTYP_UID" = reference_location_type."RLTYP_UID"
-       left join wqx."MEASUREMENT_UNIT" measurement_unit
+       left join wqx_dump."MEASUREMENT_UNIT" measurement_unit
          on monitoring_location_weight."MSUNT_UID" = measurement_unit."MSUNT_UID"
-       left join wqx."CITATION" citation
+       left join wqx_dump."CITATION" citation
          on monitoring_location_weight."CITATN_UID" = citation."CITATN_UID"
        join station_swap_storet
          on monitoring_location_weight."MLOC_UID" = station_swap_storet.station_id

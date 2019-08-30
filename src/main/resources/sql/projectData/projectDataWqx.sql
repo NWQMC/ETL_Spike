@@ -41,10 +41,10 @@ select 3 data_source_id,
              '/projects/' || encode_uri_component(project."PRJ_ID") ||
              '/projectMonitoringLocationWeightings'
        end monitoring_location_weight_url
-  from wqx."PROJECT" project
-       join wqx."ORGANIZATION" organization
+  from wqx_dump."PROJECT" project
+       join wqx_dump."ORGANIZATION" organization
          on project."ORG_UID" = organization."ORG_UID"
-       left join wqx."SAMPLING_DESIGN_TYPE" sampling_design_type
+       left join wqx_dump."SAMPLING_DESIGN_TYPE" sampling_design_type
          on project."SDTYP_UID" = sampling_design_type."SDTYP_UID"
 --       left join (select org_uid, ref_uid, count(*) has_blob
 --                    from wqx.attached_object
@@ -53,6 +53,6 @@ select 3 data_source_id,
 --         on project.org_uid = attached_object.org_uid and
 --            project.prj_uid = attached_object.ref_uid
        left join (select "PRJ_UID" prj_uid, count(*) has_weight
-                    from wqx."MONITORING_LOCATION_WEIGHT" monitoring_location_weight
+                    from wqx_dump."MONITORING_LOCATION_WEIGHT" monitoring_location_weight
                       group by prj_uid) monitoring_location_weight
          on project."PRJ_UID" = monitoring_location_weight.prj_uid

@@ -17,8 +17,8 @@ public class TransformOrgDataWqxIT extends WqxBaseFlowIT {
 
 	@Test
 	@DatabaseSetup(
-			connection=WqxBaseFlowIT.CONNECTION_WQX,
-			value="classpath:/testData/wqx/csv/"
+			connection=WqxBaseFlowIT.CONNECTION_WQX_DUMP,
+			value="classpath:/testData/wqxDump/csv/"
 			)
 	@DatabaseSetup(value="classpath:/testData/wqp/orgData/storet/empty.xml")
 	@ExpectedDatabase(value="classpath:/testData/wqp/orgData/storet/org_data_swap_storet.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)

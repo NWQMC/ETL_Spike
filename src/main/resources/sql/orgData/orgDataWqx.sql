@@ -8,8 +8,8 @@ with addresses as (select org_address."ORG_UID" org_uid,
                           state.st_cd state_code,
                           county.cnty_fips_cd county_code,
                           row_number() over (partition by org_address."ORG_UID" order by org_address."ORGADD_UID") addr_num
-                     from wqx."ORG_ADDRESS" org_address
-                          join wqx."ADDRESS_TYPE" address_type
+                     from wqx_dump."ORG_ADDRESS" org_address
+                          join wqx_dump."ADDRESS_TYPE" address_type
                             on org_address."ADDTYP_UID" = address_type."ADDTYP_UID"
                           left join wqx.country
                             on org_address."CNTRY_UID" = country.cntry_uid
@@ -25,15 +25,15 @@ with addresses as (select org_address."ORG_UID" org_uid,
                                   ';'
                                   order by "ORGPH_UID"
                                  ) telephonic
-                  from wqx."ORG_PHONE" org_phone
-                       join wqx."PHONE_TYPE" phone_type
+                  from wqx_dump."ORG_PHONE" org_phone
+                       join wqx_dump."PHONE_TYPE" phone_type
                          on org_phone."PHTYP_UID" = phone_type."PHTYP_UID"
                     group by org_uid
                ),
      emails as (select "ORG_UID" org_uid,
                        string_agg("ORGEA_TEXT" || ' (' || "EATYP_NAME" || ')', ';' order by "ORGEA_UID") electronic_address
-                  from wqx."ORG_ELECTRONIC_ADDRESS" org_electronic_address
-                       join wqx."ELECTRONIC_ADDRESS_TYPE" electronic_address_type
+                  from wqx_dump."ORG_ELECTRONIC_ADDRESS" org_electronic_address
+                       join wqx_dump."ELECTRONIC_ADDRESS_TYPE" electronic_address_type
                          on org_electronic_address."EATYP_UID" = electronic_address_type."EATYP_UID"
                     group by org_uid
                )
@@ -80,8 +80,8 @@ select 3 data_source_id,
        addresses3.country_code country_code_3,
        addresses3.state_code state_code_3,
        addresses3.county_code county_code_3
-  from wqx."ORGANIZATION" organization
-       left join wqx."TRIBE" tribe
+  from wqx_dump."ORGANIZATION" organization
+       left join wqx_dump."TRIBE" tribe
          on organization."TRB_UID" = tribe."TRB_UID"
        left join emails org_electronic_address
          on organization."ORG_UID" = org_electronic_address.org_uid

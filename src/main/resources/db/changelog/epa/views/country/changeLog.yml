@@ -6,13 +6,7 @@ databaseChangeLog:
   - changeSet:
       author: drsteini
       id: "create.view.${WQX_SCHEMA_NAME}.country"
-      preConditions:
-        - onFail: MARK_RAN
-        - onError: HALT
-        - not:
-          - viewExists:
-              schemaName: ${WQX_SCHEMA_NAME}
-              viewName: country
+      runAlways: true
       changes:
         - sqlFile:
             path: country.sql
