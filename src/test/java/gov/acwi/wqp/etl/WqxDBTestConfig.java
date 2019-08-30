@@ -34,4 +34,17 @@ public class WqxDBTestConfig {
 		dbUnitDatabaseConnection.setSchema("wqx");
 		return dbUnitDatabaseConnection;
 	}
+
+	@Bean
+	public DatabaseDataSourceConnectionFactoryBean wqxDump() throws SQLException {
+		//Currently the WQX tables from EPA are in upper case.
+		dbUnitDatabaseConfig.setCaseSensitiveTableNames(true);
+		//And need to be enclosed in quotes for the delete portion of the database setup.
+		dbUnitDatabaseConfig.setEscapePattern("\"?\"");
+		DatabaseDataSourceConnectionFactoryBean dbUnitDatabaseConnection = new DatabaseDataSourceConnectionFactoryBean();
+		dbUnitDatabaseConnection.setDatabaseConfig(dbUnitDatabaseConfig);
+		dbUnitDatabaseConnection.setDataSource(dataSourceWqx);
+		dbUnitDatabaseConnection.setSchema("wqx_dump");
+		return dbUnitDatabaseConnection;
+	}
 }

@@ -240,37 +240,37 @@ select activity_swap_storet.data_source_id,
        result_frequency_class_aggregated.frequency_class_upper_bound_2,
        result_frequency_class_aggregated.frequency_class_upper_bound_3
   from activity_swap_storet
-       join wqx."RESULT" result
+       join wqx_dump."RESULT" result
          on activity_swap_storet.activity_id = result."ACT_UID"
-       left join wqx."METHOD_SPECIATION" method_speciation
+       left join wqx_dump."METHOD_SPECIATION" method_speciation
          on result."MTHSPC_UID" = method_speciation."MTHSPC_UID"
-       left join wqx."BIOLOGICAL_INTENT" biological_intent
+       left join wqx_dump."BIOLOGICAL_INTENT" biological_intent
          on result."BIOINT_UID" = biological_intent."BIOINT_UID"
-       left join wqx."CHARACTERISTIC" characteristic
+       left join wqx_dump."CHARACTERISTIC" characteristic
          on result."CHR_UID" = characteristic."CHR_UID"
-       left join wqx."RESULT_DETECTION_CONDITION" result_detection_condition
+       left join wqx_dump."RESULT_DETECTION_CONDITION" result_detection_condition
          on result."RDCND_UID" = result_detection_condition."RDCND_UID"
-       left join wqx."SAMPLE_FRACTION" sample_fraction
+       left join wqx_dump."SAMPLE_FRACTION" sample_fraction
          on result."SMFRC_UID" = sample_fraction."SMFRC_UID"
-       left join wqx."MEASUREMENT_UNIT" rmeasurement_unit
+       left join wqx_dump."MEASUREMENT_UNIT" rmeasurement_unit
          on result."MSUNT_UID_MEASURE" = rmeasurement_unit."MSUNT_UID"
-       left join wqx."RESULT_MEASURE_QUALIFIER" result_measure_qualifier
+       left join wqx_dump."RESULT_MEASURE_QUALIFIER" result_measure_qualifier
          on result."RMQLF_UID" = result_measure_qualifier."RMQLF_UID"
-       left join wqx."RESULT_STATUS" result_status
+       left join wqx_dump."RESULT_STATUS" result_status
          on result."RESSTA_UID" = result_status."RESSTA_UID"
-       left join wqx."RESULT_STATISTICAL_BASE" result_statistical_base
+       left join wqx_dump."RESULT_STATISTICAL_BASE" result_statistical_base
          on result."RSBAS_UID" = result_statistical_base."RSBAS_UID"
-       left join wqx."RESULT_VALUE_TYPE" result_value_type
+       left join wqx_dump."RESULT_VALUE_TYPE" result_value_type
          on result."RVTYP_UID" = result_value_type."RVTYP_UID"
-       left join wqx."RESULT_WEIGHT_BASIS" result_weight_basis
+       left join wqx_dump."RESULT_WEIGHT_BASIS" result_weight_basis
          on result."RWBAS_UID" = result_weight_basis."RWBAS_UID"
-       left join wqx."RESULT_TIME_BASIS" result_time_basis
+       left join wqx_dump."RESULT_TIME_BASIS" result_time_basis
          on result."RTIMB_UID" = result_time_basis."RTIMB_UID"
-       left join wqx."RESULT_TEMPERATURE_BASIS" result_temperature_basis
+       left join wqx_dump."RESULT_TEMPERATURE_BASIS" result_temperature_basis
          on result."RTMPB_UID" = result_temperature_basis."RTMPB_UID"
-       left join wqx."MEASUREMENT_UNIT" dhmeasurement_unit
+       left join wqx_dump."MEASUREMENT_UNIT" dhmeasurement_unit
          on result."MSUNT_UID_DEPTH_HEIGHT" = dhmeasurement_unit."MSUNT_UID"
-       left join wqx."MEASUREMENT_UNIT" group_summ_ct_wt
+       left join wqx_dump."MEASUREMENT_UNIT" group_summ_ct_wt
          on result."MSUNT_UID_GROUP_SUMMARY_CT_WT" = group_summ_ct_wt."MSUNT_UID"
        left join wqx.analytical_method_plus_nemi
          on result."ANLMTH_UID" = analytical_method_plus_nemi.anlmth_uid
@@ -278,31 +278,31 @@ select activity_swap_storet.data_source_id,
          on result."RES_UID" = wqx.detection_quant_limit.res_uid
        left join wqx.result_lab_sample_prep_sum
          on result."RES_UID" = wqx.result_lab_sample_prep_sum.res_uid
-       left join wqx."TIME_ZONE" analysis_start
+       left join wqx_dump."TIME_ZONE" analysis_start
          on result."TMZONE_UID_LAB_ANALYSIS_START" = analysis_start."TMZONE_UID"
-       left join wqx."TIME_ZONE" analysis_end
+       left join wqx_dump."TIME_ZONE" analysis_end
          on result."TMZONE_UID_LAB_ANALYSIS_END" = analysis_end."TMZONE_UID" 
-       left join wqx."TAXON" taxon
+       left join wqx_dump."TAXON" taxon
          on result."TAX_UID" = taxon."TAX_UID"
-       left join wqx."SAMPLE_TISSUE_ANATOMY" sample_tissue_anatomy
+       left join wqx_dump."SAMPLE_TISSUE_ANATOMY" sample_tissue_anatomy
          on result."STANT_UID" = sample_tissue_anatomy."STANT_UID"
-       left join wqx."RESULT_LAB_COMMENT" result_lab_comment
+       left join wqx_dump."RESULT_LAB_COMMENT" result_lab_comment
          on result."RLCOM_UID" = result_lab_comment."RLCOM_UID"
-       left join wqx."CHARACTERISTIC_GROUP" characteristic_group
+       left join wqx_dump."CHARACTERISTIC_GROUP" characteristic_group
          on characteristic."CHRGRP_UID" = characteristic_group."CHRGRP_UID"
        left join wqx.result_taxon_habit_aggregated
          on result."RES_UID" = result_taxon_habit_aggregated.res_uid
-       left join wqx."RESULT_TAXON_DETAIL" result_taxon_detail
+       left join wqx_dump."RESULT_TAXON_DETAIL" result_taxon_detail
          on result."RES_UID" = result_taxon_detail."RES_UID"
-       left join wqx."VOLTINISM" voltinism
+       left join wqx_dump."VOLTINISM" voltinism
          on result_taxon_detail."VOLT_UID" = voltinism."VOLT_UID"
        left join wqx.result_taxon_feeding_group_aggregated
          on result."RES_UID" = result_taxon_feeding_group_aggregated.res_uid
-       left join wqx."CITATION" taxon_citation
+       left join wqx_dump."CITATION" taxon_citation
          on result_taxon_detail."CITATN_UID" = taxon_citation."CITATN_UID"
-       left join wqx."CELL_FORM" cell_form
+       left join wqx_dump."CELL_FORM" cell_form
          on result_taxon_detail."CELFRM_UID" = cell_form."CELFRM_UID"
-       left join wqx."CELL_SHAPE" cell_shape
+       left join wqx_dump."CELL_SHAPE" cell_shape
          on result_taxon_detail."CELSHP_UID" = cell_shape."CELSHP_UID"
 --       left join wqx_attached_object_result
 --         on result.org_uid = wqx_attached_object_result.org_uid and

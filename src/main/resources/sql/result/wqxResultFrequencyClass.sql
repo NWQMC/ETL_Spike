@@ -4,10 +4,10 @@ with result_frequency_classes as (select result_frequency_class."RES_UID" res_ui
                                           measurement_unit."MSUNT_CD" msunt_cd,
                                           result_frequency_class."FCDSC_LOWER_BOUND" fcdsc_lower_bound,
                                           result_frequency_class."FCDSC_UPPER_BOUND" fcdsc_upper_bound
-                                     from wqx."RESULT_FREQUENCY_CLASS" result_frequency_class
-                                          left join wqx."FREQUENCY_CLASS_DESCRIPTOR" frequency_class_descriptor
+                                     from wqx_dump."RESULT_FREQUENCY_CLASS" result_frequency_class
+                                          left join wqx_dump."FREQUENCY_CLASS_DESCRIPTOR" frequency_class_descriptor
                                             on result_frequency_class."FCDSC_UID" = frequency_class_descriptor."FCDSC_UID"
-                                          left join wqx."MEASUREMENT_UNIT" measurement_unit
+                                          left join wqx_dump."MEASUREMENT_UNIT" measurement_unit
                                             on result_frequency_class."MSUNT_UID" = measurement_unit."MSUNT_UID")
 insert
   into wqx.result_frequency_class_aggregated (res_uid,

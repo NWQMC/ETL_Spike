@@ -10,10 +10,10 @@ select distinct
                                to_char(state."ST_FIPS_CD", 'fm00') st_fips_cd,
                                county."CNTY_FIPS_CD" cnty_fips_cd,
                                county."CNTY_NAME" cnty_name
-                          from ${WQX_SCHEMA_NAME}."COUNTRY" country
-                               join ${WQX_SCHEMA_NAME}."STATE" state
+                          from ${WQX_DUMP_SCHEMA_NAME}."COUNTRY" country
+                               join ${WQX_DUMP_SCHEMA_NAME}."STATE" state
                                  on country."CNTRY_UID" = state."CNTRY_UID"
-                               join ${WQX_SCHEMA_NAME}."COUNTY" county
+                               join ${WQX_DUMP_SCHEMA_NAME}."COUNTY" county
                                  on state."ST_UID" = county."ST_UID"
                        ) wqx
          on nwis.country_cd = wqx.cntry_cd and

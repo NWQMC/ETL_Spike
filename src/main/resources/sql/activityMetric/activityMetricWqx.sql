@@ -31,14 +31,14 @@ select activity.data_source_id,
        activity_metric."ACTMET_SCORE" score,
        activity_metric."ACTMET_COMMENT" comment_text,
        null index_identifier
-  from wqx."ACTIVITY_METRIC" activity_metric
+  from wqx_dump."ACTIVITY_METRIC" activity_metric
        join activity_swap_storet activity
          on activity_metric."ACT_UID" = activity.activity_id
-       left join wqx."METRIC_TYPE" metric_type
+       left join wqx_dump."METRIC_TYPE" metric_type
          on activity_metric."METTYP_UID" = metric_type."METTYP_UID"
-       left join wqx."MEASUREMENT_UNIT" measurement_unit
+       left join wqx_dump."MEASUREMENT_UNIT" measurement_unit
          on activity_metric."MSUNT_UID_VALUE" = measurement_unit."MSUNT_UID"
-       left join wqx."CITATION" citation
+       left join wqx_dump."CITATION" citation
          on metric_type."CITATN_UID" = citation."CITATN_UID"
-       left join wqx."METRIC_TYPE_CONTEXT" metric_type_context
+       left join wqx_dump."METRIC_TYPE_CONTEXT" metric_type_context
          on metric_type."MTCTX_UID" = metric_type_context."MTCTX_UID"

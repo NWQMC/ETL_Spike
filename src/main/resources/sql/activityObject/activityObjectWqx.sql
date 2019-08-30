@@ -9,15 +9,15 @@ insert /*+ append parallel(4) */
                                     object_type,
                                     object_content)
 select '3' data_source_id,
-       atobj_uid object_id,
+       attached_object."ATOBJ_UID" object_id,
        'STORET' data_source,
-       ref_uid,
+       attached_object."REF_UID" activity_id,
        activity_swap_storet.organization,
        activity_swap_storet.activity,
-       atobj_file_name object_name,
-       atobj_type object_type,
-       atobj_content object_content
-  from wqx.attached_object
+       attached_object."ATOBJ_FILE_NAME" object_name,
+       attached_object."ATOBJ_TYPE" object_type,
+       attached_object."ATOBJ_CONTENT" object_content
+  from wqx_dump."ATTACHED_OBJECT" attached_object
        join activity_swap_storet
-         on attached_object.ref_uid = activity_swap_storet.activity_id
- where tbl_uid = 3
+         on attached_object."REF_UID" = activity_swap_storet.activity_id
+ where attached_object."TBL_UID" = 3

@@ -130,66 +130,66 @@ select 3 data_source_id,
                '/activities/' || encode_uri_component(station.organization) || '-' || activity."ACT_ID" ||
                '/activitymetrics'
        end activity_metric_url
-  from wqx."ACTIVITY" activity
+  from wqx_dump."ACTIVITY" activity
        join station_swap_storet station
          on activity."MLOC_UID" = station.station_id
-       left join wqx."SAMPLE_COLLECTION_EQUIP" sample_collection_equip
+       left join wqx_dump."SAMPLE_COLLECTION_EQUIP" sample_collection_equip
          on activity."SCEQP_UID" = sample_collection_equip."SCEQP_UID"
        left join wqx.activity_conducting_org_aggregated
          on activity."ACT_UID" = activity_conducting_org_aggregated.act_uid
        left join wqx.activity_project_aggregated
          on activity."ACT_UID" = activity_project_aggregated.act_uid
-       left join wqx."MEASUREMENT_UNIT" b_measurement_unit
+       left join wqx_dump."MEASUREMENT_UNIT" b_measurement_unit
          on activity."MSUNT_UID_DEPTH_HEIGHT_BOTTOM" = b_measurement_unit."MSUNT_UID"
-       left join wqx."MEASUREMENT_UNIT" t_measurement_unit
+       left join wqx_dump."MEASUREMENT_UNIT" t_measurement_unit
          on activity."MSUNT_UID_DEPTH_HEIGHT_TOP" = t_measurement_unit."MSUNT_UID"
-       left join wqx."MEASUREMENT_UNIT" h_measurement_unit
+       left join wqx_dump."MEASUREMENT_UNIT" h_measurement_unit
          on activity."MSUNT_UID_DEPTH_HEIGHT" = h_measurement_unit."MSUNT_UID"
-       left join wqx."MEASUREMENT_UNIT" net_surface_unit
+       left join wqx_dump."MEASUREMENT_UNIT" net_surface_unit
          on activity."MSUNT_UID_NET_SURFACE_AREA" = net_surface_unit."MSUNT_UID"
-       left join wqx."TIME_ZONE" end_time_zone
+       left join wqx_dump."TIME_ZONE" end_time_zone
          on activity."TMZONE_UID_END_TIME" = end_time_zone."TMZONE_UID"
-       left join wqx."TIME_ZONE" start_time_zone
+       left join wqx_dump."TIME_ZONE" start_time_zone
          on activity."TMZONE_UID_START_TIME" = start_time_zone."TMZONE_UID"
-       left join wqx."ACTIVITY_MEDIA_SUBDIVISION" activity_media_subdivision
+       left join wqx_dump."ACTIVITY_MEDIA_SUBDIVISION" activity_media_subdivision
          on activity."AMSUB_UID" = activity_media_subdivision."AMSUB_UID"
-       left join wqx."ACTIVITY_TYPE" activity_type
+       left join wqx_dump."ACTIVITY_TYPE" activity_type
          on activity."ACTYP_UID" = activity_type."ACTYP_UID"
-       left join wqx."ORGANIZATION" organization
+       left join wqx_dump."ORGANIZATION" organization
          on activity."ORG_UID" = organization."ORG_UID"
-       left join wqx."ACTIVITY_MEDIA" activity_media
+       left join wqx_dump."ACTIVITY_MEDIA" activity_media
          on activity."ACMED_UID" = activity_media."ACMED_UID"
-       left join wqx."MEASUREMENT_UNIT" activity_horizontal_unit
+       left join wqx_dump."MEASUREMENT_UNIT" activity_horizontal_unit
          on activity."MSUNT_UID_HORIZONTAL_ACCURACY" = activity_horizontal_unit."MSUNT_UID"
-       left join wqx."HORIZONTAL_COLLECTION_METHOD" horizontal_collection_method
+       left join wqx_dump."HORIZONTAL_COLLECTION_METHOD" horizontal_collection_method
          on activity."HCMTH_UID" = horizontal_collection_method."HCMTH_UID"
-       left join wqx."HORIZONTAL_REFERENCE_DATUM" horizontal_reference_datum
+       left join wqx_dump."HORIZONTAL_REFERENCE_DATUM" horizontal_reference_datum
          on activity."HRDAT_UID" = horizontal_reference_datum."HRDAT_UID"
-       left join wqx."ASSEMBLAGE" assemblage
+       left join wqx_dump."ASSEMBLAGE" assemblage
          on activity."ASMBLG_UID" = assemblage."ASMBLG_UID"
-       left join wqx."MEASUREMENT_UNIT" collection_duration
+       left join wqx_dump."MEASUREMENT_UNIT" collection_duration
          on activity."MSUNT_UID_COLLECTION_DURATION" = collection_duration."MSUNT_UID"
-       left join wqx."MEASUREMENT_UNIT" reach_length
+       left join wqx_dump."MEASUREMENT_UNIT" reach_length
          on activity."MSUNT_UID_REACH_LENGTH" = reach_length."MSUNT_UID"
-       left join wqx."MEASUREMENT_UNIT" reach_width
+       left join wqx_dump."MEASUREMENT_UNIT" reach_width
          on activity."MSUNT_UID_REACH_WIDTH" = reach_width."MSUNT_UID"
-       left join wqx."NET_TYPE" net_type
+       left join wqx_dump."NET_TYPE" net_type
          on activity."NETTYP_UID" = net_type."NETTYP_UID"
-       left join wqx."MEASUREMENT_UNIT" net_mesh
+       left join wqx_dump."MEASUREMENT_UNIT" net_mesh
          on activity."MSUNT_UID_NET_MESH_SIZE" = net_mesh."MSUNT_UID"
-       left join wqx."MEASUREMENT_UNIT" boat_speed
+       left join wqx_dump."MEASUREMENT_UNIT" boat_speed
          on activity."MSUNT_UID_BOAT_SPEED" = boat_speed."MSUNT_UID"
-       left join wqx."MEASUREMENT_UNIT" current_speed
+       left join wqx_dump."MEASUREMENT_UNIT" current_speed
          on activity."MSUNT_UID_CURRENT_SPEED" = current_speed."MSUNT_UID"
-       left join wqx."TOXICITY_TEST_TYPE" toxicity_test_type
+       left join wqx_dump."TOXICITY_TEST_TYPE" toxicity_test_type
          on activity."TTTYP_UID" = toxicity_test_type."TTTYP_UID"
-       left join wqx."CONTAINER_TYPE" container_type
+       left join wqx_dump."CONTAINER_TYPE" container_type
          on activity."CONTYP_UID" = container_type."CONTYP_UID"
-       left join wqx."CONTAINER_COLOR" container_color
+       left join wqx_dump."CONTAINER_COLOR" container_color
          on activity."CONCOL_UID" = container_color."CONCOL_UID"
-       left join wqx."THERMAL_PRESERVATIVE" thermal_preservative
+       left join wqx_dump."THERMAL_PRESERVATIVE" thermal_preservative
          on activity."THPRSV_UID" = thermal_preservative."THPRSV_UID"
-       left join wqx."RELATIVE_DEPTH" relative_depth
+       left join wqx_dump."RELATIVE_DEPTH" relative_depth
          on activity."RELDPTH_UID" = relative_depth."RELDPTH_UID"
 --       left join wqx_attached_object_activity
 --         on activity."ORG_UID" = wqx_attached_object_activity.org_uid and

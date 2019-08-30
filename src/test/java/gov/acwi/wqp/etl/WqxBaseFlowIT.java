@@ -12,6 +12,7 @@ import com.github.springtestdbunit.annotation.DbUnitConfiguration;
 		databaseConnection={
 				BaseFlowIT.CONNECTION_WQP,
 				WqxBaseFlowIT.CONNECTION_WQX,
+				WqxBaseFlowIT.CONNECTION_WQX_DUMP,
 				BaseFlowIT.CONNECTION_NWIS,
 				BaseFlowIT.CONNECTION_INFORMATION_SCHEMA
 				},
@@ -20,6 +21,7 @@ import com.github.springtestdbunit.annotation.DbUnitConfiguration;
 public abstract class WqxBaseFlowIT extends BaseFlowIT {
 
 	public static final String CONNECTION_WQX = "wqx";
+	public static final String CONNECTION_WQX_DUMP = "wqxDump";
 
 	@Autowired
 	private ConfigurationService configurationService;

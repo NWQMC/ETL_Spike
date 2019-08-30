@@ -6,13 +6,7 @@ databaseChangeLog:
   - changeSet:
       author: drsteini
       id: "create.view.${WQX_SCHEMA_NAME}.state"
-      preConditions:
-        - onFail: MARK_RAN
-        - onError: HALT
-        - not:
-          - viewExists:
-              schemaName: ${WQX_SCHEMA_NAME}
-              viewName: state
+      runAlways: true
       changes:
         - sqlFile:
             path: state.sql

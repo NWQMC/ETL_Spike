@@ -42,25 +42,25 @@ select 3 data_source_id,
        end vdatum_id_code,
        monitoring_location."MLOC_HORIZONTAL_ACCURACY" geoposition_accy_value,
        hmeasurement_unit."MSUNT_CD" geoposition_accy_unit
-  from wqx."MONITORING_LOCATION" monitoring_location
+  from wqx_dump."MONITORING_LOCATION" monitoring_location
        left join wqx.monitoring_location_local
          on monitoring_location."MLOC_UID" = monitoring_location_local.station_id and
             'WQX' = wqx.monitoring_location_local.monitoring_location_source
-       left join wqx."VERTICAL_REFERENCE_DATUM" vertical_reference_datum
+       left join wqx_dump."VERTICAL_REFERENCE_DATUM" vertical_reference_datum
          on monitoring_location."VRDAT_UID" = vertical_reference_datum."VRDAT_UID"
-       left join wqx."VERTICAL_COLLECTION_METHOD" vertical_collection_method
+       left join wqx_dump."VERTICAL_COLLECTION_METHOD" vertical_collection_method
          on monitoring_location."VCMTH_UID" = vertical_collection_method."VCMTH_UID"
-       left join wqx."MEASUREMENT_UNIT" measurement_unit
+       left join wqx_dump."MEASUREMENT_UNIT" measurement_unit
          on monitoring_location."MSUNT_UID_VERTICAL_MEASURE" = measurement_unit."MSUNT_UID"
-       left join wqx."MEASUREMENT_UNIT" hmeasurement_unit
+       left join wqx_dump."MEASUREMENT_UNIT" hmeasurement_unit
          on monitoring_location."MSUNT_UID_HORIZONTAL_ACCURACY" = hmeasurement_unit."MSUNT_UID"
-       left join wqx."HORIZONTAL_REFERENCE_DATUM" horizontal_reference_datum
+       left join wqx_dump."HORIZONTAL_REFERENCE_DATUM" horizontal_reference_datum
          on monitoring_location."HRDAT_UID" = horizontal_reference_datum."HRDAT_UID"
-       left join wqx."HORIZONTAL_COLLECTION_METHOD" horizontal_collection_method
+       left join wqx_dump."HORIZONTAL_COLLECTION_METHOD" horizontal_collection_method
          on monitoring_location."HCMTH_UID" = horizontal_collection_method."HCMTH_UID"
-       left join wqx."ORGANIZATION" org
+       left join wqx_dump."ORGANIZATION" org
          on monitoring_location."ORG_UID" = org."ORG_UID"
-       left join wqx."MONITORING_LOCATION_TYPE" monitoring_location_type
+       left join wqx_dump."MONITORING_LOCATION_TYPE" monitoring_location_type
          on monitoring_location."MLTYP_UID" = monitoring_location_type."MLTYP_UID"
        left join wqx.site_type_conversion
          on monitoring_location."MLTYP_UID" = site_type_conversion.mltyp_uid

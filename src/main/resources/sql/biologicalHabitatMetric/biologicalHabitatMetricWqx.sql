@@ -26,10 +26,10 @@ select 3 data_source_id,
        biological_habitat_index."BHIDX_QUALIFIER_CD" index_qualifier_code,
        biological_habitat_index."BHIDX_COMMENT" index_comment,
        biological_habitat_index."BHIDX_CALCULATED_DATE" index_calculated_date
-  from wqx."BIOLOGICAL_HABITAT_INDEX" biological_habitat_index
+  from wqx_dump."BIOLOGICAL_HABITAT_INDEX" biological_habitat_index
        left join station_swap_storet station
          on biological_habitat_index."MLOC_UID" = station.station_id
-       left join wqx."INDEX_TYPE" index_type
+       left join wqx_dump."INDEX_TYPE" index_type
          on biological_habitat_index."IDXTYP_UID" = index_type."IDXTYP_UID"
-       left join wqx."CITATION" citation
+       left join wqx_dump."CITATION" citation
          on index_type."CITATN_UID" = citation."CITATN_UID"
