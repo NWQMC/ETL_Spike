@@ -9,45 +9,28 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-//TODO - WQP-1442/WQP-1459
-//@Configuration
+import gov.acwi.wqp.etl.EtlConstantUtils;
+
+@Configuration
 public class TransformMonitoringLocationObject {
 
 	@Autowired
 	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
-	@Qualifier("dropMonitoringLocationObjectIndexes")
-	private Tasklet dropMonitoringLocationObjectIndexes;
-
-	@Autowired
-	@Qualifier("truncateMonitoringLocationObject")
-	private Tasklet truncateMonitoringLocationObject;
+	@Qualifier(EtlConstantUtils.SETUP_MONITORING_LOCATION_OBJECT_SWAP_TABLE_FLOW)
+	private Flow setupMonitoringLocationObjectSwapTableFlow;
 
 	@Autowired
 	@Qualifier("transformMonitoringLocationObjectWqx")
 	private Tasklet transformMonitoringLocationObjectWqx;
 
 	@Autowired
-	@Qualifier("buildMonitoringLocationObjectIndexes")
-	private Tasklet buildMonitoringLocationObjectIndexes;
+	@Qualifier(EtlConstantUtils.AFTER_LOAD_MONITORING_LOCATION_OBJECT_FLOW)
+	private Flow afterLoadMonitoringLocationObjectFlow;
 
-	@Bean
-	public Step dropMonitoringLocationObjectIndexesStep() {
-		return stepBuilderFactory.get("dropMonitoringLocationObjectIndexesStep")
-				.tasklet(dropMonitoringLocationObjectIndexes)
-				.build();
-	}
-
-	@Bean
-	public Step truncateMonitoringLocationObjectStep() {
-		return stepBuilderFactory.get("truncateMonitoringLocationObjectStep")
-				.tasklet(truncateMonitoringLocationObject)
-				.build();
-	}
-
-	@Bean
 	public Step transformMonitoringLocationObjectWqxStep() {
 		return stepBuilderFactory.get("transformMonitoringLocationObjectWqxStep")
 				.tasklet(transformMonitoringLocationObjectWqx)
@@ -55,19 +38,11 @@ public class TransformMonitoringLocationObject {
 	}
 
 	@Bean
-	public Step buildMonitoringLocationObjectIndexesStep() {
-		return stepBuilderFactory.get("buildMonitoringLocationObjectIndexesStep")
-				.tasklet(buildMonitoringLocationObjectIndexes)
-				.build();
-	}
-
-	@Bean
 	public Flow monitoringLocationObjectFlow() {
 		return new FlowBuilder<SimpleFlow>("monitoringLocationObjectFlow")
-				.start(dropMonitoringLocationObjectIndexesStep())
-				.next(truncateMonitoringLocationObjectStep())
+				.start(setupMonitoringLocationObjectSwapTableFlow)
 				.next(transformMonitoringLocationObjectWqxStep())
-				.next(buildMonitoringLocationObjectIndexesStep())
+				.next(afterLoadMonitoringLocationObjectFlow)
 				.build();
 	}
 }

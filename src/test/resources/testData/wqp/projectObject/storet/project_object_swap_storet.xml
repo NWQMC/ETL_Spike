@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <project_object_swap_storet data_source_id="3" object_id="1" data_source="STORET" organization="WIDNR_WQX" project_identifier="MR003" object_name="test.pdf" object_type="pdf" object_content="riewutyi;weuyioer" />
-    <project_object_swap_storet data_source_id="3" object_id="2" data_source="STORET" organization="WIDNR_WQX" project_identifier="BEACH_SEQ=87" object_name="text.csv" object_type="csv" object_content="test,one one, test" />
+    <project_object_swap_storet data_source_id="3" object_id="1" data_source="STORET" organization="WIDNR_WQX" project_identifier="MR003" object_name="test_project.pdf" object_type="pdf" object_content="project;riewutyi;weuyioer" />
+    <project_object_swap_storet data_source_id="3" object_id="2" data_source="STORET" organization="WIDNR_WQX" project_identifier="BEACH_SEQ=87" object_name="text_project.csv" object_type="csv" object_content="project, test,one one, test" />
 </dataset>
