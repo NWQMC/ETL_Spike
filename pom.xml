@@ -114,20 +114,20 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
                     <environmentVariables>
-                        <WQP_DATABASE_ADDRESS>127.0.0.1</WQP_DATABASE_ADDRESS>
-                        <WQP_DATABASE_PORT>5437</WQP_DATABASE_PORT>
+                        <WQP_DATABASE_ADDRESS>${TESTING_DATABASE_ADDRESS}</WQP_DATABASE_ADDRESS>
+                        <WQP_DATABASE_PORT>${TESTING_DATABASE_PORT}</WQP_DATABASE_PORT>
                         <WQP_DATABASE_NAME>wqp_db</WQP_DATABASE_NAME>
                         <WQP_SCHEMA_NAME>wqp</WQP_SCHEMA_NAME>
                         <WQP_SCHEMA_OWNER_USERNAME>wqp_core</WQP_SCHEMA_OWNER_USERNAME>
                         <WQP_SCHEMA_OWNER_PASSWORD>changeMe</WQP_SCHEMA_OWNER_PASSWORD>
-                        <NWIS_DATABASE_ADDRESS>127.0.0.1</NWIS_DATABASE_ADDRESS>
-                        <NWIS_DATABASE_PORT>5437</NWIS_DATABASE_PORT>
+                        <NWIS_DATABASE_ADDRESS>${TESTING_DATABASE_ADDRESS}</NWIS_DATABASE_ADDRESS>
+                        <NWIS_DATABASE_PORT>${TESTING_DATABASE_PORT}</NWIS_DATABASE_PORT>
                         <NWIS_DATABASE_NAME>wqp_db</NWIS_DATABASE_NAME>
                         <NWIS_SCHEMA_OWNER_USERNAME>nwis_ws_star</NWIS_SCHEMA_OWNER_USERNAME>
                         <NWIS_SCHEMA_OWNER_PASSWORD>changeMe</NWIS_SCHEMA_OWNER_PASSWORD>
                         <NWIS_SCHEMA_NAME>nwis</NWIS_SCHEMA_NAME>
-                        <EPA_DATABASE_ADDRESS>127.0.0.1</EPA_DATABASE_ADDRESS>
-                        <EPA_DATABASE_PORT>5437</EPA_DATABASE_PORT>
+                        <EPA_DATABASE_ADDRESS>${TESTING_DATABASE_ADDRESS}</EPA_DATABASE_ADDRESS>
+                        <EPA_DATABASE_PORT>${TESTING_DATABASE_PORT}</EPA_DATABASE_PORT>
                         <EPA_DATABASE_NAME>wqp_db</EPA_DATABASE_NAME>
                         <EPA_SCHEMA_OWNER_USERNAME>epa_owner</EPA_SCHEMA_OWNER_USERNAME>
                         <EPA_SCHEMA_OWNER_PASSWORD>changeMe</EPA_SCHEMA_OWNER_PASSWORD>
@@ -176,7 +176,12 @@
                     <images>
                         <image>
                             <name>usgswma/wqp_db:etl</name>
+                            <alias>wqpDatabase</alias>
                             <run>
+                                <network>
+                                    <mode>custom</mode>
+                                    <name>${TESTING_DATABASE_NETWORK}</name>
+                                </network>
                                 <ports>
                                     <port>5437:5432</port>
                                 </ports>
@@ -225,6 +230,7 @@
                                 </env>
                                 <wait>
                                     <time>100000</time>
+                                    <log>(?s)PostgreSQL init process complete; ready for start up.*database system is ready to accept connections</log>
                                 </wait>
                             </run>
                         </image>
