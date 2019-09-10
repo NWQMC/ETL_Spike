@@ -29,6 +29,8 @@ drop table if exists wqp.organization_sum_swap_storet cascade;
 select create_swap_table ('storet', 'wqp', 'organization_sum');
 drop table if exists wqp.station_sum_swap_storet cascade;
 select create_swap_table ('storet', 'wqp', 'station_sum');
+drop table if exists wqp.qwportal_summary_swap_storet cascade;
+select create_swap_table ('storet', 'wqp', 'qwportal_summary');
 
 drop table if exists wqp.assemblage_swap_storet cascade;
 select create_swap_table ('storet', 'wqp', 'assemblage');
@@ -56,3 +58,12 @@ drop table if exists wqp.state_swap_storet cascade;
 select create_swap_table ('storet', 'wqp', 'state');
 drop table if exists wqp.taxa_name_swap_storet cascade;
 select create_swap_table ('storet', 'wqp', 'taxa_name');
+
+drop table if exists wqp.activity_object_swap_storet cascade;
+select create_swap_table ('storet', 'wqp', 'activity_object');
+drop table if exists wqp.project_object_swap_storet cascade;
+select create_swap_table ('storet', 'wqp', 'project_object');
+drop table if exists wqp.result_object_swap_storet cascade;
+select create_swap_table ('storet', 'wqp', 'result_object');
+drop table if exists wqp.station_object_swap_storet cascade;
+select create_swap_table ('storet', 'wqp', 'station_object');

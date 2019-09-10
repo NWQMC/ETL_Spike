@@ -9,43 +9,27 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-//TODO - WQP-1442/WQP-1420
-//@Configuration
+import gov.acwi.wqp.etl.EtlConstantUtils;
+
+@Configuration
 public class TransformActivityObject {
 
 	@Autowired
 	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
-	@Qualifier("dropActivityObjectIndexes")
-	private Tasklet dropActivityObjectIndexes;
-
-	@Autowired
-	@Qualifier("truncateActivityObject")
-	private Tasklet truncateActivityObject;
+	@Qualifier(EtlConstantUtils.SETUP_ACTIVITY_OBJECT_SWAP_TABLE_FLOW)
+	private Flow setupActivityObjectSwapTableFlow;
 
 	@Autowired
 	@Qualifier("transformActivityObjectWqx")
 	private Tasklet transformActivityObjectWqx;
 
 	@Autowired
-	@Qualifier("buildActivityObjectIndexes")
-	private Tasklet buildActivityObjectIndexes;
-
-	@Bean
-	public Step dropActivityObjectIndexesStep() {
-		return stepBuilderFactory.get("dropActivityObjectIndexesStep")
-				.tasklet(dropActivityObjectIndexes)
-				.build();
-	}
-
-	@Bean
-	public Step truncateActivityObjectStep() {
-		return stepBuilderFactory.get("truncateActivityObjectStep")
-				.tasklet(truncateActivityObject)
-				.build();
-	}
+	@Qualifier(EtlConstantUtils.AFTER_LOAD_ACTIVITY_OBJECT_FLOW)
+	private Flow afterLoadActivityObjectFlow;
 
 	@Bean
 	public Step transformActivityObjectWqxStep() {
@@ -55,19 +39,11 @@ public class TransformActivityObject {
 	}
 
 	@Bean
-	public Step buildActivityObjectIndexesStep() {
-		return stepBuilderFactory.get("buildActivityObjectIndexesStep")
-				.tasklet(buildActivityObjectIndexes)
-				.build();
-	}
-
-	@Bean
 	public Flow activityObjectFlow() {
 		return new FlowBuilder<SimpleFlow>("activityObjectFlow")
-				.start(dropActivityObjectIndexesStep())
-				.next(truncateActivityObjectStep())
+				.start(setupActivityObjectSwapTableFlow)
 				.next(transformActivityObjectWqxStep())
-				.next(buildActivityObjectIndexesStep())
+				.next(afterLoadActivityObjectFlow)
 				.build();
 	}
 }

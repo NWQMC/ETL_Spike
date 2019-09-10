@@ -9,43 +9,27 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-//TODO - WQP-1442/WQP-1427
-//@Configuration
+import gov.acwi.wqp.etl.EtlConstantUtils;
+
+@Configuration
 public class TransfromResultObject {
 
 	@Autowired
 	private StepBuilderFactory stepBuilderFactory;
 
 	@Autowired
-	@Qualifier("dropResultObjectIndexes")
-	private Tasklet dropResultObjectIndexes;
-
-	@Autowired
-	@Qualifier("truncateResultObject")
-	private Tasklet truncateResultObject;
+	@Qualifier(EtlConstantUtils.SETUP_RESULT_OBJECT_SWAP_TABLE_FLOW)
+	private Flow setupResultObjectSwapTableFlow;
 
 	@Autowired
 	@Qualifier("transformResultObjectWqx")
 	private Tasklet transformResultObjectWqx;
 
 	@Autowired
-	@Qualifier("buildResultObjectIndexes")
-	private Tasklet buildResultObjectIndexes;
-
-	@Bean
-	public Step dropResultObjectIndexesStep() {
-		return stepBuilderFactory.get("dropResultObjectIndexesStep")
-				.tasklet(dropResultObjectIndexes)
-				.build();
-	}
-
-	@Bean
-	public Step truncateResultObjectStep() {
-		return stepBuilderFactory.get("truncateResultObjectStep")
-				.tasklet(truncateResultObject)
-				.build();
-	}
+	@Qualifier(EtlConstantUtils.AFTER_LOAD_RESULT_OBJECT_FLOW)
+	private Flow afterLoadResultObjectFlow;
 
 	@Bean
 	public Step transformResultObjectWqxStep() {
@@ -55,19 +39,11 @@ public class TransfromResultObject {
 	}
 
 	@Bean
-	public Step buildResultObjectIndexesStep() {
-		return stepBuilderFactory.get("buildResultObjectIndexesStep")
-				.tasklet(buildResultObjectIndexes)
-				.build();
-	}
-
-	@Bean
 	public Flow resultObjectFlow() {
 		return new FlowBuilder<SimpleFlow>("resultObjectFlow")
-				.start(dropResultObjectIndexesStep())
-				.next(truncateResultObjectStep())
+				.start(setupResultObjectSwapTableFlow)
 				.next(transformResultObjectWqxStep())
-				.next(buildResultObjectIndexesStep())
+				.next(afterLoadResultObjectFlow)
 				.build();
 	}
 }

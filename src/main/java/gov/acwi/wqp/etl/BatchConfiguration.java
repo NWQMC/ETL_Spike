@@ -25,8 +25,16 @@ public class BatchConfiguration {
 	private Flow projectDataFlow;
 
 	@Autowired
+	@Qualifier("projectObjectFlow")
+	private Flow projectObjectFlow;
+
+	@Autowired
 	@Qualifier("monitoringLocationFlow")
 	private Flow monitoringLocationFlow;
+
+	@Autowired
+	@Qualifier("monitoringLocationObjectFlow")
+	private Flow monitoringLocationObjectFlow;
 
 	@Autowired
 	@Qualifier("biologicalHabitatMetricFlow")
@@ -41,8 +49,16 @@ public class BatchConfiguration {
 	private Flow activityMetricFlow;
 
 	@Autowired
+	@Qualifier("activityObjectFlow")
+	private Flow activityObjectFlow;
+
+	@Autowired
 	@Qualifier("resultFlow")
 	private Flow resultFlow;
+
+	@Autowired
+	@Qualifier("resultObjectFlow")
+	private Flow resultObjectFlow;
 
 	@Autowired
 	@Qualifier("resDetectQntLimitFlow")
@@ -70,11 +86,15 @@ public class BatchConfiguration {
 		return jobBuilderFactory.get("WQP_STORET_WQX_ETL")
 				.start(orgDataFlow)
 				.next(projectDataFlow)
+				.next(projectObjectFlow)
 				.next(monitoringLocationFlow)
+				.next(monitoringLocationObjectFlow)
 				.next(biologicalHabitatMetricFlow)
 				.next(activityFlow)
 				.next(activityMetricFlow)
+				.next(activityObjectFlow)
 				.next(resultFlow)
+				.next(resultObjectFlow)
 				.next(resDetectQntLimitFlow)
 				.next(projectMLWeightingFlow)
 				.next(createSummariesFlow)

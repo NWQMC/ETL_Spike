@@ -1,6 +1,10 @@
 conrelid,conname,pg_get_constraintdef
 activity_storet,activity_storet_pk,"PRIMARY KEY (data_source_id, station_id, activity_id)"
+activity_object_storet,activity_object_storet_pk,"PRIMARY KEY (data_source_id, object_id)"
 org_data_storet,org_data_storet_pk,"PRIMARY KEY (data_source_id, organization_id)"
 project_data_storet,project_data_storet_pk,"PRIMARY KEY (data_source_id, project_id)"
+project_object_storet,project_object_storet_pk,"PRIMARY KEY (data_source_id, object_id)"
 station_storet,station_storet_pk,"PRIMARY KEY (data_source_id, station_id)"
+station_object_storet,station_object_storet_pk,"PRIMARY KEY (data_source_id, object_id)"
 station_sum_storet,station_sum_storet_pk,"PRIMARY KEY (data_source_id, station_id)"
+result_object_storet,result_object_storet_pk,"PRIMARY KEY (data_source_id, object_id)"

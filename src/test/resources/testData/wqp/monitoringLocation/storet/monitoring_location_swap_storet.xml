@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <station_swap_storet data_source_id="3" data_source="STORET" organization="WIDNR_WQX" station_id="993" site_id="WIDNR_WQX-163256" />
+    <station_swap_storet data_source_id="3" data_source="STORET" organization="WIDNR_WQX" station_id="1070" site_id="WIDNR_WQX-143030" />
+</dataset>
