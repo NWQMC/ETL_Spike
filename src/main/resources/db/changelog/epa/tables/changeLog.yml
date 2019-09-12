@@ -20,6 +20,14 @@ databaseChangeLog:
       relativeToChangelogFile: true
 
   - include:
+      file: "attachedObjectActivity/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "attachedObjectResult/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
       file: "detectionQuantLimit/changeLog.yml"
       relativeToChangelogFile: true
 

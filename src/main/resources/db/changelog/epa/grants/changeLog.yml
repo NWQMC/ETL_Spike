@@ -37,6 +37,23 @@ databaseChangeLog:
 
   - changeSet:
       author: drsteini
+      id: "grant.insert.truncate.${WQX_SCHEMA_NAME}.attached_object_activity.${WQP_SCHEMA_OWNER_USERNAME}"
+      changes:
+        - sql:
+            sql: grant insert,truncate on ${WQX_SCHEMA_NAME}.attached_object_activity to ${WQP_SCHEMA_OWNER_USERNAME};
+        - rollback: revoke insert,truncate on ${WQX_SCHEMA_NAME}.attached_object_activity from ${WQP_SCHEMA_OWNER_USERNAME};
+
+
+  - changeSet:
+      author: drsteini
+      id: "grant.insert.truncate.${WQX_SCHEMA_NAME}.attached_object_result.${WQP_SCHEMA_OWNER_USERNAME}"
+      changes:
+        - sql:
+            sql: grant insert,truncate on ${WQX_SCHEMA_NAME}.attached_object_result to ${WQP_SCHEMA_OWNER_USERNAME};
+        - rollback: revoke insert,truncate on ${WQX_SCHEMA_NAME}.attached_object_result from ${WQP_SCHEMA_OWNER_USERNAME};
+
+  - changeSet:
+      author: drsteini
       id: "grant.insert.truncate.${WQX_SCHEMA_NAME}.detection_quant_limit.${WQP_SCHEMA_OWNER_USERNAME}"
       changes:
         - sql:

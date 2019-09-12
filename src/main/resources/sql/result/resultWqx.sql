@@ -28,7 +28,7 @@ insert
                            res_lab_accred_yn, res_lab_accred_authority, res_taxonomist_accred_yn, res_taxonomist_accred_authorty, prep_method_id, prep_method_context,
                            prep_method_name, prep_method_qual_type, prep_method_desc, analysis_prep_date_tx, prep_start_time, prep_start_timezone, prep_end_date,
                            prep_end_time, prep_end_timezone, prep_dilution_factor, project_name, monitoring_location_name,
-                           --result_object_name, result_object_type, result_file_url,
+                           result_object_name, result_object_type, result_file_url,
                            last_updated, res_detect_qnt_lmt_url,
                            lab_sample_prep_url, frequency_class_code_1, frequency_class_code_2, frequency_class_code_3,
                            frequency_class_unit_1, frequency_class_unit_2, frequency_class_unit_3, frequency_class_lower_bound_1, frequency_class_lower_bound_2,
@@ -198,18 +198,18 @@ select activity_swap_storet.data_source_id,
        /*result_lab_sample_prep.*/ null rlsprp_dilution_factor,
        activity_swap_storet.project_name,
        activity_swap_storet.monitoring_location_name,
---       wqx_attached_object_result.result_object_name,
---       wqx_attached_object_result.result_object_type,
---       case
---         when wqx.attached_object_result.ref_uid is null
---           then null
---         else
---           '/providers/' || encode_uri_component(activity_swap_storet.data_source) ||
---             '/organizations/' || encode_uri_component(activity_swap_storet.organization) ||
---             '/activities/' || encode_uri_component(activity_swap_storet.activity) ||
---             '/results/' || result."RES_UID" ||
---             '/files'
---       end result_file_url,
+       attached_object_result.result_object_name,
+       attached_object_result.result_object_type,
+       case
+         when attached_object_result.ref_uid is null
+           then null
+         else
+           '/providers/' || encode_uri_component(activity_swap_storet.data_source) ||
+             '/organizations/' || encode_uri_component(activity_swap_storet.organization) ||
+             '/activities/' || encode_uri_component(activity_swap_storet.activity) ||
+             '/results/' || result."RES_UID" ||
+             '/files'
+       end result_file_url,
        result."RES_LAST_CHANGE_DATE" last_updated,
        case 
          when detection_quant_limit.res_uid is null
@@ -304,9 +304,9 @@ select activity_swap_storet.data_source_id,
          on result_taxon_detail."CELFRM_UID" = cell_form."CELFRM_UID"
        left join wqx_dump."CELL_SHAPE" cell_shape
          on result_taxon_detail."CELSHP_UID" = cell_shape."CELSHP_UID"
---       left join wqx_attached_object_result
---         on result.org_uid = wqx_attached_object_result.org_uid and
---            result."RES_UID" = wqx_attached_object_result.ref_uid
+       left join wqx.attached_object_result
+         on result."ORG_UID" = attached_object_result.org_uid and
+            result."RES_UID" = attached_object_result.ref_uid
        left join wqx.result_frequency_class_aggregated
          on result."RES_UID" = result_frequency_class_aggregated.res_uid
  where result."RESSTA_UID" != 4

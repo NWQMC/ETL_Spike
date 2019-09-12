@@ -176,12 +176,12 @@ public class TransformActivity {
 	public Flow activityFlow() throws IOException {
 		return new FlowBuilder<SimpleFlow>("activityFlow")
 				.start(setupActivitySwapTableFlow)
-				//TODO - WQP-1419 & WQP-1488 & blob urls
+				//TODO - WQP-1419 & WQP-1488
 				.split(new SimpleAsyncTaskExecutor())
 					.add(
 							wqxActivityProjectFlow(),
 							wqxActivityConductingOrgFlow(),
-//							wqxAttachedObjectActivityFlow(),
+							wqxAttachedObjectActivityFlow(),
 							wqxActivityMetricSumFlow()
 						)
 				.next(transformActivityWqxStep())
