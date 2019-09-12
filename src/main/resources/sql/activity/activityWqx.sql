@@ -14,7 +14,7 @@ insert
                              act_sam_prep_meth_id, act_sam_prep_meth_context, act_sam_prep_meth_name, act_sam_prep_meth_qual_type,
                              act_sam_prep_meth_desc, sample_container_type, sample_container_color, act_sam_chemical_preservative,
                              thermal_preservative_name, act_sam_transport_storage_desc,
---                             activity_object_name, activity_object_type, activity_file_url,
+                             activity_object_name, activity_object_type, activity_file_url,
                              activity_metric_url
                             )
 select 3 data_source_id,
@@ -112,16 +112,16 @@ select 3 data_source_id,
        activity."ACT_SAM_CHEMICAL_PRESERVATIVE" act_sam_chemical_preservative,
        thermal_preservative."THPRSV_NAME" thermal_preservative_name,
        activity."ACT_SAM_TRANSPORT_STORAGE_DESC" act_sam_transport_storage_desc,
---       wqx_attached_object_activity.activity_object_name,
---       wqx_attached_object_activity.activity_object_type,
---       case
---         when wqx_attached_object_activity.ref_uid is null
---           then null
---         else
---             '/providers/STORET/organizations/' || encode_uri_component(station.organization) ||
---               '/activities/' || encode_uri_component(station.organization) || '-' || activity."ACT_ID" ||
---               '/files'
---       end activity_file_url,
+       attached_object_activity.activity_object_name,
+       attached_object_activity.activity_object_type,
+       case
+         when attached_object_activity.ref_uid is null
+           then null
+         else
+             '/providers/STORET/organizations/' || encode_uri_component(station.organization) ||
+               '/activities/' || encode_uri_component(station.organization) || '-' || activity."ACT_ID" ||
+               '/files'
+       end activity_file_url,
        case
          when activity_metric_sum.act_uid is null
            then null
@@ -191,8 +191,8 @@ select 3 data_source_id,
          on activity."THPRSV_UID" = thermal_preservative."THPRSV_UID"
        left join wqx_dump."RELATIVE_DEPTH" relative_depth
          on activity."RELDPTH_UID" = relative_depth."RELDPTH_UID"
---       left join wqx_attached_object_activity
---         on activity."ORG_UID" = wqx_attached_object_activity.org_uid and
---            activity."ACT_UID" = wqx_attached_object_activity.ref_uid
+       left join wqx.attached_object_activity
+         on activity."ORG_UID" = attached_object_activity.org_uid and
+            activity."ACT_UID" = attached_object_activity.ref_uid
        left join wqx.activity_metric_sum
          on activity."ACT_UID" = activity_metric_sum.act_uid

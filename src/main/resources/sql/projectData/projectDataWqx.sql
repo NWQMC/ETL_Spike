@@ -10,7 +10,7 @@ insert
                                  sampling_design_type_code,
                                  qapp_approved_indicator,
                                  qapp_approval_agency_name,
---                                 project_file_url,
+                                 project_file_url,
                                  monitoring_location_weight_url
                                 )
 select 3 data_source_id,
@@ -24,15 +24,14 @@ select 3 data_source_id,
        sampling_design_type."SDTYP_DESC" sampling_design_type_code,
        project."PRJ_QAPP_APPROVED_YN" qapp_approved_indicator,
        project."PRJ_QAPP_APPROVAL_AGENCY_NAME" qapp_approval_agency_name,
---       case 
---         when attached_object.has_blob is null
---           then null
---         else
---           '/providers/STORET/organizations/' || encode_uri_component(organization."ORG_ID") ||
---             '/projects/' || encode_uri_component(project."PRJ_ID") ||
---             '/files'
---         else null
---       end project_file_url,
+       case 
+         when attached_object.has_blob is null
+           then null
+         else
+           '/providers/STORET/organizations/' || encode_uri_component(organization."ORG_ID") ||
+             '/projects/' || encode_uri_component(project."PRJ_ID") ||
+             '/files'
+       end project_file_url,
        case
          when monitoring_location_weight.has_weight is null
            then null
@@ -46,12 +45,12 @@ select 3 data_source_id,
          on project."ORG_UID" = organization."ORG_UID"
        left join wqx_dump."SAMPLING_DESIGN_TYPE" sampling_design_type
          on project."SDTYP_UID" = sampling_design_type."SDTYP_UID"
---       left join (select org_uid, ref_uid, count(*) has_blob
---                    from wqx.attached_object
---                   where 1 = tbl_uid
---                     group by org_uid, ref_uid) attached_object
---         on project.org_uid = attached_object.org_uid and
---            project.prj_uid = attached_object.ref_uid
+       left join (select "ORG_UID" org_uid, "REF_UID" ref_uid, count(*) has_blob
+                    from wqx_dump."ATTACHED_OBJECT" attached_object
+                   where 1 = "TBL_UID"
+                     group by "ORG_UID", "REF_UID") attached_object
+         on project."ORG_UID" = attached_object.org_uid and
+            project."PRJ_UID" = attached_object.ref_uid
        left join (select "PRJ_UID" prj_uid, count(*) has_weight
                     from wqx_dump."MONITORING_LOCATION_WEIGHT" monitoring_location_weight
                       group by prj_uid) monitoring_location_weight
