@@ -327,7 +327,7 @@ public class TransformResult {
 //							setupResultSwapTableFlow
 							)
 				.next(transformResultWqxStep())
-//				.next(transformResultStoretwStep())
+				.next(transformResultStoretwStep())
 				.next(afterLoadResultFlow)
 				.build();
 	}

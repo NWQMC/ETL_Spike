@@ -185,7 +185,7 @@ public class TransformActivity {
 							wqxActivityMetricSumFlow()
 						)
 				.next(transformActivityWqxStep())
-//				.next(transformActivityStoretwStep())
+				.next(transformActivityStoretwStep())
 				.next(afterLoadActivityFlow)
 				.build();
 	}

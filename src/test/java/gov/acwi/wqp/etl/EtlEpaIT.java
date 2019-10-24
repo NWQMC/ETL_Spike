@@ -13,13 +13,13 @@ import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
 import gov.acwi.wqp.etl.dbFinalize.UpdateLastETLIT;
 
-public class EtlStoretWqxIT extends WqxBaseFlowIT {
+public class EtlEpaIT extends WqxBaseFlowIT {
 
 	public static final String EXPECTED_DATABASE_TABLE_STATION_SUM = "station_sum_storet";
 	public static final String EXPECTED_DATABASE_QUERY_STATION_SUM = BASE_EXPECTED_DATABASE_QUERY_STATION_SUM + EXPECTED_DATABASE_TABLE_STATION_SUM;
 
 	public static final String EXPECTED_DATABASE_QUERY_TABLE = BASE_EXPECTED_DATABASE_QUERY_CHECK_TABLE_LIKE
-			+ "'%storet%' and table_name not like '%swap%'";
+			+ "'%storet%' and table_name not like '%swap%' and table_schema = 'wqp'";
 	public static final String EXPECTED_DATABASE_QUERY_INDEX = BASE_EXPECTED_DATABASE_QUERY_CHECK_INDEX_LIKE
 			+ "'%storet' and tablename not like '%swap%'";
 
@@ -38,6 +38,26 @@ public class EtlStoretWqxIT extends WqxBaseFlowIT {
 	@DatabaseSetup(connection=CONNECTION_NWIS, value="classpath:/testData/nwis/state/state.xml")
 	@DatabaseSetup(connection=CONNECTION_NWIS, value="classpath:/testData/nwis/county/county.xml")
 	@DatabaseSetup(value="classpath:/testData/wqp/lastEtl/lastEtl.xml")
+	@DatabaseSetup(
+			connection=CONNECTION_STORETW,
+			value="classpath:/testData/storetw/orgDataNoSource/csv/"
+			)
+	@DatabaseSetup(
+			connection=CONNECTION_STORETW,
+			value="classpath:/testData/storetw/projectDataNoSource/csv/"
+			)
+	@DatabaseSetup(
+			connection=CONNECTION_STORETW,
+			value="classpath:/testData/storetw/stationNoSource/csv/"
+			)
+	@DatabaseSetup(
+			connection=CONNECTION_STORETW,
+			value="classpath:/testData/storetw/activityNoSource/csv/"
+			)
+	@DatabaseSetup(
+			connection=CONNECTION_STORETW,
+			value="classpath:/testData/storetw/resultNoSource/csv/"
+			)
 
 	//Tables
 	@ExpectedDatabase(
@@ -78,19 +98,14 @@ public class EtlStoretWqxIT extends WqxBaseFlowIT {
 
 	//Storet Base Data
 	//TODO - WQP-1415
-//	@ExpectedDatabase(value="classpath:/testResult/wqp/orgData.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
-	//TODO - WQP-1416
-//	@ExpectedDatabase(value="classpath:/testResult/wqp/projectData.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
-	//TODO - WQP-1418
-//	@ExpectedDatabase(value="classpath:/testResult/wqp/monitoringLocation.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
+	@ExpectedDatabase(
+			value="classpath:/testResult/wqp/tableData/csv/",
+			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED
+			)
 	//TODO - WQP-1458
 //	@ExpectedDatabase(value="classpath:/testResult/wqp/biologicalHabitatMetric.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
-	//TODO - WQP-1419
-//	@ExpectedDatabase(value="classpath:/testResult/wqp/activity.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
 	//TODO - WQP-1425
 //	@ExpectedDatabase(value="classpath:/testResult/wqp/activityMetric.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
-	//TODO - WQP-1426
-//	@ExpectedDatabase(value="classpath:/testResult/wqp/result.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
 	//TODO - WQP-1428
 //	@ExpectedDatabase(value="classpath:/testResult/wqp/resDetectQntLimit.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
 	//TODO - WQP-1429

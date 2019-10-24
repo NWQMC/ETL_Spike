@@ -55,7 +55,7 @@ public class TransformOrgData {
 				.start(setupOrgDataSwapTableFlow)
 				//TODO - WQP-1415
 				.next(transformOrgDataWqxStep())
-//				.next(transformOrgDataStoretwStep())
+				.next(transformOrgDataStoretwStep())
 				.next(afterLoadOrgDataFlow)
 				.build();
 	}

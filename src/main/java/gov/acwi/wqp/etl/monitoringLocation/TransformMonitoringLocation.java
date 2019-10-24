@@ -122,12 +122,12 @@ public class TransformMonitoringLocation {
 				//TODO - WQP-1418
 				.next(purgeWqxMonitoringLocationLocalWqxStep())
 				.next(updateWqxMonitoringLocationLocalWqxStep())
-//				.next(purgeWqxMonitoringLocationLocalStoretwStep())
-//				.next(updateWqxMonitoringLocationLocalStoretwStep())
+				.next(purgeWqxMonitoringLocationLocalStoretwStep())
+				.next(updateWqxMonitoringLocationLocalStoretwStep())
 				.next(calculateHucStep())
 				.next(calculateGeopoliticalDataStep())
 				.next(transformMonitoringLocationWqxStep())
-//				.next(transformMonitoringLocationStoretwStep())
+				.next(transformMonitoringLocationStoretwStep())
 				.next(afterLoadMonitoringLocationFlow)
 				.build();
 	}
