@@ -55,7 +55,7 @@ public class TransformResDetectQntLimit {
 				.start(setupResDetectQntLimitSwapTableFlow)
 				//TODO - WQP-1428
 				.next(transformResDetectQntLimitWqxStep())
-//				.next(transformResDetectQntLimitStoretwStep())
+				.next(transformResDetectQntLimitStoretwStep())
 				.next(afterLoadResDetectQntLimitFlow)
 				.build();
 	}

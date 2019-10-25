@@ -11,6 +11,7 @@ import org.springframework.batch.core.job.flow.Flow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
@@ -48,9 +49,19 @@ public class TransformResDetectQntLimitIT extends WqxBaseFlowIT {
 	@Test
 	//TODO - WQP-1428
 //	@DatabaseSetup(value="classpath:/testData/storet/resDetectQntLimit/resDetectQntLimitOld.xml")
+	@DatabaseSetup(
+			value="classpath:/testResult/storet/monitoringLocation/csv/"
+			)
 //	@DatabaseSetup(value="classpath:/testResult/storet/activity/activity.xml")
 //	@DatabaseSetup(value="classpath:/testResult/storet/result/result.xml")
-//	@ExpectedDatabase(value="classpath:/testResult/storet/resDetectQntLimit/resDetectQntLimit.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
+	@DatabaseSetup(
+			connection=CONNECTION_STORETW,
+			value="classpath:/testData/storetw/resultNoSource/csv/"
+			)
+	@ExpectedDatabase(
+			value="classpath:/testResult/storet/resDetectQntLimit/csv/",
+			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED
+			)
 	@ExpectedDatabase(
 			value="classpath:/testResult/storet/resDetectQntLimit/indexes/all.xml",
 			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED,

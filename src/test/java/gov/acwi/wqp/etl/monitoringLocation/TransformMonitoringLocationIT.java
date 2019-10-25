@@ -11,6 +11,7 @@ import org.springframework.batch.core.job.flow.Flow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
@@ -61,7 +62,18 @@ public class TransformMonitoringLocationIT extends WqxBaseFlowIT {
 //	@DatabaseSetup(connection=CONNECTION_ARS, value="classpath:/testData/ars/siteTypeToPrimary.xml")
 //	@DatabaseSetup(connection=CONNECTION_ARS, value="classpath:/testResult/ars/arsOrgProject/arsOrgProject.xml")
 //	@DatabaseSetup(connection=CONNECTION_ARS, value="classpath:/testResult/ars/arsMonitoringLocation/arsMonitoringLocation.xml")
-//	@ExpectedDatabase(value="classpath:/testResult/storet/monitoringLocation/monitoringLocation.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
+	@DatabaseSetup(
+			connection=WqxBaseFlowIT.CONNECTION_WQX,
+			value="classpath:/testData/wqx/monitoringLocationLocal/monitoring_location_local.xml"
+			)
+	@DatabaseSetup(
+			connection=CONNECTION_STORETW,
+			value="classpath:/testData/storetw/stationNoSource/csv/"
+			)
+	@ExpectedDatabase(
+			value="classpath:/testResult/storet/monitoringLocation/csv/",
+			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED
+			)
 	@ExpectedDatabase(
 			value="classpath:/testResult/storet/monitoringLocation/indexes/all.xml",
 			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED,

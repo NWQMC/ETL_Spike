@@ -11,6 +11,7 @@ import org.springframework.batch.core.job.flow.Flow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
@@ -55,9 +56,18 @@ public class TransformActivityIT extends WqxBaseFlowIT {
 	//TODO - WQP-1419
 //	@DatabaseSetup(value="classpath:/testData/storet/activity/activityOld.xml")
 //	@DatabaseSetup(value="classpath:/testResult/storet/projectData/projectData.xml")
-//	@DatabaseSetup(value="classpath:/testResult/storet/monitoringLocation/monitoringLocation.xml")
+	@DatabaseSetup(
+			value="classpath:/testResult/storet/monitoringLocation/csv/"
+			)
 //	@DatabaseSetup(connection=CONNECTION_ARS, value="classpath:/testResult/ars/arsResult/arsResult.xml")
-//	@ExpectedDatabase(value="classpath:/testResult/storet/activity/activity.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
+	@DatabaseSetup(
+			connection=CONNECTION_STORETW,
+			value="classpath:/testData/storetw/activityNoSource/csv/"
+			)
+	@ExpectedDatabase(
+			value="classpath:/testResult/storet/activity/csv/",
+			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED
+			)
 	@ExpectedDatabase(
 			value="classpath:/testResult/storet/activity/indexes/all.xml",
 			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED,

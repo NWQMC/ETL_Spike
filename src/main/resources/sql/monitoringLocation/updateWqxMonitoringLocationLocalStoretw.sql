@@ -5,8 +5,8 @@ with new_data as (select 'STORETW' station_source,
                          longitude,
                          huc,
                          substring(governmental_unit_code, '^[^:]+') cntry_cd,
-                         substring(governmental_unit_code, '^[^:]+:[^:]+') st_fips_cd,
-                         substring(governmental_unit_code, '^[^:]+:[^:]+:[^:]+$') cnty_fips_cd,
+                         substring(substring(governmental_unit_code, '^[^:]+:[^:]+'), '\d{2}$') st_fips_cd,
+                         substring(substring(governmental_unit_code, '^[^:]+:[^:]+:[^:]+$'), '\d{3}$') cnty_fips_cd,
                          geom
                     from storetw.station_no_source
                    where station_no_source.site_id not in (select site_id

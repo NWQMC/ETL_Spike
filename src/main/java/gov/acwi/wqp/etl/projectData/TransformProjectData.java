@@ -55,7 +55,7 @@ public class TransformProjectData {
 				.start(setupProjectDataSwapTableFlow)
 				//TODO - WQP-1416 & WQP-1488
 				.next(transformProjectDataWqxStep())
-//				.next(transformProjectDataStoretwStep())
+				.next(transformProjectDataStoretwStep())
 				.next(afterLoadProjectDataFlow)
 				.build();
 	}

@@ -31,3 +31,6 @@ select 3 data_source_id,
           from storetw.result_no_source
                join station_swap_storet station
                  on result_no_source.station_id + 10000000 = station.station_id) a
+         where detection_limit is not null or
+               detection_limit_unit is not null or
+               detection_limit_desc is not null

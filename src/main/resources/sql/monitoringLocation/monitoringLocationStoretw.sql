@@ -16,7 +16,7 @@ select 3 data_source_id,
               substr(monitoring_location_local.calculated_fips, 3) = '000'
            then monitoring_location_local.cntry_cd || ':' || monitoring_location_local.st_fips_cd || ':' || monitoring_location_local.cnty_fips_cd
          else 'US:' || substr(monitoring_location_local.calculated_fips, 1, 2) || ':' || substr(monitoring_location_local.calculated_fips, 3, 3)
-       end governmental_unit_code, 
+       end governmental_unit_code,
        monitoring_location_local.geom,
        station_no_source.station_name,
        station_no_source.organization_name,
