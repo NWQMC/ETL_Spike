@@ -39,6 +39,10 @@ public class EtlEpaIT extends WqxBaseFlowIT {
 	@DatabaseSetup(connection=CONNECTION_NWIS, value="classpath:/testData/nwis/county/county.xml")
 	@DatabaseSetup(value="classpath:/testData/wqp/lastEtl/lastEtl.xml")
 	@DatabaseSetup(
+			connection=WqxBaseFlowIT.CONNECTION_WQX,
+			value="classpath:/testData/wqx/monitoringLocationLocal/monitoring_location_local.xml"
+			)
+	@DatabaseSetup(
 			connection=CONNECTION_STORETW,
 			value="classpath:/testData/storetw/orgDataNoSource/csv/"
 			)
