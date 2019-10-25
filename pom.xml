@@ -228,6 +228,7 @@
                                     <WQX_SCHEMA_NAME>wqx</WQX_SCHEMA_NAME>
                                     <WQX_DUMP_SCHEMA_NAME>wqx_dump</WQX_DUMP_SCHEMA_NAME>
                                     <STORETW_SCHEMA_NAME>storetw</STORETW_SCHEMA_NAME>
+                                    <STORETW_DUMP_SCHEMA_NAME>storetw_dump</STORETW_DUMP_SCHEMA_NAME>
                                 </env>
                                 <wait>
                                     <time>100000</time>
