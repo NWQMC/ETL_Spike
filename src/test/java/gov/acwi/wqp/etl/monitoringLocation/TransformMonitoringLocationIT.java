@@ -63,6 +63,10 @@ public class TransformMonitoringLocationIT extends WqxBaseFlowIT {
 //	@DatabaseSetup(connection=CONNECTION_ARS, value="classpath:/testResult/ars/arsOrgProject/arsOrgProject.xml")
 //	@DatabaseSetup(connection=CONNECTION_ARS, value="classpath:/testResult/ars/arsMonitoringLocation/arsMonitoringLocation.xml")
 	@DatabaseSetup(
+			connection=WqxBaseFlowIT.CONNECTION_WQX,
+			value="classpath:/testData/wqx/monitoringLocationLocal/monitoring_location_local.xml"
+			)
+	@DatabaseSetup(
 			connection=CONNECTION_STORETW,
 			value="classpath:/testData/storetw/stationNoSource/csv/"
 			)
