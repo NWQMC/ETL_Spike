@@ -1,8 +1,7 @@
 insert
   into station_swap_storet (data_source_id, data_source, station_id, site_id, organization, site_type, huc, governmental_unit_code,
                             geom, station_name, organization_name, description_text, station_type_name, latitude, longitude, map_scale,
-                            geopositioning_method, hdatum_id_code, elevation_value, elevation_unit, elevation_method, vdatum_id_code,
-                            geoposition_accy_value, geoposition_accy_unit
+                            geopositioning_method, hdatum_id_code, elevation_value, elevation_unit, elevation_method, vdatum_id_code
                            )
 select 3 data_source_id,
        'STORET' data_source,
@@ -14,8 +13,8 @@ select 3 data_source_id,
        case
          when monitoring_location_local.calculated_fips is null or
               substr(monitoring_location_local.calculated_fips, 3) = '000'
-           then monitoring_location_local.cntry_cd || ':' || monitoring_location_local.st_fips_cd || ':' || monitoring_location_local.cnty_fips_cd
-         else 'US:' || substr(monitoring_location_local.calculated_fips, 1, 2) || ':' || substr(monitoring_location_local.calculated_fips, 3, 3)
+           then coalesce(monitoring_location_local.cntry_cd, '') || ':' || coalesce(monitoring_location_local.st_fips_cd, '') || ':' || coalesce(monitoring_location_local.cnty_fips_cd, '')
+         else 'US:' || coalesce(substr(monitoring_location_local.calculated_fips, 1, 2), '') || ':' || coalesce(substr(monitoring_location_local.calculated_fips, 3, 3), '')
        end governmental_unit_code,
        monitoring_location_local.geom,
        station_no_source.station_name,
@@ -30,9 +29,7 @@ select 3 data_source_id,
        station_no_source.elevation_value,
        station_no_source.elevation_unit,
        station_no_source.elevation_method,
-       station_no_source.vdatum_id_code,
-       null geoposition_accy_value,
-       null geoposition_accy_unit
+       station_no_source.vdatum_id_code
   from wqx.monitoring_location_local
        join storetw.station_no_source
          on monitoring_location_local.station_id = station_no_source.station_id

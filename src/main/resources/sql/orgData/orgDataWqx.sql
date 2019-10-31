@@ -19,9 +19,9 @@ with addresses as (select org_address."ORG_UID" org_uid,
                             on org_address."CNTY_UID" = county.cnty_uid
                   ),
      phones as (select "ORG_UID" org_uid,
-                       string_agg("ORGPH_NUM" ||
+                       string_agg(coalesce("ORGPH_NUM", '') ||
                                       case when "ORGPH_EXT" is not null then ' x' || "ORGPH_EXT" else '' end ||
-                                      ' (' || "PHTYP_NAME" || ')',
+                                      ' (' || coalesce("PHTYP_NAME", '') || ')',
                                   ';'
                                   order by "ORGPH_UID"
                                  ) telephonic
@@ -31,7 +31,7 @@ with addresses as (select org_address."ORG_UID" org_uid,
                     group by org_uid
                ),
      emails as (select "ORG_UID" org_uid,
-                       string_agg("ORGEA_TEXT" || ' (' || "EATYP_NAME" || ')', ';' order by "ORGEA_UID") electronic_address
+                       string_agg(coalesce("ORGEA_TEXT", '') || ' (' || coalesce("EATYP_NAME", '') || ')', ';' order by "ORGEA_UID") electronic_address
                   from wqx_dump."ORG_ELECTRONIC_ADDRESS" org_electronic_address
                        join wqx_dump."ELECTRONIC_ADDRESS_TYPE" electronic_address_type
                          on org_electronic_address."EATYP_UID" = electronic_address_type."EATYP_UID"

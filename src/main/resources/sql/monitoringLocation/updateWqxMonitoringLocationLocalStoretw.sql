@@ -9,9 +9,6 @@ with new_data as (select 'STORETW' station_source,
                          substring(substring(governmental_unit_code, '^[^:]+:[^:]+:[^:]+$'), '\d{3}$') cnty_fips_cd,
                          geom
                     from storetw.station_no_source
-                   where station_no_source.site_id not in (select site_id
-                                                             from wqx.monitoring_location_local
-                                                            where monitoring_location_source = 'WQX')
             )
 insert into wqx.monitoring_location_local (monitoring_location_source, station_id,site_id,latitude,longitude,
                                            huc,cntry_cd,st_fips_cd,cnty_fips_cd,geom)

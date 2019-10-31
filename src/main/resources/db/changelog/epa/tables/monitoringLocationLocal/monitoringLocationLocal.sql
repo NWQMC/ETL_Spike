@@ -13,5 +13,5 @@ create unlogged table if not exists ${WQX_SCHEMA_NAME}.monitoring_location_local
 ,calculated_fips                character varying (5)
 ,geom                           geometry(point,4269)
 ,constraint monitoring_location_local_pk primary key (monitoring_location_source, station_id)
-,constraint monitoring_location_local_uk unique (monitoring_location_source, site_id)
+,constraint monitoring_location_local_uk unique (site_id)
 )
