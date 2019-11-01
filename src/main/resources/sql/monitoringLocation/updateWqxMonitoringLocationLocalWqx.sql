@@ -1,6 +1,6 @@
 with new_data as (select 'WQX' monitoring_location_source,
                          monitoring_location."MLOC_UID" station_id,
-                         org."ORG_ID" || '-' || monitoring_location."MLOC_UID" site_id,
+                         coalesce(org."ORG_ID", '') || '-' || coalesce(monitoring_location."MLOC_ID", '') site_id,
                          monitoring_location."MLOC_LATITUDE" latitude,
                          monitoring_location."MLOC_LONGITUDE" longitude,
                          monitoring_location."HRDAT_UID" hrdat_uid,

@@ -23,7 +23,7 @@ select 3 data_source_id,
        station.site_id,
        station.station_name,
        date_trunc('day', activity."ACT_START_DATE") event_date,
-       station.organization || '-' || activity."ACT_ID" activity,
+       coalesce(station.organization, '') || '-' || coalesce(activity."ACT_ID", '') activity,
        activity_media."ACMED_NAME" sample_media,
        station.organization,
        station.site_type,
@@ -118,16 +118,16 @@ select 3 data_source_id,
          when attached_object_activity.ref_uid is null
            then null
          else
-             '/providers/STORET/organizations/' || encode_uri_component(station.organization) ||
-               '/activities/' || encode_uri_component(station.organization) || '-' || activity."ACT_ID" ||
+             '/providers/STORET/organizations/' || coalesce(encode_uri_component(station.organization), '') ||
+               '/activities/' || coalesce(encode_uri_component(station.organization), '') || '-' || coalesce(activity."ACT_ID", '') ||
                '/files'
        end activity_file_url,
        case
          when activity_metric_sum.act_uid is null
            then null
            else
-             '/providers/STORET/organizations/' || encode_uri_component(station.organization) ||
-               '/activities/' || encode_uri_component(station.organization) || '-' || activity."ACT_ID" ||
+             '/providers/STORET/organizations/' || coalesce(encode_uri_component(station.organization), '') ||
+               '/activities/' || coalesce(encode_uri_component(station.organization), '') || '-' || coalesce(activity."ACT_ID", '') ||
                '/activitymetrics'
        end activity_metric_url
   from wqx_dump."ACTIVITY" activity

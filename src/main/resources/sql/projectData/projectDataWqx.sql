@@ -28,16 +28,16 @@ select 3 data_source_id,
          when attached_object.has_blob is null
            then null
          else
-           '/providers/STORET/organizations/' || encode_uri_component(organization."ORG_ID") ||
-             '/projects/' || encode_uri_component(project."PRJ_ID") ||
+           '/providers/STORET/organizations/' || coalesce(encode_uri_component(organization."ORG_ID"), '') ||
+             '/projects/' || coalesce(encode_uri_component(project."PRJ_ID"), '') ||
              '/files'
        end project_file_url,
        case
          when monitoring_location_weight.has_weight is null
            then null
          else
-           '/providers/STORET/organizations/' || encode_uri_component(organization."ORG_ID") ||
-             '/projects/' || encode_uri_component(project."PRJ_ID") ||
+           '/providers/STORET/organizations/' || coalesce(encode_uri_component(organization."ORG_ID"), '') ||
+             '/projects/' || coalesce(encode_uri_component(project."PRJ_ID"), '') ||
              '/projectMonitoringLocationWeightings'
        end monitoring_location_weight_url
   from wqx_dump."PROJECT" project

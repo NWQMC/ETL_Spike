@@ -7,15 +7,15 @@ insert
 select 3 data_source_id,
        'STORET' data_source,
        monitoring_location."MLOC_UID" station_id,
-       org."ORG_ID" || '-' || monitoring_location."MLOC_ID" site_id,
+       coalesce(org."ORG_ID", '') || '-' || coalesce(monitoring_location."MLOC_ID", '') site_id,
        org."ORG_ID" organization,
        site_type_conversion.station_group_type site_type,
        coalesce(monitoring_location_local.calculated_huc_12, coalesce("MLOC_HUC_12", "MLOC_HUC_8")) huc,
        case
          when monitoring_location_local.calculated_fips is null or
               substr(monitoring_location_local.calculated_fips, 3) = '000'
-           then monitoring_location_local.cntry_cd || ':' || monitoring_location_local.st_fips_cd || ':' || monitoring_location_local.cnty_fips_cd
-         else 'US:' || substr(monitoring_location_local.calculated_fips, 1, 2) || ':' || substr(monitoring_location_local.calculated_fips, 3, 3)
+           then coalesce(monitoring_location_local.cntry_cd, '') || ':' || coalesce(monitoring_location_local.st_fips_cd, '') || ':' || coalesce(monitoring_location_local.cnty_fips_cd, '')
+         else 'US:' || coalesce(substr(monitoring_location_local.calculated_fips, 1, 2), '') || ':' || coalesce(substr(monitoring_location_local.calculated_fips, 3, 3), '')
        end governmental_unit_code, 
        monitoring_location_local.geom,
        trim(monitoring_location."MLOC_NAME") station_name,

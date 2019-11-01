@@ -2,7 +2,7 @@
 <dataset>
     <monitoring_location_local monitoring_location_source="STORETW"
                        station_id="213"
-                       site_id="STORET"
+                       site_id="STORET2"
                        latitude="-89.007"
                        longitude="43.436"
                        hrdat_uid="2"

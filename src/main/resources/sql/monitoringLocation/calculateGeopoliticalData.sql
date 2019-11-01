@@ -1,5 +1,5 @@
 update wqx.monitoring_location_local upd_table
-   set calculated_fips = fips_state_code || fips_county_code
+   set calculated_fips = coalesce(fips_state_code, '') || coalesce(fips_county_code, '')
   from wqx.monitoring_location_local src_table
        join county_geom
          on st_covers(county_geom.geom, st_transform(src_table.geom, 4326))
