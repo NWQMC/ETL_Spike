@@ -207,7 +207,7 @@ select activity_swap_storet.data_source_id,
            '/providers/' || coalesce(encode_uri_component(activity_swap_storet.data_source), '') ||
              '/organizations/' || coalesce(encode_uri_component(activity_swap_storet.organization), '') ||
              '/activities/' || coalesce(encode_uri_component(activity_swap_storet.activity), '') ||
-             '/results/' || coalesce(result."RES_UID", '') ||
+             '/results/' || coalesce(result."RES_UID"::text, '') ||
              '/files'
        end result_file_url,
        result."RES_LAST_CHANGE_DATE" last_updated,
@@ -218,7 +218,7 @@ select activity_swap_storet.data_source_id,
            '/providers/' || coalesce(encode_uri_component(activity_swap_storet.data_source), '') ||
              '/organizations/' || coalesce(encode_uri_component(activity_swap_storet.organization), '') ||
              '/activities/' || coalesce(encode_uri_component(activity_swap_storet.activity), '') ||
-             '/results/' || coalesce(result."RES_UID", '') ||
+             '/results/' || coalesce(result."RES_UID"::text, '') ||
              '/resdetectqntlmts'
        end res_detect_qnt_lmt_url,
        case 
