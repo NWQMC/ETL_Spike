@@ -127,6 +127,7 @@ public class EtlEpaIT extends WqxBaseFlowIT {
 //			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED,
 //			table=EXPECTED_DATABASE_TABLE_STATION_SUM,
 //			query=EXPECTED_DATABASE_QUERY_STATION_SUM)
+	@ExpectedDatabase(value = "classpath:/testResult/wqp/qwportalSummary.xml", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
 
 //	//Codes Data
 	//TODO - WQP-1431
