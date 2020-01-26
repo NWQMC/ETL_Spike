@@ -64,6 +64,10 @@ public class TransformActivityIT extends WqxBaseFlowIT {
 			connection=CONNECTION_STORETW,
 			value="classpath:/testData/storetw/activityNoSource/csv/"
 			)
+	@DatabaseSetup(
+			connection=CONNECTION_WQX_DUMP,
+			value="classpath:/testData/wqxDump/csv/"
+	)
 	@ExpectedDatabase(
 			value="classpath:/testResult/storet/activity/csv/",
 			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED
