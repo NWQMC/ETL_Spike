@@ -15,7 +15,6 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
-import gov.acwi.wqp.etl.FLowTestHelper;
 import gov.acwi.wqp.etl.WqxBaseFlowIT;
 
 public class TransformActivityIT extends WqxBaseFlowIT {
@@ -115,7 +114,6 @@ public class TransformActivityIT extends WqxBaseFlowIT {
 			e.printStackTrace();
 			fail(e.getLocalizedMessage());
 		}
-		FLowTestHelper.verifyActivitySwapStoretGeom(jdbcTemplate);
 	}
 
 }

@@ -1,6 +1,6 @@
 insert
   into r_detect_qnt_lmt_swap_storet(data_source_id, data_source, station_id, site_id, event_date, activity, analytical_method,
-                                    characteristic_name, characteristic_type, sample_media, organization, site_type, huc, governmental_unit_code,
+                                    characteristic_name, characteristic_type, sample_media, organization, site_type, huc, governmental_unit_code, geom,
                                     organization_name, project_id, assemblage_sampled_name, sample_tissue_taxonomic_name, activity_id,
                                     result_id, detection_limit_id, detection_limit, detection_limit_unit, detection_limit_desc)
 select result_swap_storet.data_source_id,
@@ -17,6 +17,7 @@ select result_swap_storet.data_source_id,
        result_swap_storet.site_type,
        result_swap_storet.huc,
        result_swap_storet.governmental_unit_code,
+       result_swap_storet.geom,
        result_swap_storet.organization_name,
        result_swap_storet.project_id,
        result_swap_storet.assemblage_sampled_name,
