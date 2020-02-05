@@ -1,1 +1,2 @@
 r_detect_qnt_lmt_storet
+r_detect_qnt_lmt_swap_storet

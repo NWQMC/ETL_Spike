@@ -63,12 +63,20 @@ public class TransformResultIT extends WqxBaseFlowIT {
 			connection=CONNECTION_STORETW,
 			value="classpath:/testData/storetw/resultNoSource/csv/"
 			)
+	@DatabaseSetup(
+			connection=CONNECTION_WQP,
+			value="classpath:/testResult/storet/activity/csv/"
+			)
 //	@DatabaseSetup(connection=CONNECTION_ARS, value="classpath:/testResult/ars/arsResult/arsResult.xml")
 //	@DatabaseSetup(connection=CONNECTION_ARS, value="classpath:/testData/ars/charNameToType.xml")
 	@ExpectedDatabase(
 			value="classpath:/testResult/storet/result/csv/",
 			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED
 			)
+	@DatabaseSetup(
+			connection=CONNECTION_WQX_DUMP,
+			value="classpath:/testData/wqxDump/csv/"
+	)
 	@ExpectedDatabase(
 			connection=CONNECTION_INFORMATION_SCHEMA,
 			value="classpath:/testResult/storet/result/create.xml",
