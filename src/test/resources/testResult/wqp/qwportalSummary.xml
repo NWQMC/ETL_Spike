@@ -20,10 +20,10 @@
         fips_state_and_county="17075"
         huc8="07120002"
         min_date="2005-11-02"
-        max_date="2005-11-02"
+        max_date="2014-01-22"
         samples_past_12_months="0"
         samples_past_60_months="0"
-        samples_all_time="2"
+        samples_all_time="3"
         nwis_or_epa="E"
     />
     <qwportal_summary

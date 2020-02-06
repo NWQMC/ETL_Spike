@@ -62,6 +62,10 @@ public class EtlEpaIT extends WqxBaseFlowIT {
 			connection=CONNECTION_STORETW,
 			value="classpath:/testData/storetw/resultNoSource/csv/"
 			)
+	@DatabaseSetup(
+			connection=CONNECTION_WQX_DUMP,
+			value="classpath:/testData/wqxDump/csv/"
+	)
 
 	//Tables
 	@ExpectedDatabase(

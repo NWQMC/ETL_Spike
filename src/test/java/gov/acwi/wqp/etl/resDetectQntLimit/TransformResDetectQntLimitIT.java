@@ -55,8 +55,15 @@ public class TransformResDetectQntLimitIT extends WqxBaseFlowIT {
 //	@DatabaseSetup(value="classpath:/testResult/storet/activity/activity.xml")
 //	@DatabaseSetup(value="classpath:/testResult/storet/result/result.xml")
 	@DatabaseSetup(
+			connection=CONNECTION_WQX,
+			value="classpath:/testData/wqx/rDectQntLmt/csv/"
+			)
+	@DatabaseSetup(
 			connection=CONNECTION_STORETW,
 			value="classpath:/testData/storetw/resultNoSource/csv/"
+			)
+	@DatabaseSetup(
+			value="classpath:testResult/storet/result/csv/"
 			)
 	@ExpectedDatabase(
 			value="classpath:/testResult/storet/resDetectQntLimit/csv/",
