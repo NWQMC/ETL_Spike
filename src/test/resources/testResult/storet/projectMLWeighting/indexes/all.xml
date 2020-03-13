@@ -17,6 +17,11 @@
      />
     <pg_indexes
         tablename="prj_ml_weighting_swap_storet"
+        indexname="prj_ml_weighting_swap_storet_geom_2163"
+        indexdef="CREATE INDEX prj_ml_weighting_swap_storet_geom_2163 ON wqp.prj_ml_weighting_swap_storet USING gist (st_transform(geom, 2163)) WITH (fillfactor='100')"
+     />
+    <pg_indexes
+        tablename="prj_ml_weighting_swap_storet"
         indexname="prj_ml_weighting_swap_storet_huc_10"
         indexdef="CREATE INDEX prj_ml_weighting_swap_storet_huc_10 ON wqp.prj_ml_weighting_swap_storet USING btree (&quot;substring&quot;((huc)::text, '[0-9]{10}'::text)) WITH (fillfactor='100')"
      />
