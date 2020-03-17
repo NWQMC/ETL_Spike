@@ -15,33 +15,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.util.FileCopyUtils;
 
 import gov.acwi.wqp.etl.MapItemSqlParameterSourceProvider;
 
-@Configuration
+//TODO - WQP-1428/WQP-1476
+//@Configuration
 public class TransformWqpNemiEpaCrosswalk {
 
 	@Autowired
-	@Qualifier("wqpDataSource")
-	DataSource wqpDataSource;
+	DataSource dataSourceWqp;
+
 	@Autowired
-	@Qualifier("nemiDataSource")
-	DataSource nemiDataSource;
+	@Qualifier("dataSourceNemi")
+	DataSource dataSourceNemi;
+
 	@Autowired
 	StepBuilderFactory stepBuilderFactory;
+
 	@Value("classpath:sql/result/readWqpNemiEpaCrosswalk.sql")
 	private Resource readerResource;
+
 	@Value("classpath:sql/result/writeWqpNemiEpaCrosswalk.sql")
 	private Resource writerResource;
 
 	@Bean
 	public JdbcCursorItemReader<Map<String, Object>> myItemReader() throws IOException {
 		return new JdbcCursorItemReaderBuilder<Map<String, Object>>()
-				.dataSource(nemiDataSource)
+				.dataSource(dataSourceNemi)
 				.name("nemiWqpNemiEpaCrosswalk")
 				.sql(new String(FileCopyUtils.copyToByteArray(readerResource.getInputStream())))
 				.rowMapper(new ColumnMapRowMapper())
@@ -53,7 +56,7 @@ public class TransformWqpNemiEpaCrosswalk {
 		return new JdbcBatchItemWriterBuilder<Map<String, Object>>()
 				.itemSqlParameterSourceProvider(new MapItemSqlParameterSourceProvider())
 				.sql(new String(FileCopyUtils.copyToByteArray(writerResource.getInputStream())))
-				.dataSource(wqpDataSource)
+				.dataSource(dataSourceWqp)
 				.build();
 	}
 

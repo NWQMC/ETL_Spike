@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - preConditions:
+    - dbms:
+        type: postgresql
+
+  - changeSet:
+      author: drsteini
+      id: "create.table.${WQX_SCHEMA_NAME}.result_lab_sample_prep_sum"
+      preConditions:
+        - onFail: MARK_RAN
+        - onError: HALT
+        - not:
+          - tableExists:
+              schemaName: ${WQX_SCHEMA_NAME}
+              tableName: result_lab_sample_prep_sum
+      changes:
+        - sqlFile:
+            path: resultLabSamplePrepSum.sql
+            relativeToChangelogFile: true
+        - rollback: drop table if exists ${WQX_SCHEMA_NAME}.result_lab_sample_prep_sum cascade;
+

@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - preConditions:
+    - dbms:
+        type: postgresql
+
+  - include:
+      file: "activityConductingOrgAggregated/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "activityMetricSum/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "activityProjectAggregated/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "analyticalMethodPlusNemi/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "attachedObjectActivity/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "attachedObjectResult/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "detectionQuantLimit/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "dqlHierarchy/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "hrdatToSrid/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "monitoringLocationLocal/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "rDetectQntLmt/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "resultFrequencyClassAggregated/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "resultLabSamplePrepSum/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "resultTaxonFeedingGroupAggregated/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "resultTaxonHabitAggregated/changeLog.yml"
+      relativeToChangelogFile: true
+
+  - include:
+      file: "siteTypeConversion/changeLog.yml"
+      relativeToChangelogFile: true

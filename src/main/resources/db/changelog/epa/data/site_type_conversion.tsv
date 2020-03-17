@@ -1,0 +1,96 @@
+MLTYP_UID	MLTYP_NAME	STATION_GROUP_TYPE
+1	Canal Drainage	Stream
+2	Canal Irrigation	Stream
+3	Canal Transport	Stream
+4	Cave	Aggregate groundwater use
+5	CERCLA Superfund Site	Facility
+6	Borehole	Facility
+7	Spigot / Faucet	Facility
+8	Survey Monument	Facility
+9	Test Pit	Facility
+10	Channelized Stream	Stream
+11	Combined Sewer	Facility
+12	Constructed Wetland	Wetland
+13	Estuary	Estuary
+14	Facility Industrial	Facility
+15	Facility Municipal Sewage (POTW)	Facility
+16	Facility Public Water Supply (PWS)	Facility
+17	Facility Other	Facility
+18	Facility Privately Owned Non-industrial	Facility
+19	Gallery	Well
+20	Great Lake	Lake, Reservoir, Impoundment
+21	Lake	Lake, Reservoir, Impoundment
+22	Land Flood Plain	Land
+23	Land Runoff	Land
+24	Landfill	Land
+25	Mine/Mine Discharge	Aggregate groundwater use
+26	Mine/Mine Discharge Adit (Mine Entrance)	Aggregate groundwater use
+27	Mine/Mine Discharge Tailings Pile	Aggregate groundwater use
+28	Mine/Mine Discharge Waste Rock Pile	Aggregate groundwater use
+29	National Air Monitoring Station	null
+30	Ocean	Ocean
+31	Reservoir	Lake, Reservoir, Impoundment
+32	River/Stream	Stream
+33	Riverine Impoundment	Lake, Reservoir, Impoundment
+34	Spring	Spring
+35	State/Local Air Monitoring Station	Atmosphere
+36	Storm Sewer	Facility
+37	Waste Pit	Facility
+38	Waste Sewer	Facility
+39	Well	Well
+40	Wetland Estuarine-Emergent	Wetland
+41	Wetland Estuarine-Forested	Wetland
+42	Wetland Estuarine-Scrub-Shrub	Wetland
+43	Wetland Lacustrine-Emergent	Wetland
+44	Wetland Palustrine-Emergent	Wetland
+45	Wetland Palustrine-Forested	Wetland
+46	Wetland Palustrine-Moss-Lichen	Wetland
+47	Wetland Palustrine-Shrub-Scrub	Wetland
+48	Wetland Riverine-Emergent	Wetland
+49	Wetland Undifferentiated	Wetland
+50	Land	Land
+51	Other-Surface Water	Aggregate surface-water-use
+52	Other-Ground Water	Aggregate groundwater use
+53	Seep	Spring
+54	Playa	null
+55	River/Stream Intermittent	Stream
+56	River/Stream Perennial	Stream
+57	Pipe, Unspecified Source	Aggregate surface-water-use
+58	BEACH Program Site-Channelized stream	Ocean
+59	BEACH Program Site-Estuary	Ocean
+60	BEACH Program Site-Great Lake	Ocean
+61	BEACH Program Site-Lake	Ocean
+62	BEACH Program Site-Land runoff	Ocean
+63	BEACH Program Site-Land	Ocean
+64	BEACH Program Site-Ocean	Ocean
+65	BEACH Program Site-River/Stream	Ocean
+66	BEACH Program Site-Storm sewer	Ocean
+67	BEACH Program Site-Waste sewer	Ocean
+68	Pond-Stormwater	Stream
+69	River/Stream Ephemeral	Stream
+70	Pond-Anchialine	Stream
+71	Leachate-Lysimeter	Land
+72	Floodwater Urban	Stream
+73	Floodwater non-Urban	Stream
+74	River/stream Effluent-Dominated	null
+75	Pond-Wastewater	Aggregate surface-water-use
+76	Gas-Condensate	null
+77	Gas-Engine	null
+78	Gas-Extraction	null
+79	Gas-Flare	null
+80	Gas-Monitoring Probe	null
+81	Gas-Passive Vent	null
+82	Gas-Temporary	null
+83	Leachate-Extraction	null
+84	Leachate-Head Well	null
+85	Leachate-SamplePoint	null
+86	Atmosphere	null
+87	Constructed Diversion Dam	null
+88	Constructed Tunnel	null
+89	Constructed Water Transport Structure	null
+90	Oil and Gas Well	null
+91	Local Air Monitoring Station	Atmosphere
+92	Gas-Subslab	null
+93	Pond-Sediment	null
+94	Pond-Stock	null
+95	Mine Pit	null

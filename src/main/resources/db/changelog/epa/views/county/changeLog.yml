@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - preConditions:
+    - dbms:
+        type: postgresql
+
+  - changeSet:
+      author: drsteini
+      id: "create.view.${WQX_SCHEMA_NAME}.county"
+      runAlways: true
+      changes:
+        - sqlFile:
+            path: county.sql
+            relativeToChangelogFile: true
+        - rollback: drop view if exists ${WQX_SCHEMA_NAME}.county cascade;

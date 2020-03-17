@@ -1,6 +1,5 @@
-insert  /*+ append parallel(4) */ into wqx_activity_conducting_org (act_uid, acorg_name_list)
-select /*+ parallel(4) */
-       act_uid,
-       listagg(acorg_name, ';') within group (order by rownum) acorg_name_list
-  from wqx.activity_conducting_org
-    group by act_uid
+insert into wqx.activity_conducting_org_aggregated (act_uid, acorg_name_list)
+select "ACT_UID" act_uid,
+       string_agg("ACORG_NAME", ';' order by "ORG_UID") acorg_name_list
+  from wqx_dump."ACTIVITY_CONDUCTING_ORG" activity_conducting_org
+    group by "ACT_UID"

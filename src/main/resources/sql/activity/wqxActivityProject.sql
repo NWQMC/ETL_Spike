@@ -1,11 +1,8 @@
-insert /*+ append parallel(4) */ into wqx_activity_project (act_uid, project_id_list, project_name_list)
-select /*+ parallel(4) */
-       activity_project.act_uid,
-       listagg(project.prj_id, ';') within group (order by project.prj_id) project_id_list,
-       listagg(project.prj_id, ';') within group (order by project.prj_id) project_name_list
---values too long       listagg(project.prj_name, ';') within group (order by project.prj_id) project_name_list
---does not run on wqx        rtrim(clobagg(project.prj_name || '; '), '; ') project_name_list
-       from wqx.activity_project
-       left join wqx.project
-         on activity_project.prj_uid = project.prj_uid
-    group by activity_project.act_uid
+insert into wqx.activity_project_aggregated (act_uid, project_id_list, project_name_list)
+select activity_project."ACT_UID" act_uid,
+       string_agg(project."PRJ_ID", ';' order by project."PRJ_ID") project_id_list,
+       string_agg(project."PRJ_NAME", ';' order by project."PRJ_ID") project_name_list
+  from wqx_dump."ACTIVITY_PROJECT" activity_project
+       left join wqx_dump."PROJECT" project
+         on activity_project."PRJ_UID" = project."PRJ_UID"
+    group by activity_project."ACT_UID"

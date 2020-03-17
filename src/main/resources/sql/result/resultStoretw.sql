@@ -1,6 +1,6 @@
-insert /*+ append parallel(4) */
+insert
   into result_swap_storet (data_source_id, data_source, station_id, site_id, event_date, analytical_method, activity,
-                           characteristic_name, characteristic_type, sample_media, organization, site_type, huc, governmental_unit_code,
+                           characteristic_name, characteristic_type, sample_media, organization, site_type, huc, governmental_unit_code, geom,
                            organization_name, activity_id, activity_type_code, activity_media_subdiv_name, activity_start_time,
                            act_start_time_zone, activity_stop_date, activity_stop_time, act_stop_time_zone, activity_depth,
                            activity_depth_unit, activity_depth_ref_point, activity_upper_depth, activity_upper_depth_unit,
@@ -15,8 +15,7 @@ insert /*+ append parallel(4) */
 select 3 data_source_id,
        'STORET' data_source,
        a.*
-  from (select /*+ parallel(4) */
-               station.station_id,
+  from (select station.station_id,
                station.site_id,
                result_no_source.event_date,
                result_no_source.analytical_method,
@@ -28,6 +27,7 @@ select 3 data_source_id,
                station.site_type,
                station.huc,
                station.governmental_unit_code,
+               station.geom,
                station.organization_name,
                result_no_source.activity_id,
                result_no_source.activity_type_code,
@@ -80,6 +80,6 @@ select 3 data_source_id,
                result_no_source.detection_limit_unit,
                result_no_source.detection_limit_desc,
                result_no_source.analysis_prep_date_tx
-          from result_no_source
+          from storetw.result_no_source
                join station_swap_storet station
                  on result_no_source.station_id + 10000000 = station.station_id) a

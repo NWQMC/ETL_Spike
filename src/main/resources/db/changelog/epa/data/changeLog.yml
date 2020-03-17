@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - preConditions:
+    - dbms:
+        type: postgresql
+
+  - changeSet:
+      id: load.${WQX_SCHEMA_NAME}.hrdat_to_srid
+      author: drsteini
+      runOnChange: true
+      changes:
+        - delete:
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: hrdat_to_srid
+        - loadData:
+            encoding: UTF-8
+            file: hrdat_to_srid.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: hrdat_to_srid
+        - rollback: select 'no rollback - you must restore previous hrdat_to_srid.tsv and rerun manually'
+
+  - changeSet:
+      id: load.${WQX_SCHEMA_NAME}.dql_hierarchy
+      author: drsteini
+      runOnChange: true
+      changes:
+        - delete:
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: dql_hierarchy
+        - loadData:
+            encoding: UTF-8
+            file: dql_hierarchy.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: dql_hierarchy
+        - rollback: select 'no rollback - you must restore previous dql_hierarchy.tsv and rerun manually'
+
+  - changeSet:
+      id: load.${WQX_SCHEMA_NAME}.site_type_conversion
+      author: drsteini
+      runOnChange: true
+      changes:
+        - delete:
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: site_type_conversion
+        - loadData:
+            encoding: UTF-8
+            file: site_type_conversion.tsv
+            relativeToChangelogFile: true
+            separator: \t
+            schemaName: ${WQX_SCHEMA_NAME}
+            tableName: site_type_conversion
+        - rollback: select 'no rollback - you must restore previous site_type_conversion.tsv and rerun manually'

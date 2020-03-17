@@ -1,12 +1,8 @@
-merge into wqx_station_local o
-      using (select /*+ parallel(4) */
-                    station_source,
-                    station_id,
-                    huc12
-               from huc12nometa,
-                    wqx_station_local
-              where sdo_contains(huc12nometa.geometry,  wqx_station_local.geom) = 'TRUE' and
-                    calculated_huc_12 is null) n
-   on (o.station_id = n.station_id and
-       o.station_source = n.station_source)
-when matched then update set calculated_huc_12 = huc12
+update wqx.monitoring_location_local upd_table
+   set calculated_huc_12 = huc12nometa.huc12
+  from wqx.monitoring_location_local src_table
+       join huc12nometa
+         on st_covers(huc12nometa.geometry, st_transform(src_table.geom, 4326))
+ where src_table.calculated_huc_12 is null and 
+       upd_table.station_id = src_table.station_id and
+       upd_table.monitoring_location_source = src_table.monitoring_location_source

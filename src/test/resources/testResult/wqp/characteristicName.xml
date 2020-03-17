@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <char_name_storet
+        data_source_id="1"
+        code_value="Ammonia"
+    />
+    <char_name_storet
+        data_source_id="1"
+        code_value="Orthophosphate"
+    />
+    <char_name_storet
+        data_source_id="1"
+        code_value="Phosphorus"
+    />
+    <char_name_storet
+        data_source_id="1"
+        code_value="Nitrogen Kjeldahl"
+    />
+    <char_name_storet
+        data_source_id="1"
+        code_value="Nitrogen"
+    />
+</dataset>

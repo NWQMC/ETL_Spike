@@ -1,0 +1,15 @@
+"data_source_id","project_id","data_source","organization","organization_name","project_identifier","project_name","description","sampling_design_type_code","qapp_approved_indicator","qapp_approval_agency_name","project_file_url","monitoring_location_weight_url"
+"3","51659","STORET","WIDNR_WQX","Wisconsin Department of Natural Resources","BEACH_SEQ=87","Alford Park Beach","Alford Park Beach","Probabilistic - A probability sampling method is any method of sampling that utilizes some form of random selection. In order to have a random selection method, you must set up some process or procedure that assures that the different units in your population have equal probabilities of being chosen.","N","Test Approval","/providers/STORET/organizations/WIDNR_WQX/projects/BEACH_SEQ%3D87/files","/providers/STORET/organizations/WIDNR_WQX/projects/BEACH_SEQ%3D87/projectMonitoringLocationWeightings"
+"3","212","STORET","WIDNR_WQX","Wisconsin Department of Natural Resources","MR003","2003-04 AMBIENT MONITORING","Mississippi River",null,null,null,"/providers/STORET/organizations/WIDNR_WQX/projects/MR003/files",null
+3,"100000002767.0000000000","STORET","HANALEI","Hanalei Watershed Study (Region 9) - California","HANALEI","Watershed Initiative Program",null,null,null,null,null,null
+3,"100000004581.0000000000","STORET","HANNAHWQ","Hannahville Tribal Community (Michigan)","HANSWQM","Hannahville Surface Water Quality Monitoring",null,null,null,null,null,null
+3,"100000002755.0000000000","STORET","IL_EPA","Illinois EPA","AWQMN","Ambient WQMN",null,null,null,null,null,null
+3,"100000002759.0000000000","STORET","IL_EPA","Illinois EPA","ALMP","ALMP",null,null,null,null,null,null
+3,"100000001644.0000000000","STORET","INSTOR","Indiana STORET","101","1999 Macroinvertebrates",null,null,null,null,null,null
+3,"100000001693.0000000000","STORET","INSTOR","Indiana STORET","10","1997 Synoptic",null,null,null,null,null,null
+3,"100000001687.0000000000","STORET","INSTOR","Indiana STORET","1","1998 Fixed Station",null,null,null,null,null,null
+3,"100000000704.0000000000","STORET","INTRMTN","Superfund Intermountain Waste Oil Refinery","IWOR8","Intermountain Waste Oil Refinery OU2 Groundwater",null,null,null,null,null,null
+3,"100000001366.0000000000","STORET","INTRMTN","Superfund Intermountain Waste Oil Refinery","33412","33412-INTERMOUNTAIN WASTE OIL REFINERY","description","sampling_design_type_code","qapp_approved_indicator","qapp_approval_agency_name",null,null
+3,"100000007504.0000000000","STORET","IOWATER","Iowa Volunteer Water Monitoring Program","IOWATER","Iowa Volunteer Monitoring Program",null,null,null,null,null,null
+3,"100000003114.0000000000","STORET","21FLBRA","Biological Research Associates (Florida)","SMON07","Strategic Monitoring for DEP, 2007",null,null,null,null,null,null
+3,"100000003112.0000000000","STORET","21FLBRA","Biological Research Associates (Florida)","SMON06","Strategic Monitoring for DEP, 2006",null,null,null,null,null,null

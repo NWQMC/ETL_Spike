@@ -22,7 +22,7 @@ public class TruncateWqxAttachedObjectActivity implements Tasklet {
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		jdbcTemplate.execute("truncate table wqx_attached_object_activity");
+		jdbcTemplate.execute("truncate table wqx.attached_object_activity");
 		return RepeatStatus.FINISHED;
 	}
 }

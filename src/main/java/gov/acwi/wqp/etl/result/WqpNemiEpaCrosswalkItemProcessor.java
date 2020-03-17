@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.util.LinkedCaseInsensitiveMap;
 
-import gov.acwi.wqp.etl.Application;
+import gov.acwi.wqp.etl.JobCommandLineRunner;
 
 public class WqpNemiEpaCrosswalkItemProcessor implements ItemProcessor<Map<String, Object>, Map<String, Object>> {
-	private final Logger LOG = LoggerFactory.getLogger(Application.class);
+	private final Logger LOG = LoggerFactory.getLogger(JobCommandLineRunner.class);
 
 	public static final String NEMI_URL = "NEMI_URL";
 	public static final String METHOD_ID = "method_id";

@@ -21,10 +21,6 @@ public class BatchConfiguration {
 	private Flow orgDataFlow;
 
 	@Autowired
-	@Qualifier("databaseSetupFlow")
-	private Flow databaseSetupFlow;
-
-	@Autowired
 	@Qualifier("projectDataFlow")
 	private Flow projectDataFlow;
 
@@ -37,24 +33,24 @@ public class BatchConfiguration {
 	private Flow monitoringLocationFlow;
 
 	@Autowired
-	@Qualifier("biologicalHabitatMetricFlow")
-	private Flow biologicalHabitatMetricFlow;
-
-	@Autowired
 	@Qualifier("monitoringLocationObjectFlow")
 	private Flow monitoringLocationObjectFlow;
+
+	@Autowired
+	@Qualifier("biologicalHabitatMetricFlow")
+	private Flow biologicalHabitatMetricFlow;
 
 	@Autowired
 	@Qualifier("activityFlow")
 	private Flow activityFlow;
 
 	@Autowired
-	@Qualifier("activityObjectFlow")
-	private Flow activityObjectFlow;
-
-	@Autowired
 	@Qualifier("activityMetricFlow")
 	private Flow activityMetricFlow;
+
+	@Autowired
+	@Qualifier("activityObjectFlow")
+	private Flow activityObjectFlow;
 
 	@Autowired
 	@Qualifier("resultFlow")
@@ -65,47 +61,46 @@ public class BatchConfiguration {
 	private Flow resultObjectFlow;
 
 	@Autowired
-	@Qualifier("resDetectQntLmtFlow")
-	private Flow resDetectQntLmtFlow;
+	@Qualifier("resDetectQntLimitFlow")
+	private Flow resDetectQntLimitFlow;
 
 	@Autowired
-	@Qualifier("projectMlWeightingFlow")
-	private Flow projectMlWeightingFlow;
+	@Qualifier("projectMLWeightingFlow")
+	private Flow projectMLWeightingFlow;
+	
 
 	@Autowired
-	@Qualifier("createSummariesFlow")
+	@Qualifier(EtlConstantUtils.CREATE_SUMMARIES_FLOW)
 	private Flow createSummariesFlow;
 
 	@Autowired
-	@Qualifier("createCodesFlow")
-	private Flow createCodesFlow;
+	@Qualifier(EtlConstantUtils.CREATE_LOOKUP_CODES_FLOW)
+	private Flow createLookupCodesFlow;
 
 	@Autowired
-	@Qualifier("databaseFinalizeFlow")
+	@Qualifier(EtlConstantUtils.CREATE_DATABASE_FINALIZE_FLOW)
 	private Flow databaseFinalizeFlow;
 
 	@Bean
 	public Job wqxEtl() {
-		return jobBuilderFactory.get("WQX_ETL")
-				.start(databaseSetupFlow)
-				.next(orgDataFlow)
+		return jobBuilderFactory.get("WQP_STORET_WQX_ETL")
+				.start(orgDataFlow)
 				.next(projectDataFlow)
 				.next(projectObjectFlow)
 				.next(monitoringLocationFlow)
-				.next(biologicalHabitatMetricFlow)
 				.next(monitoringLocationObjectFlow)
+				.next(biologicalHabitatMetricFlow)
 				.next(activityFlow)
-				.next(activityObjectFlow)
 				.next(activityMetricFlow)
+				.next(activityObjectFlow)
 				.next(resultFlow)
 				.next(resultObjectFlow)
-				.next(resDetectQntLmtFlow)
-				.next(projectMlWeightingFlow)
+				.next(resDetectQntLimitFlow)
+				.next(projectMLWeightingFlow)
 				.next(createSummariesFlow)
-				.next(createCodesFlow)
+				.next(createLookupCodesFlow)
 				.next(databaseFinalizeFlow)
-				.build() // build the flow
-				.build(); // build the job
+				.build()
+				.build();
 	}
-
 }

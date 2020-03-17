@@ -1,0 +1,33 @@
+HIERARCHY_VALUE	DQLTYP_UID	DQLTYP_NAME
+1	12	Practical Quantitation Limit
+2	5	Lower Quantitation Limit
+3	24	Sample-Specific Quantitation Limit
+4	30	Estimated Quantitation Limit
+5	19	Contract Quantitation Limit
+6	15	Minimum Reporting Level
+7	23	Reporting limit
+8	11	Sample-specific min detect conc
+9	14	Laboratory Reporting Level
+10	10	Lower Reporting Limit
+11	29	Sample Detection Limit
+12	21	Lower limit of detection
+13	1	Instrument Detection Level
+14	3	Estimated Detection Level
+15	2	Method Detection Level
+16	16	Measurement Uncertainty
+17	6	Long Term Method Detection Level
+18	13	Interim Reporting Level
+19	20	Daily detection limit
+20	22	Blank-adjusted method detect limit
+21	31	Contract Detection Limit
+22	4	Upper Quantitation Limit
+23	9	Upper Reporting Limit
+24	32	Upper Calibration Limit
+25	27	Field Holding Time Limit
+26	26	Laboratory Holding Time Limit
+27	7	Drinking Water Maximum
+28	18	Systematic Uncertainty
+29	17	Statistical Uncertainty
+30	8	Water Quality Standard or Criteria
+31	25	Specified in workplan
+32	28	Taxanomic Loss Threshold

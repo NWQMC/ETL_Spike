@@ -20,7 +20,7 @@ public class TruncateWqxActivityMetricSum implements Tasklet {
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		jdbcTemplate.execute("truncate table wqx_activity_metric_sum");
+		jdbcTemplate.execute("truncate table wqx.activity_metric_sum");
 		return RepeatStatus.FINISHED;
 	}
 }

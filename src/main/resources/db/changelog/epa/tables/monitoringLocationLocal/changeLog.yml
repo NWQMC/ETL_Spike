@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - preConditions:
+    - dbms:
+        type: postgresql
+
+  - changeSet:
+      author: drsteini
+      id: "create.table.${WQX_SCHEMA_NAME}.monitoring_location_local"
+      preConditions:
+        - onFail: MARK_RAN
+        - onError: HALT
+        - not:
+          - tableExists:
+              schemaName: ${WQX_SCHEMA_NAME}
+              tableName: monitoring_location_local
+      changes:
+        - sqlFile:
+            path: monitoringLocationLocal.sql
+            relativeToChangelogFile: true
+        - rollback: drop table if exists ${WQX_SCHEMA_NAME}.monitoring_location_local cascade;
+
