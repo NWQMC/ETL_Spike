@@ -1,10 +1,10 @@
 package gov.acwi.wqp.etl.result;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
 
@@ -14,7 +14,7 @@ import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
 import gov.acwi.wqp.etl.WqxBaseFlowIT;
 
-@Ignore
+@Disabled
 public class TransformWqpNemiEpaCrosswalkIT extends WqxBaseFlowIT {
 
 	@Test

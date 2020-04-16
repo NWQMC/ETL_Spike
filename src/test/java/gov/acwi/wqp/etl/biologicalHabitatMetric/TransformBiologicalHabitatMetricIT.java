@@ -1,9 +1,10 @@
 package gov.acwi.wqp.etl.biologicalHabitatMetric;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
@@ -11,6 +12,7 @@ import org.springframework.batch.core.job.flow.Flow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
@@ -32,6 +34,17 @@ public class TransformBiologicalHabitatMetricIT extends WqxBaseFlowIT {
 	@Test
 	//TODO - WQP-1458
 //	@ExpectedDatabase(value="classpath:/testResult/storet/biologicalHabitatMetric/biologicalHabitatMetric.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
+	@DatabaseSetup(
+			connection=CONNECTION_WQP,
+			value="classpath:/testResult/storet/monitoringLocation/csv/"
+	)
+	@DatabaseSetup(
+			connection=CONNECTION_WQX_DUMP,
+			value="classpath:/testData/wqxDump/csv/"
+	)
+	@ExpectedDatabase(
+			value="classpath:/testResult/storet/biologicalHabitatMetric/csv/",
+			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
 	@ExpectedDatabase(
 			value="classpath:/testResult/storet/biologicalHabitatMetric/indexes/all.xml",
 			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED,
