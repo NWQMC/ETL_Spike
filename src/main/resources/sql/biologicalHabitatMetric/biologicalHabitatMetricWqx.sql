@@ -1,5 +1,5 @@
 insert 
-  into bio_hab_metric_swap_storet (data_source_id, data_source, station_id, site_id, organization, site_type, huc, governmental_unit_code,
+  into bio_hab_metric_swap_storet (data_source_id, data_source, station_id, site_id, organization, site_type, huc, geom, governmental_unit_code,
                                    index_identifier, index_type_identifier, index_type_context, index_type_name, resource_title_name,
                                    resource_creator_name, resource_subject_text, resource_publisher_name, resource_date, resource_identifier,
                                    index_type_scale_text, index_score_numeric, index_qualifier_code, index_comment, index_calculated_date)
@@ -10,6 +10,7 @@ select 3 data_source_id,
        station.organization,
        station.site_type,
        station.huc,
+       station.geom,
        station.governmental_unit_code,
        biological_habitat_index."BHIDX_ID" index_identifier,
        index_type."IDXTYP_ID" index_type_identifier,

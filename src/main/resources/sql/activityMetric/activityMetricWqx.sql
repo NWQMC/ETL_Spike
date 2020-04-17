@@ -1,5 +1,5 @@
 insert
-  into act_metric_swap_storet (data_source_id, data_source, station_id, site_id, event_date, activity, sample_media, organization, site_type, huc, governmental_unit_code,
+  into act_metric_swap_storet (data_source_id, data_source, station_id, site_id, event_date, activity, sample_media, organization, site_type, huc, geom, governmental_unit_code,
                                organization_name, activity_id, type_identifier, identifier_context, type_name, resource_title, resource_creator, resource_subject, resource_publisher,
                                resource_date, resource_identifier, type_scale, formula_description, measure_value, unit_code, score, comment_text, index_identifier)
 select activity.data_source_id,
@@ -12,6 +12,7 @@ select activity.data_source_id,
        activity.organization,
        activity.site_type,
        activity.huc,
+       activity.geom,
        activity.governmental_unit_code,
        activity.organization_name,
        activity.activity_id,

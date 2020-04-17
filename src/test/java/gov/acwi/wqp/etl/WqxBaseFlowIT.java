@@ -1,6 +1,6 @@
 package gov.acwi.wqp.etl;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
@@ -28,7 +28,7 @@ public abstract class WqxBaseFlowIT extends BaseFlowIT {
 	@Autowired
 	private ConfigurationService configurationService;
 
-	@Before
+	@BeforeEach
 	@Override
 	public void baseSetup() {
 		testJobParameters= new JobParametersBuilder()

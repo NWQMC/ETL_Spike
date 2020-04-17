@@ -1,6 +1,6 @@
 package gov.acwi.wqp.etl;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 //TODO - ??
 public abstract class BaseProcessorTest {
@@ -88,7 +88,7 @@ public abstract class BaseProcessorTest {
 
 	protected ConfigurationService configurationService;
 
-	@Before
+	@BeforeEach
 	public void setup() {
 		configurationService = new ConfigurationService();
 		configurationService.setEtlDataSourceId(TEST_DATA_SOURCE_ID);

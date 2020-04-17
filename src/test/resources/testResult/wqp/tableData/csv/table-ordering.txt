@@ -2,5 +2,8 @@ org_data_storet
 project_data_storet
 station_storet
 activity_storet
+act_metric_storet
 result_storet
 r_detect_qnt_lmt_storet
+bio_hab_metric_storet
+prj_ml_weighting_storet
