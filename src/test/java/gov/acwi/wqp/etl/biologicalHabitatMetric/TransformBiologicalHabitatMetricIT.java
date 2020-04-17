@@ -32,8 +32,6 @@ public class TransformBiologicalHabitatMetricIT extends WqxBaseFlowIT {
 	}
 
 	@Test
-	//TODO - WQP-1458
-//	@ExpectedDatabase(value="classpath:/testResult/storet/biologicalHabitatMetric/biologicalHabitatMetric.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
 	@DatabaseSetup(
 			connection=CONNECTION_WQP,
 			value="classpath:/testResult/storet/monitoringLocation/csv/"

@@ -35,8 +35,6 @@ public class TransformActivityMetricIT extends WqxBaseFlowIT {
 	}
 
 	@Test
-	//TODO - WQP-1425
-//	@ExpectedDatabase(value="classpath:/testResult/storet/activityMetric/activityMetric.xml", assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)
 	@DatabaseSetup(
 			connection=CONNECTION_WQP,
 			value="classpath:/testData/storetw/activitySwapStoret/csv/"
