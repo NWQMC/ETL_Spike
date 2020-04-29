@@ -197,3 +197,4 @@ select 3 data_source_id,
             activity."ACT_UID" = attached_object_activity.ref_uid
        left join wqx.activity_metric_sum
          on activity."ACT_UID" = activity_metric_sum.act_uid
+       where activity."ORG_UID" not between 2000 and 2999
