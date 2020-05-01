@@ -23,14 +23,14 @@ select 3 data_source_id,
        station.site_id,
        station.station_name,
        date_trunc('day', activity."ACT_START_DATE") event_date,
-       coalesce(station.organization, '') || '-' || coalesce(activity."ACT_ID", '') activity,
+       coalesce(org_data.organization, '') || '-' || coalesce(activity."ACT_ID", '') activity,
        activity_media."ACMED_NAME" sample_media,
-       station.organization,
+       org_data.organization,
        station.site_type,
        station.huc,
        station.governmental_unit_code,
        station.geom,
-       organization."ORG_NAME" organization_name,
+       org_data.organization_name,
        activity."ACT_UID" activity_id,
        activity_type."ACTYP_CD" activity_type_code,
        activity_media_subdivision."AMSUB_NAME" activity_media_subdiv_name,
@@ -56,7 +56,7 @@ select 3 data_source_id,
        activity."ACT_COMMENTS" activity_comment,
        coalesce(activity."ACT_LOC_LATITUDE", station.latitude) activity_latitude,
        coalesce(activity."ACT_LOC_LONGITUDE", station.longitude) activity_longitude,
-       activity."ACT_LOC_SOURCE_MAP_SCALE" activity_source_map_scale,
+       activity."ACT_LOC_SOURCE_MAP_SCALE"::integer activity_source_map_scale,
        activity."ACT_HORIZONTAL_ACCURACY" act_horizontal_accuracy,
        activity_horizontal_unit."MSUNT_CD" act_horizontal_accuracy_unit,
        horizontal_collection_method."HCMTH_NAME" act_horizontal_collect_method,
@@ -134,6 +134,8 @@ select 3 data_source_id,
   from wqx_dump."ACTIVITY" activity
        join station_swap_storet station
          on activity."MLOC_UID" = station.station_id
+       join org_data_swap_storet org_data
+         on activity."ORG_UID" = org_data.organization_id
        left join wqx_dump."SAMPLE_COLLECTION_EQUIP" sample_collection_equip
          on activity."SCEQP_UID" = sample_collection_equip."SCEQP_UID"
        left join wqx.activity_conducting_org_aggregated
@@ -156,8 +158,6 @@ select 3 data_source_id,
          on activity."AMSUB_UID" = activity_media_subdivision."AMSUB_UID"
        left join wqx_dump."ACTIVITY_TYPE" activity_type
          on activity."ACTYP_UID" = activity_type."ACTYP_UID"
-       left join wqx_dump."ORGANIZATION" organization
-         on activity."ORG_UID" = organization."ORG_UID"
        left join wqx_dump."ACTIVITY_MEDIA" activity_media
          on activity."ACMED_UID" = activity_media."ACMED_UID"
        left join wqx_dump."MEASUREMENT_UNIT" activity_horizontal_unit
