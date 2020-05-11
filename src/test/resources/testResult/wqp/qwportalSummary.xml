@@ -23,7 +23,7 @@
         max_date="2014-01-22"
         samples_past_12_months="0"
         samples_past_60_months="0"
-        samples_all_time="3"
+        samples_all_time="5"
         nwis_or_epa="E"
     />
     <qwportal_summary

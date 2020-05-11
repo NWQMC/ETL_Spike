@@ -56,7 +56,11 @@ select 3 data_source_id,
        activity."ACT_COMMENTS" activity_comment,
        coalesce(activity."ACT_LOC_LATITUDE", station.latitude) activity_latitude,
        coalesce(activity."ACT_LOC_LONGITUDE", station.longitude) activity_longitude,
-       activity."ACT_LOC_SOURCE_MAP_SCALE"::integer activity_source_map_scale,
+       case
+         when activity."ACT_LOC_SOURCE_MAP_SCALE" ~ '^[0-9]+$'
+             and "ACT_LOC_SOURCE_MAP_SCALE"::decimal between -2147483648 and 2147483647
+         then activity."ACT_LOC_SOURCE_MAP_SCALE"::integer
+       end activity_source_map_scale,
        activity."ACT_HORIZONTAL_ACCURACY" act_horizontal_accuracy,
        activity_horizontal_unit."MSUNT_CD" act_horizontal_accuracy_unit,
        horizontal_collection_method."HCMTH_NAME" act_horizontal_collect_method,
@@ -65,12 +69,20 @@ select 3 data_source_id,
        activity."ACT_COLLECTION_DURATION" act_collection_duration,
        collection_duration."MSUNT_CD" act_collection_duration_unit,
        activity."ACT_SAM_COMPNT_NAME" act_sam_compnt_name,
-       activity."ACT_SAM_COMPNT_PLACE_IN_SERIES"::integer act_sam_compnt_place_in_series,
+       case
+         when activity."ACT_SAM_COMPNT_PLACE_IN_SERIES" ~ '^[0-9]+$'
+             and "ACT_SAM_COMPNT_PLACE_IN_SERIES"::decimal between -2147483648 and 2147483647
+         then activity."ACT_SAM_COMPNT_PLACE_IN_SERIES"::integer
+       end act_sam_compnt_place_in_series,
        activity."ACT_REACH_LENGTH" act_reach_length,
        reach_length."MSUNT_CD" act_reach_length_unit,
        activity."ACT_REACH_WIDTH" act_reach_width,
        reach_width."MSUNT_CD" act_reach_width_unit,
-       activity."ACT_PASS_COUNT"::integer act_pass_count,
+       case
+         when activity."ACT_PASS_COUNT" ~ '^[0-9]+$'
+             and "ACT_PASS_COUNT"::decimal between -2147483648 and 2147483647
+         then activity."ACT_PASS_COUNT"::integer
+       end act_pass_count,
        net_type."NETTYP_NAME" net_type_name,
        activity."ACT_NET_SURFACE_AREA" act_net_surface_area,
        net_surface_unit."MSUNT_CD" act_net_surface_area_unit,

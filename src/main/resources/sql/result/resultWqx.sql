@@ -119,7 +119,7 @@ select activity_swap_storet.data_source_id,
        sample_fraction."SMFRC_NAME" sample_fraction_type,
        result."RES_MEASURE" result_measure_value,
        rmeasurement_unit."MSUNT_CD" result_unit,
-       result_measure_qualifier."RMQLF_CD" result_meas_qual_code,
+       measure_qualifier."MSRQLF_CD" result_meas_qual_code,
        result_status."RESSTA_NAME" result_value_status,
        result_statistical_base."RSBAS_CD" statistic_type,
        result_value_type."RVTYP_NAME" result_value_type,
@@ -256,7 +256,9 @@ select activity_swap_storet.data_source_id,
        left join wqx_dump."MEASUREMENT_UNIT" rmeasurement_unit
          on result."MSUNT_UID_MEASURE" = rmeasurement_unit."MSUNT_UID"
        left join wqx_dump."RESULT_MEASURE_QUALIFIER" result_measure_qualifier
-         on result."RMQLF_UID" = result_measure_qualifier."RMQLF_UID"
+         on result."RES_UID" = result_measure_qualifier."RES_UID"
+       left join wqx_dump."MEASURE_QUALIFIER" measure_qualifier
+         on result_measure_qualifier."MSRQLF_UID" = measure_qualifier."MSRQLF_UID"
        left join wqx_dump."RESULT_STATUS" result_status
          on result."RESSTA_UID" = result_status."RESSTA_UID"
        left join wqx_dump."RESULT_STATISTICAL_BASE" result_statistical_base
