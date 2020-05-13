@@ -19,3 +19,47 @@ databaseChangeLog:
             relativeToChangelogFile: true
         - rollback: drop table if exists ${WQX_SCHEMA_NAME}.analytical_method_plus_nemi cascade;
 
+  - changeSet:
+      author: eorosz
+      id: "alter.column.${WQX_SCHEMA_NAME}.analytical_method_plus_nemi.anlmth_id"
+      preConditions:
+        - onFail: MARK_RAN
+        - onError: HALT
+        - sqlCheck:
+          - sql: "SELECT count(*) FROM information_schema.columns WHERE table_schema = '${WQX_SCHEMA_NAME}' and
+            table_name = 'analytical_method_plus_nemi' and column_name = 'anlmth_id' and data_type = 'character varying'
+            and character_maximum_length = 20"
+          - expectedResult: "1"
+      changes:
+        - sql: ALTER TABLE ${WQX_SCHEMA_NAME}.analytical_method_plus_nemi ALTER COLUMN anlmth_id TYPE character varying(35);
+        - rollback: ALTER TABLE ${WQX_SCHEMA_NAME}.analytical_method_plus_nemi ALTER COLUMN anlmth_id TYPE character varying(20);
+
+  - changeSet:
+      author: eorosz
+      id: "alter.column.${WQX_SCHEMA_NAME}.analytical_method_plus_nemi.amctx_cd"
+      preConditions:
+        - onFail: MARK_RAN
+        - onError: HALT
+        - sqlCheck:
+          - sql: "SELECT count(*) FROM information_schema.columns WHERE table_schema = '${WQX_SCHEMA_NAME}' and
+            table_name = 'analytical_method_plus_nemi' and column_name = 'amctx_cd' and data_type = 'character varying'
+            and character_maximum_length = 30"
+          - expectedResult: "1"
+      changes:
+        - sql: ALTER TABLE ${WQX_SCHEMA_NAME}.analytical_method_plus_nemi ALTER COLUMN amctx_cd TYPE character varying(35);
+        - rollback: ALTER TABLE ${WQX_SCHEMA_NAME}.analytical_method_plus_nemi ALTER COLUMN amctx_cd TYPE character varying(30);
+
+  - changeSet:
+      author: eorosz
+      id: "alter.column.${WQX_SCHEMA_NAME}.analytical_method_plus_nemi.anlmth_name"
+      preConditions:
+        - onFail: MARK_RAN
+        - onError: HALT
+        - sqlCheck:
+          - sql: "SELECT count(*) FROM information_schema.columns WHERE table_schema = '${WQX_SCHEMA_NAME}' and
+            table_name = 'analytical_method_plus_nemi' and column_name = 'anlmth_name' and data_type = 'character varying'
+            and character_maximum_length = 120"
+          - expectedResult: "1"
+      changes:
+        - sql: ALTER TABLE ${WQX_SCHEMA_NAME}.analytical_method_plus_nemi ALTER COLUMN anlmth_name TYPE character varying(250);
+        - rollback: ALTER TABLE ${WQX_SCHEMA_NAME}.analytical_method_plus_nemi ALTER COLUMN anlmth_name TYPE character varying(120);
