@@ -59,6 +59,10 @@ public class TransformResDetectQntLimitIT extends WqxBaseFlowIT {
 			value="classpath:/testData/wqx/rDectQntLmt/csv/"
 			)
 	@DatabaseSetup(
+			connection=CONNECTION_WQX,
+			value="classpath:/testData/wqx/dqlHierarchy/csv/"
+			)
+	@DatabaseSetup(
 			connection=CONNECTION_STORETW,
 			value="classpath:/testData/storetw/resultNoSource/csv/"
 			)

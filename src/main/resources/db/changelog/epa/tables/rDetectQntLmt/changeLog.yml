@@ -19,3 +19,18 @@ databaseChangeLog:
             relativeToChangelogFile: true
         - rollback: drop table if exists ${WQX_SCHEMA_NAME}.r_detect_qnt_lmt cascade;
 
+  - changeSet:
+      author: eorosz
+      id: "alter.column.${WQX_SCHEMA_NAME}.r_detect_qnt_lmt.rdqlmt_measure"
+      preConditions:
+        - onFail: MARK_RAN
+        - onError: HALT
+        - sqlCheck:
+          - sql: "SELECT count(*) FROM information_schema.columns WHERE table_schema = '${WQX_SCHEMA_NAME}' and
+            table_name = 'r_detect_qnt_lmt' and column_name = 'rdqlmt_measure' and data_type = 'character varying'
+            and character_maximum_length = 12"
+          - expectedResult: "1"
+      changes:
+        - sql: ALTER TABLE ${WQX_SCHEMA_NAME}.r_detect_qnt_lmt ALTER COLUMN rdqlmt_measure TYPE character varying(60);
+        - rollback: ALTER TABLE ${WQX_SCHEMA_NAME}.r_detect_qnt_lmt ALTER COLUMN rdqlmt_measure TYPE character varying(12);
+
