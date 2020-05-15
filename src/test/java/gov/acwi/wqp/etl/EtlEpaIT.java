@@ -63,6 +63,9 @@ public class EtlEpaIT extends WqxBaseFlowIT {
 			value="classpath:/testData/storetw/resultNoSource/csv/"
 			)
 	@DatabaseSetup(
+			connection = CONNECTION_WQX,
+			value = "classpath:/testData/wqx/dqlHierarchy/csv/")
+	@DatabaseSetup(
 			connection=CONNECTION_WQX_DUMP,
 			value="classpath:/testData/wqxDump/csv/"
 	)
@@ -165,5 +168,4 @@ public class EtlEpaIT extends WqxBaseFlowIT {
 			fail(e.getLocalizedMessage());
 		}
 	}
-
 }
