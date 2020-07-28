@@ -55,6 +55,10 @@ public class TransformProjectDataIT extends WqxBaseFlowIT {
 //	@DatabaseSetup(value="classpath:/testData/storet/projectData/projectDataOld.xml")
 //	@DatabaseSetup(connection=CONNECTION_ARS, value="classpath:/testResult/ars/arsOrgProject/arsOrgProject.xml")
 	@DatabaseSetup(
+			connection=CONNECTION_WQP,
+			value="classpath:/testData/wqp/huc12nometa/"
+			)
+	@DatabaseSetup(
 			connection=CONNECTION_STORETW,
 			value="classpath:/testData/storetw/projectDataNoSource/csv/"
 			)

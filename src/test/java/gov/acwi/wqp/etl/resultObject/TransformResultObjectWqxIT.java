@@ -17,6 +17,10 @@ public class TransformResultObjectWqxIT extends WqxBaseFlowIT {
 
 	@Test
 	@DatabaseSetup(
+			connection=CONNECTION_WQP,
+			value="classpath:/testData/wqp/huc12nometa/"
+			)
+	@DatabaseSetup(
 			connection=WqxBaseFlowIT.CONNECTION_WQX_DUMP,
 			value="classpath:/testData/wqxDump/csv/"
 			)

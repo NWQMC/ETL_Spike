@@ -11,8 +11,6 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import gov.acwi.wqp.etl.result.WqpNemiEpaCrosswalkItemProcessor;
-
 public class WqpNemiEpaCrosswalkItemProcessorTest {
 
 	protected WqpNemiEpaCrosswalkItemProcessor ip;

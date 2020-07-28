@@ -65,6 +65,10 @@ public class TransformActivityIT extends WqxBaseFlowIT {
 			value="classpath:/testData/storetw/activityNoSource/csv/"
 			)
 	@DatabaseSetup(
+			connection=CONNECTION_WQP,
+			value="classpath:/testData/wqp/huc12nometa/"
+			)
+	@DatabaseSetup(
 			connection=CONNECTION_WQX_DUMP,
 			value="classpath:/testData/wqxDump/csv/"
 	)

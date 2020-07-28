@@ -81,7 +81,7 @@ NWIS_OR_EPA: <E>
 *   **NWIS_OR_EPA** - If **QWPORTAL_SUMMARY_ETL** is true, is this an NIWS (N) or STORET WQX (E) ETL.
 
 ### Testing
-This project contains JUnit tests. Maven can be used to run them (in addition to the capabilities of your IDE).
+This project contains JUnit tests. Maven can be used to run them. (In addition to the capabilities of your IDE - Note that the IDE may run the tests from wqp-etl-core and they will fail due to an invalid environment for them.)
 
 To run the unit tests of the application use:
 

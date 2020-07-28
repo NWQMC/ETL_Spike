@@ -37,11 +37,18 @@ public class EtlEpaIT extends WqxBaseFlowIT {
 	@DatabaseSetup(connection=CONNECTION_NWIS, value="classpath:/testData/nwis/country/country.xml")
 	@DatabaseSetup(connection=CONNECTION_NWIS, value="classpath:/testData/nwis/state/state.xml")
 	@DatabaseSetup(connection=CONNECTION_NWIS, value="classpath:/testData/nwis/county/county.xml")
+
 	@DatabaseSetup(value="classpath:/testData/wqp/lastEtl/lastEtl.xml")
+	@DatabaseSetup(value="classpath:/testData/wqp/huc12nometa/")
+
 	@DatabaseSetup(
-			connection=WqxBaseFlowIT.CONNECTION_WQX,
+			connection=CONNECTION_WQX,
+			value = "classpath:/testData/wqx/dqlHierarchy/csv/")
+	@DatabaseSetup(
+			connection=CONNECTION_WQX,
 			value="classpath:/testData/wqx/monitoringLocationLocal/monitoring_location_local.xml"
 			)
+
 	@DatabaseSetup(
 			connection=CONNECTION_STORETW,
 			value="classpath:/testData/storetw/orgDataNoSource/csv/"
@@ -62,9 +69,7 @@ public class EtlEpaIT extends WqxBaseFlowIT {
 			connection=CONNECTION_STORETW,
 			value="classpath:/testData/storetw/resultNoSource/csv/"
 			)
-	@DatabaseSetup(
-			connection = CONNECTION_WQX,
-			value = "classpath:/testData/wqx/dqlHierarchy/csv/")
+
 	@DatabaseSetup(
 			connection=CONNECTION_WQX_DUMP,
 			value="classpath:/testData/wqxDump/csv/"
