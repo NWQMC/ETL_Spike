@@ -51,6 +51,10 @@ public class TransformOrgDataIT extends WqxBaseFlowIT {
 //	@DatabaseSetup(value="classpath:/testData/storet/orgData/orgDataOld.xml")
 //	@DatabaseSetup(connection=CONNECTION_ARS, value="classpath:/testResult/ars/arsOrgProject/arsOrgProject.xml")
 	@DatabaseSetup(
+			connection=CONNECTION_WQP,
+			value="classpath:/testData/wqp/huc12nometa/"
+			)
+	@DatabaseSetup(
 			connection=CONNECTION_STORETW,
 			value="classpath:/testData/storetw/orgDataNoSource/csv/"
 			)

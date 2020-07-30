@@ -21,6 +21,10 @@ public class TransformProjectObjectWqxIT extends WqxBaseFlowIT {
 			value="classpath:/testData/wqxDump/csv/"
 			)
 	@DatabaseSetup(value="classpath:/testData/wqp/projectObject/storet/empty.xml")
+	@DatabaseSetup(
+			connection=CONNECTION_WQP,
+			value="classpath:/testData/wqp/huc12nometa/"
+			)
 	@ExpectedDatabase(
 			value="classpath:/testData/wqp/projectObject/storet/project_object_swap_storet.xml",
 			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED,

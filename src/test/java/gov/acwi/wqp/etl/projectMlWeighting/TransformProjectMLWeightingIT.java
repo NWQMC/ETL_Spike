@@ -37,16 +37,20 @@ public class TransformProjectMLWeightingIT extends WqxBaseFlowIT {
 	@Test
 	@DatabaseSetup(
 			connection=CONNECTION_WQP,
+			value="classpath:/testData/wqp/huc12nometa/"
+			)
+	@DatabaseSetup(
+			connection=CONNECTION_WQP,
 			value="classpath:/testResult/storet/monitoringLocation/csv/"
-	)
+			)
 	@DatabaseSetup(
 			connection=CONNECTION_WQP,
 			value="classpath:/testResult/storet/projectData/csv/"
-	)
+			)
 	@DatabaseSetup(
 			connection=CONNECTION_WQX_DUMP,
 			value="classpath:/testData/wqxDump/csv/"
-	)
+			)
 	@ExpectedDatabase(
 			value="classpath:/testResult/storet/projectMLWeighting/csv/",
 			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)

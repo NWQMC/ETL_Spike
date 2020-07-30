@@ -57,6 +57,10 @@ public class TransformResultIT extends WqxBaseFlowIT {
 //	@DatabaseSetup(value="classpath:/testData/storet/result/resultOld.xml")
 //	@DatabaseSetup(value="classpath:/testResult/storet/activity/activity.xml")
 	@DatabaseSetup(
+			connection=CONNECTION_WQP,
+			value="classpath:/testData/wqp/huc12nometa/"
+			)
+	@DatabaseSetup(
 			value="classpath:/testResult/storet/monitoringLocation/csv/"
 			)
 	@DatabaseSetup(

@@ -38,11 +38,16 @@ public class TransformActivityMetricIT extends WqxBaseFlowIT {
 	@DatabaseSetup(
 			connection=CONNECTION_WQP,
 			value="classpath:/testData/storetw/activitySwapStoret/csv/"
-	)
+			)
+	@DatabaseSetup(
+			connection=CONNECTION_WQP,
+			value="classpath:/testData/wqp/huc12nometa/"
+			)
 	@DatabaseSetup(
 			connection=CONNECTION_WQX_DUMP,
 			value="classpath:/testData/wqxDump/csv/"
-	)
+			)
+
 	@ExpectedDatabase(
 			value="classpath:/testResult/storet/activityMetric/csv/",
 			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED)

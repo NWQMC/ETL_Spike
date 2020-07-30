@@ -22,6 +22,10 @@ public class TransformActivityObjectWqxIT extends WqxBaseFlowIT {
 			)
 	@DatabaseSetup(value="classpath:/testData/wqp/activityObject/storet/empty.xml")
 	@DatabaseSetup(value="classpath:/testData/wqp/activity/storet/activity_swap_storet.xml")
+	@DatabaseSetup(
+			connection=CONNECTION_WQP,
+			value="classpath:/testData/wqp/huc12nometa/"
+			)
 	@ExpectedDatabase(
 			value="classpath:/testData/wqp/activityObject/storet/activity_object_swap_storet.xml",
 			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED,
