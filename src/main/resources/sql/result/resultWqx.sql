@@ -35,7 +35,7 @@ insert
                            frequency_class_lower_bound_3, frequency_class_upper_bound_1, frequency_class_upper_bound_2, frequency_class_upper_bound_3)
 select activity_swap_storet.data_source_id,
        activity_swap_storet.data_source,
-       activity_swap_storet.station_id, 
+       activity_swap_storet.station_id,
        activity_swap_storet.site_id,
        activity_swap_storet.event_date,
        analytical_method_plus_nemi.nemi_url analytical_method,
@@ -212,7 +212,7 @@ select activity_swap_storet.data_source_id,
              '/files'
        end result_file_url,
        result."RES_LAST_CHANGE_DATE" last_updated,
-       case 
+       case
          when detection_quant_limit.res_uid is null
            then null
          else
@@ -222,7 +222,7 @@ select activity_swap_storet.data_source_id,
              '/results/' || coalesce(result."RES_UID"::text, '') ||
              '/resdetectqntlmts'
        end res_detect_qnt_lmt_url,
-       case 
+       case
          when result_lab_sample_prep_sum.res_uid is null
            then null
          else
@@ -284,7 +284,7 @@ select activity_swap_storet.data_source_id,
        left join wqx_dump."TIME_ZONE" analysis_start
          on result."TMZONE_UID_LAB_ANALYSIS_START" = analysis_start."TMZONE_UID"
        left join wqx_dump."TIME_ZONE" analysis_end
-         on result."TMZONE_UID_LAB_ANALYSIS_END" = analysis_end."TMZONE_UID" 
+         on result."TMZONE_UID_LAB_ANALYSIS_END" = analysis_end."TMZONE_UID"
        left join wqx_dump."TAXON" taxon
          on result."TAX_UID" = taxon."TAX_UID"
        left join wqx_dump."SAMPLE_TISSUE_ANATOMY" sample_tissue_anatomy
@@ -312,4 +312,32 @@ select activity_swap_storet.data_source_id,
             result."RES_UID" = attached_object_result.ref_uid
        left join wqx.result_frequency_class_aggregated
          on result."RES_UID" = result_frequency_class_aggregated.res_uid
- where result."RESSTA_UID" != 4
+ where result."RESSTA_UID" != 4;
+
+update result_swap_storet
+  set result_meas_qual_code=temp_measure_qual_codes.meas_qual_codes
+  from (
+    select activity_swap_storet.activity, activity_swap_storet.sample_media,
+       characteristic."CHR_NAME" characteristic_name,
+       string_agg( measure_qualifier."MSRQLF_CD", ';') meas_qual_codes
+    from activity_swap_storet
+       join wqx_dump."RESULT" result
+         on activity_swap_storet.activity_id = result."ACT_UID"
+       left join wqx_dump."CHARACTERISTIC" characteristic
+         on result."CHR_UID" = characteristic."CHR_UID"
+       left join wqx_dump."RESULT_MEASURE_QUALIFIER" result_measure_qualifier
+         on result."RES_UID" = result_measure_qualifier."RES_UID"
+       left join wqx_dump."MEASURE_QUALIFIER" measure_qualifier
+         on result_measure_qualifier."MSRQLF_UID" = measure_qualifier."MSRQLF_UID"
+      where measure_qualifier."MSRQLF_CD" is not null
+    group by activity, sample_media, characteristic_name
+  ) temp_measure_qual_codes
+  where result_swap_storet.activity = temp_measure_qual_codes.activity
+    and result_swap_storet.sample_media = temp_measure_qual_codes.sample_media
+    and result_swap_storet.characteristic_name = temp_measure_qual_codes.characteristic_name;
+
+delete from result_swap_storet
+  where ctid not in (
+   select min(ctid)
+   from result_swap_storet
+   group by activity, sample_media, characteristic_name);
