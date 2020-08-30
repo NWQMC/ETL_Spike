@@ -8,3 +8,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
   -   Initial PostgreSQL ETL Implementation.
+  -   Combine duplicate records by concatenating qualifier codes
