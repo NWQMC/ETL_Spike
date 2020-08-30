@@ -56,7 +56,7 @@ select 3 data_source_id,
                result_no_source.sample_fraction_type,
                result_no_source.result_measure_value,
                result_no_source.result_unit,
-               result_no_source.result_meas_qual_code,
+               string_agg(result_no_source.result_meas_qual_code, ';') over (partition by result_no_source.result_meas_qual_code) result_meas_qual_code,
                result_no_source.result_value_status,
                result_no_source.statistic_type,
                result_no_source.result_value_type,
@@ -82,4 +82,29 @@ select 3 data_source_id,
                result_no_source.analysis_prep_date_tx
           from storetw.result_no_source
                join station_swap_storet station
-                 on result_no_source.station_id + 10000000 = station.station_id) a
+                 on result_no_source.station_id + 10000000 = station.station_id) a;
+
+update result_swap_storet
+  set result_meas_qual_code=subquery.result_meas_qual_code
+  from
+  (select
+     activity, sample_media, characteristic_name, event_date,
+     string_agg(result_meas_qual_code, ';') as result_meas_qual_code
+     from result_swap_storet
+     group by activity, sample_media, characteristic_name, event_date
+  ) as subquery
+  where result_swap_storet.activity = subquery.activity
+    and result_swap_storet.sample_media = subquery.sample_media
+    and result_swap_storet.characteristic_name = subquery.characteristic_name
+    and result_swap_storet.event_date = subquery.event_date;
+
+
+
+delete from result_swap_storet T1
+  using result_swap_storet T2
+  where T1.result_id < T2.result_id
+    and T1.activity = T2.activity
+    and T1.sample_media = T2.sample_media
+    and T1.characteristic_name = T2.characteristic_name
+    and T1.event_date = T2.event_date
+    and T1.result_meas_qual_code is not null;
