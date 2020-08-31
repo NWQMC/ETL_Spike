@@ -88,15 +88,27 @@ update result_swap_storet
   set result_meas_qual_code=subquery.result_meas_qual_code
   from
   (select
-     activity, sample_media, characteristic_name, event_date,
+     activity, sample_media, characteristic_name, event_date, data_source_id, station_id, site_id,
+     analytical_method, characteristic_type, site_type, huc, governmental_unit_code, geom,
      string_agg(result_meas_qual_code, ';') as result_meas_qual_code
      from result_swap_storet
-     group by activity, sample_media, characteristic_name, event_date
+     group by activity, sample_media, characteristic_name, event_date, data_source_id, station_id, site_id,
+       analytical_method, characteristic_type, site_type, huc, governmental_unit_code, geom
   ) as subquery
   where result_swap_storet.activity = subquery.activity
     and result_swap_storet.sample_media = subquery.sample_media
     and result_swap_storet.characteristic_name = subquery.characteristic_name
-    and result_swap_storet.event_date = subquery.event_date;
+    and result_swap_storet.event_date = subquery.event_date
+    and result_swap_storet.data_source_id = subquery.data_source_id
+    and result_swap_storet.station_id = subquery.station_id
+    and result_swap_storet.site_id = subquery.site_id
+    and result_swap_storet.analytical_method = subquery.analytical_method
+    and result_swap_storet.analytical_method = subquery.analytical_method
+    and result_swap_storet.characteristic_type = subquery.characteristic_type
+    and result_swap_storet.site_type = subquery.site_type
+    and result_swap_storet.huc = subquery.huc
+    and result_swap_storet.governmental_unit_code = subquery.governmental_unit_code
+    and result_swap_storet.geom = subquery.geom;
 
 
 
