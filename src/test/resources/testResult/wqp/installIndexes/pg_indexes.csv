@@ -106,6 +106,7 @@
 "project_data_storet","project_data_storet_project_identifier","CREATE INDEX project_data_storet_project_identifier ON wqp.project_data_storet USING btree (project_identifier) WITH (fillfactor='100')"
 "project_dim_storet","project_dim_storet_code_value","CREATE INDEX project_dim_storet_code_value ON wqp.project_dim_storet USING btree (code_value) WITH (fillfactor='100')"
 "project_dim_storet","project_dim_storet_project_dim_value","CREATE INDEX project_dim_storet_project_dim_value ON wqp.project_dim_storet USING btree (project_dim_value) WITH (fillfactor='100')"
+"project_dim_storet","project_dim_storet_data_source_id","CREATE INDEX project_dim_storet_data_source_id ON wqp.project_dim_storet USING btree (data_source_id) WITH (fillfactor='100')"
 "project_object_storet","project_object_storet_organization","CREATE INDEX project_object_storet_organization ON wqp.project_object_storet USING btree (organization) WITH (fillfactor='100')"
 "project_object_storet","project_object_storet_project_identifier","CREATE INDEX project_object_storet_project_identifier ON wqp.project_object_storet USING btree (project_identifier) WITH (fillfactor='100')"
 "project_storet","project_storet_code_value","CREATE INDEX project_storet_code_value ON wqp.project_storet USING btree (code_value) WITH (fillfactor='100')"
