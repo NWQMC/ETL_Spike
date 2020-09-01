@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 
 @Component
@@ -21,6 +22,9 @@ public class TransformResultStoretw implements Tasklet {
 	@Value("classpath:sql/result/resultStoretw.sql")
 	private Resource resource;
 
+	@Value("classpath:sql/result/resultStoretwCleanup.sql")
+	private Resource cleanupResource;
+
 	@Autowired
 	public TransformResultStoretw(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
@@ -30,6 +34,13 @@ public class TransformResultStoretw implements Tasklet {
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		String sql = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
 		jdbcTemplate.execute(sql);
+		executeCleanup();
 		return RepeatStatus.FINISHED;
+	}
+
+	@Transactional
+	public void executeCleanup() throws Exception {
+		String sql = new String(FileCopyUtils.copyToByteArray(cleanupResource.getInputStream()));
+		jdbcTemplate.execute(sql);
 	}
 }
