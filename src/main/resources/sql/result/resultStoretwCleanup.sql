@@ -17,7 +17,6 @@ update result_swap_storet
     and result_swap_storet.station_id = t2.station_id
     and result_swap_storet.site_id = t2.site_id
     and result_swap_storet.analytical_method = t2.analytical_method
-    and result_swap_storet.analytical_method = t2.analytical_method
     and result_swap_storet.characteristic_type = t2.characteristic_type
     and result_swap_storet.site_type = t2.site_type
     and result_swap_storet.huc = t2.huc
@@ -34,7 +33,6 @@ delete from result_swap_storet t1
     and t1.data_source_id = t2.data_source_id
     and t1.station_id = t2.station_id
     and t1.site_id = t2.site_id
-    and t1.analytical_method = t2.analytical_method
     and t1.analytical_method = t2.analytical_method
     and t1.characteristic_type = t2.characteristic_type
     and t1.site_type = t2.site_type
