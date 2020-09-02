@@ -35,7 +35,7 @@ insert
                            frequency_class_lower_bound_3, frequency_class_upper_bound_1, frequency_class_upper_bound_2, frequency_class_upper_bound_3)
 select activity_swap_storet.data_source_id,
        activity_swap_storet.data_source,
-       activity_swap_storet.station_id, 
+       activity_swap_storet.station_id,
        activity_swap_storet.site_id,
        activity_swap_storet.event_date,
        analytical_method_plus_nemi.nemi_url analytical_method,
@@ -212,7 +212,7 @@ select activity_swap_storet.data_source_id,
              '/files'
        end result_file_url,
        result."RES_LAST_CHANGE_DATE" last_updated,
-       case 
+       case
          when detection_quant_limit.res_uid is null
            then null
          else
@@ -222,7 +222,7 @@ select activity_swap_storet.data_source_id,
              '/results/' || coalesce(result."RES_UID"::text, '') ||
              '/resdetectqntlmts'
        end res_detect_qnt_lmt_url,
-       case 
+       case
          when result_lab_sample_prep_sum.res_uid is null
            then null
          else
@@ -284,7 +284,7 @@ select activity_swap_storet.data_source_id,
        left join wqx_dump."TIME_ZONE" analysis_start
          on result."TMZONE_UID_LAB_ANALYSIS_START" = analysis_start."TMZONE_UID"
        left join wqx_dump."TIME_ZONE" analysis_end
-         on result."TMZONE_UID_LAB_ANALYSIS_END" = analysis_end."TMZONE_UID" 
+         on result."TMZONE_UID_LAB_ANALYSIS_END" = analysis_end."TMZONE_UID"
        left join wqx_dump."TAXON" taxon
          on result."TAX_UID" = taxon."TAX_UID"
        left join wqx_dump."SAMPLE_TISSUE_ANATOMY" sample_tissue_anatomy

@@ -82,4 +82,4 @@ select 3 data_source_id,
                result_no_source.analysis_prep_date_tx
           from storetw.result_no_source
                join station_swap_storet station
-                 on result_no_source.station_id + 10000000 = station.station_id) a
+                 on result_no_source.station_id + 10000000 = station.station_id) a;
