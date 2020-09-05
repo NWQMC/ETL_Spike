@@ -22,8 +22,6 @@ public class TransformResultStoretw implements Tasklet {
 	@Value("classpath:sql/result/resultStoretw.sql")
 	private Resource resource;
 
-	@Value("classpath:sql/result/resultStoretwCleanup.sql")
-	private Resource cleanupResource;
 
 	@Autowired
 	public TransformResultStoretw(JdbcTemplate jdbcTemplate) {
@@ -34,8 +32,6 @@ public class TransformResultStoretw implements Tasklet {
 	@Transactional
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		String sql = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
-		jdbcTemplate.execute(sql);
-		sql = new String(FileCopyUtils.copyToByteArray(cleanupResource.getInputStream()));
 		jdbcTemplate.execute(sql);
 		return RepeatStatus.FINISHED;
 	}
