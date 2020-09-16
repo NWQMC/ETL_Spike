@@ -1,4 +1,4 @@
-create unlogged table if not exists ${WQX_SCHEMA_NAME}.r_detect_qnt_lmt
+create table if not exists ${WQX_SCHEMA_NAME}.r_detect_qnt_lmt
 (res_uid                        numeric
 ,rdqlmt_uid                     numeric
 ,rdqlmt_measure                 character varying(12)

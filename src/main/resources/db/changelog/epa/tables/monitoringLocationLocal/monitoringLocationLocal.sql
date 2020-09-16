@@ -1,4 +1,4 @@
-create unlogged table if not exists ${WQX_SCHEMA_NAME}.monitoring_location_local
+create table if not exists ${WQX_SCHEMA_NAME}.monitoring_location_local
 (monitoring_location_source     character varying (7)
 ,station_id                     numeric
 ,site_id                        text

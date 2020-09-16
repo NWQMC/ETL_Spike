@@ -1,4 +1,4 @@
-create unlogged table if not exists ${WQX_SCHEMA_NAME}.site_type_conversion
+create table if not exists ${WQX_SCHEMA_NAME}.site_type_conversion
 (mltyp_uid                      numeric
 ,mltyp_name                     character varying (45)
 ,station_group_type             character varying (256)

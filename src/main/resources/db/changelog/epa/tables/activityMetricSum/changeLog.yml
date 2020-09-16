@@ -5,7 +5,7 @@ databaseChangeLog:
 
   - changeSet:
       author: drsteini
-      id: "create.table.${WQX_SCHEMA_NAME}.activity_metric_sum"
+      id: "create.table.${WQX_SCHEMA_NAME}.activity_metric_sum.v2"
       preConditions:
         - onFail: MARK_RAN
         - onError: HALT

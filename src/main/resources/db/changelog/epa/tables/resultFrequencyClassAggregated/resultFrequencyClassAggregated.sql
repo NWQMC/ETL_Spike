@@ -1,4 +1,4 @@
-create unlogged table if not exists ${WQX_SCHEMA_NAME}.result_frequency_class_aggregated
+create table if not exists ${WQX_SCHEMA_NAME}.result_frequency_class_aggregated
 (res_uid                        numeric
 ,frequency_class_code_1         text
 ,frequency_class_unit_1         text

@@ -5,7 +5,7 @@ databaseChangeLog:
 
   - changeSet:
       author: drsteini
-      id: "create.table.${WQX_SCHEMA_NAME}.result_lab_sample_prep_sum"
+      id: "create.table.${WQX_SCHEMA_NAME}.result_lab_sample_prep_sum.v2"
       preConditions:
         - onFail: MARK_RAN
         - onError: HALT
