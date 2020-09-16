@@ -5,7 +5,7 @@ databaseChangeLog:
 
   - changeSet:
       author: drsteini
-      id: "create.table.${WQX_SCHEMA_NAME}.dql_hierarchy"
+      id: "create.table.${WQX_SCHEMA_NAME}.dql_hierarchy.v2"
       preConditions:
         - onFail: MARK_RAN
         - onError: HALT

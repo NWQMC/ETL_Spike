@@ -5,7 +5,7 @@ databaseChangeLog:
 
   - changeSet:
       author: drsteini
-      id: "create.table.${WQX_SCHEMA_NAME}.attached_object_result"
+      id: "create.table.${WQX_SCHEMA_NAME}.attached_object_result.v2"
       preConditions:
         - onFail: MARK_RAN
         - onError: HALT

@@ -1,4 +1,4 @@
-create unlogged table if not exists ${WQX_SCHEMA_NAME}.attached_object_result
+create table if not exists ${WQX_SCHEMA_NAME}.attached_object_result
 (org_uid             numeric
 ,ref_uid             numeric
 ,result_object_name  text

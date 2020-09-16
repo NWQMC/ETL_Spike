@@ -5,7 +5,7 @@ databaseChangeLog:
 
   - changeSet:
       author: drsteini
-      id: "create.table.${WQX_SCHEMA_NAME}.analytical_method_plus_nemi"
+      id: "create.table.${WQX_SCHEMA_NAME}.analytical_method_plus_nemi.v2"
       preConditions:
         - onFail: MARK_RAN
         - onError: HALT

@@ -1,4 +1,4 @@
-create unlogged table if not exists ${WQX_SCHEMA_NAME}.analytical_method_plus_nemi
+create table if not exists ${WQX_SCHEMA_NAME}.analytical_method_plus_nemi
 (anlmth_uid                     numeric
 ,anlmth_id                      character varying(20)
 ,amctx_cd                       character varying(30)

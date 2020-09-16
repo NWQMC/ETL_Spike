@@ -5,7 +5,7 @@ databaseChangeLog:
 
   - changeSet:
       author: drsteini
-      id: "create.table.${WQX_SCHEMA_NAME}.monitoring_location_local"
+      id: "create.table.${WQX_SCHEMA_NAME}.monitoring_location_local.v2"
       preConditions:
         - onFail: MARK_RAN
         - onError: HALT
