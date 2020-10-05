@@ -34,7 +34,7 @@ public class TransformResultStoretw implements Tasklet {
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		String sql = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
 		jdbcTemplate.execute(sql);
-		executeCleanup();
+		//executeCleanup();
 		return RepeatStatus.FINISHED;
 	}
 
