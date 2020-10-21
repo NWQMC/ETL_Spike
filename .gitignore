@@ -7,3 +7,5 @@
 /bin/
 /.env
 /.attach_pid*
+.idea/
+wqp-etl-epa.iml
