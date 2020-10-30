@@ -41,6 +41,7 @@ public class EtlEpaIT extends WqxBaseFlowIT {
 	@DatabaseSetup(value="classpath:/testData/wqp/lastEtl/lastEtl.xml")
 	@DatabaseSetup(value="classpath:/testData/wqp/huc12nometa/")
 	@DatabaseSetup(value="classpath:/testData/wqp/qwportalSummary/")
+	@DatabaseSetup(value="classpath:/testData/wqp/tl2019UsCountyGeopkg/")
 
 	@DatabaseSetup(
 			connection=CONNECTION_WQX,
