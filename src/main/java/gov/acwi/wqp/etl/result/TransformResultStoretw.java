@@ -34,19 +34,9 @@ public class TransformResultStoretw implements Tasklet {
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		String sql = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()));
 		jdbcTemplate.execute(sql);
-		executeCleanup();
+		sql = new String(FileCopyUtils.copyToByteArray(cleanupResource.getInputStream()));
+		jdbcTemplate.execute(sql);
 		return RepeatStatus.FINISHED;
 	}
 
-	@Transactional
-	public void executeCleanup() {
-		try {
-			String sql = new String(FileCopyUtils.copyToByteArray(cleanupResource.getInputStream()));
-			jdbcTemplate.execute(sql);
-		} catch (Exception ex) {
-			// See WQP-1586
-			// Cleanup is a nice-to-have to remove duplicate records in the result set
-			// but if it were to fail, we want the insert of data to succeed.
-		}
-	}
 }
