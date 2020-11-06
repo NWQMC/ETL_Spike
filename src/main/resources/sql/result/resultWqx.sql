@@ -35,7 +35,7 @@ insert
                            frequency_class_lower_bound_3, frequency_class_upper_bound_1, frequency_class_upper_bound_2, frequency_class_upper_bound_3)
 select activity_swap_storet.data_source_id,
        activity_swap_storet.data_source,
-       activity_swap_storet.station_id, 
+       activity_swap_storet.station_id,
        activity_swap_storet.site_id,
        activity_swap_storet.event_date,
        analytical_method_plus_nemi.nemi_url analytical_method,
@@ -119,7 +119,15 @@ select activity_swap_storet.data_source_id,
        sample_fraction."SMFRC_NAME" sample_fraction_type,
        result."RES_MEASURE" result_measure_value,
        rmeasurement_unit."MSUNT_CD" result_unit,
-       measure_qualifier."MSRQLF_CD" result_meas_qual_code,
+       (select string_agg("MSRQLF_CD", ';' order by "MSRQLF_CD")
+            from wqx_dump."RESULT_MEASURE_QUALIFIER" result_measure_qualifier
+        	  left join wqx_dump."MEASURE_QUALIFIER" measure_qualifier
+                on result_measure_qualifier."MSRQLF_UID" = measure_qualifier."MSRQLF_UID"
+        	  left join activity_storet
+        	    on result."ACT_UID" = activity_storet.activity_id
+        	  left join wqx_dump."CHARACTERISTIC" characteristic
+                on result."CHR_UID" = characteristic."CHR_UID"
+        	where result."RES_UID" = result_measure_qualifier."RES_UID") result_meas_qual_code,
        result_status."RESSTA_NAME" result_value_status,
        result_statistical_base."RSBAS_CD" statistic_type,
        result_value_type."RVTYP_NAME" result_value_type,
@@ -212,7 +220,7 @@ select activity_swap_storet.data_source_id,
              '/files'
        end result_file_url,
        result."RES_LAST_CHANGE_DATE" last_updated,
-       case 
+       case
          when detection_quant_limit.res_uid is null
            then null
          else
@@ -222,7 +230,7 @@ select activity_swap_storet.data_source_id,
              '/results/' || coalesce(result."RES_UID"::text, '') ||
              '/resdetectqntlmts'
        end res_detect_qnt_lmt_url,
-       case 
+       case
          when result_lab_sample_prep_sum.res_uid is null
            then null
          else
@@ -255,10 +263,6 @@ select activity_swap_storet.data_source_id,
          on result."SMFRC_UID" = sample_fraction."SMFRC_UID"
        left join wqx_dump."MEASUREMENT_UNIT" rmeasurement_unit
          on result."MSUNT_UID_MEASURE" = rmeasurement_unit."MSUNT_UID"
-       left join wqx_dump."RESULT_MEASURE_QUALIFIER" result_measure_qualifier
-         on result."RES_UID" = result_measure_qualifier."RES_UID"
-       left join wqx_dump."MEASURE_QUALIFIER" measure_qualifier
-         on result_measure_qualifier."MSRQLF_UID" = measure_qualifier."MSRQLF_UID"
        left join wqx_dump."RESULT_STATUS" result_status
          on result."RESSTA_UID" = result_status."RESSTA_UID"
        left join wqx_dump."RESULT_STATISTICAL_BASE" result_statistical_base
@@ -284,7 +288,7 @@ select activity_swap_storet.data_source_id,
        left join wqx_dump."TIME_ZONE" analysis_start
          on result."TMZONE_UID_LAB_ANALYSIS_START" = analysis_start."TMZONE_UID"
        left join wqx_dump."TIME_ZONE" analysis_end
-         on result."TMZONE_UID_LAB_ANALYSIS_END" = analysis_end."TMZONE_UID" 
+         on result."TMZONE_UID_LAB_ANALYSIS_END" = analysis_end."TMZONE_UID"
        left join wqx_dump."TAXON" taxon
          on result."TAX_UID" = taxon."TAX_UID"
        left join wqx_dump."SAMPLE_TISSUE_ANATOMY" sample_tissue_anatomy
