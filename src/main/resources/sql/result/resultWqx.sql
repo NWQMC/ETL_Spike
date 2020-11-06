@@ -119,11 +119,7 @@ select activity_swap_storet.data_source_id,
        sample_fraction."SMFRC_NAME" sample_fraction_type,
        result."RES_MEASURE" result_measure_value,
        rmeasurement_unit."MSUNT_CD" result_unit,
-       (select string_agg("MSRQLF_CD", ';' order by "MSRQLF_CD")
-            from wqx_dump."RESULT_MEASURE_QUALIFIER" result_measure_qualifier
-        	  left join wqx_dump."MEASURE_QUALIFIER" measure_qualifier
-                on result_measure_qualifier."MSRQLF_UID" = measure_qualifier."MSRQLF_UID"
-        	where result."RES_UID" = result_measure_qualifier."RES_UID") result_meas_qual_code,
+       result_meas_qual_codes.qualifiers result_meas_qual_code,
        result_status."RESSTA_NAME" result_value_status,
        result_statistical_base."RSBAS_CD" statistic_type,
        result_value_type."RVTYP_NAME" result_value_type,
@@ -312,4 +308,10 @@ select activity_swap_storet.data_source_id,
             result."RES_UID" = attached_object_result.ref_uid
        left join wqx.result_frequency_class_aggregated
          on result."RES_UID" = result_frequency_class_aggregated.res_uid
- where result."RESSTA_UID" != 4
+       left join (select "RES_UID", string_agg("MSRQLF_CD", ';' order by "MSRQLF_CD") qualifiers
+                    from wqx_dump."RESULT_MEASURE_QUALIFIER" result_measure_qualifier
+                      left join wqx_dump."MEASURE_QUALIFIER" measure_qualifier
+                        on result_measure_qualifier."MSRQLF_UID" = measure_qualifier."MSRQLF_UID"
+                    group by "RES_UID") result_meas_qual_codes
+            on result."RES_UID" = result_meas_qual_codes."RES_UID"
+where result."RESSTA_UID" != 4
