@@ -123,10 +123,6 @@ select activity_swap_storet.data_source_id,
             from wqx_dump."RESULT_MEASURE_QUALIFIER" result_measure_qualifier
         	  left join wqx_dump."MEASURE_QUALIFIER" measure_qualifier
                 on result_measure_qualifier."MSRQLF_UID" = measure_qualifier."MSRQLF_UID"
-        	  left join activity_storet
-        	    on result."ACT_UID" = activity_storet.activity_id
-        	  left join wqx_dump."CHARACTERISTIC" characteristic
-                on result."CHR_UID" = characteristic."CHR_UID"
         	where result."RES_UID" = result_measure_qualifier."RES_UID") result_meas_qual_code,
        result_status."RESSTA_NAME" result_value_status,
        result_statistical_base."RSBAS_CD" statistic_type,
