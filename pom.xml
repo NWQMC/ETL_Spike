@@ -7,7 +7,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
-        <wma.maven.url>https://artifactory.wma.usgs.gov/artifactory</wma.maven.url>
+        <public.wma.maven.url>https://artifactory.wma.usgs.gov/artifactory</public.wma.maven.url>
         <wqp-etl-core.version>0.2.1</wqp-etl-core.version>
     </properties>
 
@@ -32,9 +32,18 @@
         <repository>
             <id>WMA</id>
             <name>WMA Artifactory</name>
-            <url>${wma.maven.url}/wma-maven/</url>
+            <url>${public.wma.maven.url}/wma-maven/</url>
         </repository>
     </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>wma-maven-releases</id>
+            <name>wma-maven-releases</name>
+            <!-- wma.maven.url is defined in a parent settings.xml file in the jenkins job runner -->
+            <url>${wma.maven.url}/wma-maven-releases</url>
+        </repository>
+    </distributionManagement>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
