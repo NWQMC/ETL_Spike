@@ -3,16 +3,32 @@ package gov.acwi.wqp.etl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.batch.core.ExitStatus;
-import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.*;
 
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
 import gov.acwi.wqp.etl.dbFinalize.UpdateLastETLIT;
+import org.springframework.batch.core.job.flow.Flow;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
+import org.springframework.test.context.TestPropertySource;
 
+/*
+Configure to create minimal partitions so that the partitioning and indexing happens fast for the test.
+The test also checks that completion happens in under a minute, so the large number of partitions that would normally
+be created take too long.
+Setting the ETL_RUN_TIME ensures that table names are repeatable.
+ */
+@TestPropertySource(properties = {"ETL_RESULT_PARTITION_START_DATE=2015-01-01",
+                                  "ETL_RESULT_PARTITION_ONE_YEAR_BREAK=2020-01-01",
+                                  "ETL_RESULT_PARTITION_QUARTER_BREAK=2020-01-01",
+                                  "ETL_RESULT_PARTITION_END_DATE=2020-01-01",
+                                  "ETL_RUN_TIME=2021-01-01T10:15:30"})
 public class EtlEpaIT extends WqxBaseFlowIT {
 
 	public static final String EXPECTED_DATABASE_TABLE_STATION_SUM = "station_sum_storet";
@@ -31,6 +47,64 @@ public class EtlEpaIT extends WqxBaseFlowIT {
 
 	public static final String EXPECTED_DATABASE_QUERY_FOREIGN_KEY = BASE_EXPECTED_DATABASE_QUERY_FOREIGN_KEY
 			+ " like '%_storet'";
+
+	public static final String EXPECTED_INDEX_QUERY = "SELECT\n" +
+			                                                  "\tc.relname AS tablename,\n" +
+			                                                  "\ti.relname AS indexname,\n" +
+			                                                  "\tpg_get_indexdef(i.oid) AS indexdef\n" +
+			                                                  "FROM pg_index x\n" +
+			                                                  "\tJOIN pg_class c ON c.oid = x.indrelid\n" +
+			                                                  "\tJOIN pg_class i ON i.oid = x.indexrelid\n" +
+			                                                  "\tLEFT JOIN pg_namespace n ON n.oid = c.relnamespace\n" +
+			                                                  "\tLEFT JOIN pg_tablespace t ON t.oid = i.reltablespace\n" +
+			                                                  "WHERE (c.relkind in ('r','m','p'))\n" +
+			                                                  "\tAND i.relkind in ('i', 'I')\n" +
+			                                                  "\tand i.relname not like '%pk'\n" +
+			                                                  "\tand c.relname not like '%swap%'\n" +
+			                                                  "\tand c.relname like '%storet%'\n" +
+			                                                  "\tand c.relname not like '%_old'\n" +
+			                                                  "order by indexname";
+
+
+
+
+	@Autowired
+	@Qualifier(EtlConstantUtils.SETUP_RESULT_SWAP_TABLE_FLOW)
+	private Flow setupResultSwapTableFlow;
+
+	@BeforeEach
+	public void setUp() throws Exception {
+
+		//Need to drop the result swap table because it will have partitions with names that collide w/ newly created
+		//partitions.  Normally the names are time unique, but that assumes runs are at least an hour apart.
+		dropSwapTable();
+
+		//Can't reuse that job, so create a new unique one for the actual test.
+		baseSetup();
+	}
+
+	protected void dropSwapTable() throws Exception {
+
+
+		//Going to use the testUtil to run this setup job, but will need to restore the original configured job, so save it.
+		Job orgJob = jobLauncherTestUtils.getJob();
+
+		Job dropResultTbl = jobBuilderFactory.get("setupResultSwapTableFlowTest")
+				                     .start(setupResultSwapTableFlow)
+				                     .build()
+				                     .build();
+
+		jobLauncherTestUtils.setJob(dropResultTbl);
+
+		JobExecution jobExecution = jobLauncherTestUtils
+				                            .launchStep("dropResultSwapTableStep", testJobParameters);
+
+		assert(! jobExecution.getStatus().isUnsuccessful());
+
+		//rest to original test job for actual testing
+		jobLauncherTestUtils.setJob(orgJob);
+	}
+
 
 	@Test
 	//Geospatial and lastEtl from wqp-etl-core
@@ -85,13 +159,15 @@ public class EtlEpaIT extends WqxBaseFlowIT {
 			table=EXPECTED_DATABASE_TABLE_CHECK_TABLE,
 			query=EXPECTED_DATABASE_QUERY_TABLE)
 
-	//Indexes
+	//********************************************************************************************
+	//Indexes - This hasn't been updated for the new list of queries on the partitioned tables yet
+	//Once updated to PG12, do I need the updated query that is in here??
 	@ExpectedDatabase(
 			connection=CONNECTION_INFORMATION_SCHEMA,
 			value="classpath:/testResult/wqp/installIndexes/",
 			assertionMode=DatabaseAssertionMode.NON_STRICT_UNORDERED,
 			table=EXPECTED_DATABASE_TABLE_CHECK_INDEX,
-			query=EXPECTED_DATABASE_QUERY_INDEX)
+			query=EXPECTED_INDEX_QUERY)
 
 	//Analyzed
 	@ExpectedDatabase(
@@ -166,6 +242,10 @@ public class EtlEpaIT extends WqxBaseFlowIT {
 			query=UpdateLastETLIT.EXPECTED_DATABASE_QUERY_LAST_ETL)
 
 	public void endToEndTest() {
+
+		System.out.println("EXPECTED_DATABASE_QUERY_TABLE: " + EXPECTED_DATABASE_QUERY_TABLE);
+		System.out.println("Expected EXPECTED_DATABASE_QUERY_INDEX: " + EXPECTED_DATABASE_QUERY_INDEX);
+
 		try {
 			JobExecution jobExecution = jobLauncherTestUtils.launchJob(testJobParameters);
 			assertEquals(ExitStatus.COMPLETED, jobExecution.getExitStatus());
