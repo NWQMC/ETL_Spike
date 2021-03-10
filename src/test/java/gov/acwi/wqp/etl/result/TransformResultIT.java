@@ -3,6 +3,7 @@ package gov.acwi.wqp.etl.result;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
@@ -52,6 +53,7 @@ public class TransformResultIT extends WqxBaseFlowIT {
 //		}
 //	}
 
+	@Disabled
 	@Test
 	//TODO - WQP-1426
 //	@DatabaseSetup(value="classpath:/testData/storet/result/resultOld.xml")

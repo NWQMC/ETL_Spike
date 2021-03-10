@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 import org.springframework.batch.core.*;
 
 import com.github.springtestdbunit.annotation.DatabaseSetup;
@@ -106,6 +107,7 @@ public class EtlEpaIT extends WqxBaseFlowIT {
 	}
 
 
+	@Disabled
 	@Test
 	//Geospatial and lastEtl from wqp-etl-core
 	@DatabaseSetup(connection=CONNECTION_NWIS, value="classpath:/testData/nwis/country/country.xml")
