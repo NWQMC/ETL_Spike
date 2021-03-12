@@ -79,6 +79,31 @@ DB_OPERATION_CONCURRENCY: 3
 *   **WQX_SCHEMA_NAME** - Name of the schema holding WQX database objects.
 *   **STORETW_SCHEMA_NAME** - Name of the schema holding STORETW database objects.
 
+##### Result Table Partitioning
+This group of parameters is used to configure how the DateRangePartitionStrategy creates partitions - All values optional.
+Currently this is only used by the Result table.  This strategy creates sets of partitions in these groups:
+* From antiquity to the startDate
+* From the startDate to oneYearBreak in partition tables containing five years each
+* From oneYearBreak to quarterBreak in one year partitions
+* From quarterBreak to endDate (and beyond) in quarter (three month) partitions.
+
+The 'breaks' between those partition groups are based on the optional params, below, with DATE using ISO format: 'YYYY-MM-DD':
+*   **ETL_RESULT_PARTITION_START_DATE** - The start date of partitions (earlier dates are included in the first partition via 'minvalue').
+    If null, set to 65 years before the calculated end date.  Always adjusted to Jan 1 of a year divisible by 5.
+*   **ETL_RESULT_PARTITION_ONE_YEAR_BREAK** - From start date to 'one_year' is partitioned into 5 year partitions.
+    From 'one_year' to 'quarter' is partition into one year tables.  If null, set to 1/3 the way from 'start' to 'quarter'.
+    Always adjusted to Jan 1 of a year divisible by 5.
+*   **ETL_RESULT_PARTITION_QUARTER_BREAK** - From 'quarter' to 'end', tables are partitioned as 3 month quarters.
+    If null, it is set to Jan 1 of the year before the calculated end date.  Always adjusted to Jan 1.
+*   **ETL_RESULT_PARTITION_END_DATE** - Dates from this date and into the future are thrown into the last 'quarter'
+    partition via 'maxvalue'.  If null, the run time of the job is used (or ETL_RUN_TIME).
+*   **ETL_RUN_TIME** - The run time of the ETL job.  Don't specify this unless running tests.
+    Partition tables are assigned a unique name based on the run time of the ETL, thus, for repeatable testing this param
+    allows a known time to create known table names.  Don't use in production or table names will collide.
+    ISO format:  'YYYY-MM-DDTHH-MM-SS'.
+
+See DateRangePartitionStrategy.calcRuntimeConfig for how missing values are filled in and details on the default strategy.
+
 ##### Miscellaneous
 *   **ETL_OWNER_USERNAME** - Role which owns the source schema database objects.
 *   **GEO_SCHEMA_NAME** - Name of the schema holding geospatial lookup database objects.
@@ -86,7 +111,10 @@ DB_OPERATION_CONCURRENCY: 3
 *   **ETL_DATA_SOURCE** - Data Source name (text from the **WQP_SCHEMA_NAME**.data_source table).
 *   **QWPORTAL_SUMMARY_ETL** - Does the ETL populate the qwportal_summary table? true or false.
 *   **NWIS_OR_EPA** - If **QWPORTAL_SUMMARY_ETL** is true, is this an NIWS (N) or STORET WQX (E) ETL.
-
+*   **DB_OPERATION_CONCURRENCY** - Some operations against the db have been parallelized to have SpringBatch
+    run multiple concurrent operations against the db, e.g. creating multiple indexes at the same time.  This controls
+    the number of paralle operations.  Ensure there are enough db connections to support at least as many. Defaults to 3.
+    
 ### Testing
 This project contains JUnit tests. Maven can be used to run them. (In addition to the capabilities of your IDE - Note that the IDE may run the tests from wqp-etl-core and they will fail due to an invalid environment for them.)
 
