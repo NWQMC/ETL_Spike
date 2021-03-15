@@ -1,3 +1,5 @@
+drop table if exists wqp.result_storet_2021010110_minvalue_to_2015_01;
+drop table if exists wqp.result_storet_2021010110_2015_01_to_maxvalue;
 drop table if exists wqp.org_data_swap_storet cascade;
 select create_swap_table ('storet', 'wqp', 'org_data');
 drop table if exists wqp.project_data_swap_storet cascade;

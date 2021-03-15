@@ -48,6 +48,8 @@
 "wqp_db","wqp","result_object_storet","BASE TABLE"
 "wqp_db","wqp","result_object_storet_old","BASE TABLE"
 "wqp_db","wqp","result_storet","BASE TABLE"
+"wqp_db","wqp","result_storet_2021010110_2015_01_to_maxvalue","BASE TABLE"
+"wqp_db","wqp","result_storet_2021010110_minvalue_to_2015_01","BASE TABLE"
 "wqp_db","wqp","result_storet_old","BASE TABLE"
 "wqp_db","wqp","result_sum_storet","BASE TABLE"
 "wqp_db","wqp","result_sum_storet_old","BASE TABLE"
