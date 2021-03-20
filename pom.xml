@@ -2,17 +2,18 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>gov.acwi</groupId>
     <artifactId>wqp-etl-epa</artifactId>
-    <version>0.6.0</version>
+    <version>0.6.0-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
-        <wqp-etl-core.version>0.2.3</wqp-etl-core.version>
+        <wqp-etl-core.version>0.2.5</wqp-etl-core.version>
+        <skipITs>false</skipITs>
     </properties>
 
     <scm>
         <connection>scm:git:https://github.com/NWQMC/etl-epa.git</connection>
-        <developerConnection>scm:git:git@github.com:NWQMC/etl-epa.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/NWQMC/etl-epa.git</developerConnection>
         <url>https://github.com/NWQMC/etl-epa.git</url>
         <tag>HEAD</tag>
     </scm>
@@ -29,20 +30,6 @@
             <url>${wma.maven.url}/wma-maven-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-
-    <repositories>
-        <repository>
-            <id>Central</id>
-            <name>Maven Central</name>
-            <url>https://repo.maven.apache.org/maven2/</url>
-        </repository>
-
-        <repository>
-            <id>WMA</id>
-            <name>WMA Artifactory</name>
-            <url>${wma.maven.url}/wma-maven/</url>
-        </repository>
-    </repositories>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -137,6 +124,15 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <failOnError>false</failOnError>
+                    <doclint>none</doclint>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
                     <environmentVariables>
@@ -188,6 +184,9 @@
                         <goals>
                             <goal>start</goal>
                         </goals>
+                        <configuration>
+                            <skip>${skipITs}</skip>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>stop</id>
@@ -195,6 +194,9 @@
                         <goals>
                             <goal>stop</goal>
                         </goals>
+                        <configuration>
+                            <skip>${skipITs}</skip>
+                        </configuration>
                     </execution>
                 </executions>
                 <configuration>
@@ -242,5 +244,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
